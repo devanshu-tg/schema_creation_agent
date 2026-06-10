@@ -1,0 +1,61 @@
+use_case: KNOWLEDGE_GRAPH
+name: knowledge_graph_baseline
+version: 1.0.0
+description: >
+  General-purpose knowledge graph / GraphRAG shape — documents, concepts,
+  entities, and the relations between them. Optimized for retrieval, RAG
+  context expansion, and semantic-similarity traversal.
+
+vertices:
+  - name: Document
+    primary_id: document_id
+    dtype: STRING
+    name_aliases: [doc, source, article, page]
+    canonical_attributes:
+      - { name: title,       dtype: STRING, optional: true }
+      - { name: url,         dtype: STRING, optional: true }
+      - { name: published_at, dtype: DATETIME, optional: true }
+  - name: Concept
+    primary_id: concept_id
+    dtype: STRING
+    name_aliases: [topic, tag, theme]
+    canonical_attributes:
+      - { name: label,       dtype: STRING, optional: true }
+  - name: Entity
+    primary_id: entity_id
+    dtype: STRING
+    name_aliases: [entity, mention, name]
+    canonical_attributes:
+      - { name: label,       dtype: STRING, optional: true }
+      - { name: entity_type, dtype: CATEGORICAL, optional: true }
+  - name: Chunk
+    primary_id: chunk_id
+    dtype: STRING
+    name_aliases: [chunk, passage, segment]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: text,        dtype: STRING, optional: true }
+      - { name: position,    dtype: INT, optional: true }
+
+edges:
+  - { name: Document_HAS_Chunk,           from: Document, to: Chunk,    direction: DIRECTED_WITH_REVERSE, reverse_name: Chunk_FROM_Document }
+  - { name: Chunk_MENTIONS_Entity,        from: Chunk,    to: Entity,   direction: DIRECTED_WITH_REVERSE, reverse_name: Entity_MENTIONED_IN_Chunk }
+  - { name: Chunk_ABOUT_Concept,          from: Chunk,    to: Concept,  direction: DIRECTED_WITH_REVERSE, reverse_name: Concept_DISCUSSED_IN_Chunk }
+  - { name: Entity_RELATED_TO_Concept,    from: Entity,   to: Concept,  direction: DIRECTED_WITH_REVERSE, reverse_name: Concept_HAS_Entity, optional: true }
+
+target_questions:
+  - id: kg.rag_context
+    text: "Which chunks mention the same entity as this one?"
+    required_vertices: [Chunk, Entity]
+    required_edges: [Chunk_MENTIONS_Entity]
+    max_hops: 2
+  - id: kg.document_coverage
+    text: "Which documents cover this concept most thoroughly?"
+    required_vertices: [Document, Chunk, Concept]
+    required_edges: [Document_HAS_Chunk, Chunk_ABOUT_Concept]
+    max_hops: 2
+  - id: kg.entity_concept_links
+    text: "What concepts are connected to this entity across all documents?"
+    required_vertices: [Entity, Chunk, Concept]
+    required_edges: [Entity_MENTIONED_IN_Chunk, Chunk_ABOUT_Concept]
+    max_hops: 2

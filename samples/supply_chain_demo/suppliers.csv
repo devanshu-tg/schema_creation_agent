@@ -1,0 +1,81 @@
+supplier_id,name,country,tier,founded_year
+SUP0000,"Rodriguez, Figueroa and Sanchez",CN,tier_1,2007
+SUP0001,Doyle Ltd,MX,tier_1,1974
+SUP0002,"Mcclain, Miller and Henderson",DE,tier_3,1966
+SUP0003,Davis and Sons,CN,tier_3,1987
+SUP0004,"Guzman, Hoffman and Baldwin",US,tier_1,1965
+SUP0005,"Gardner, Robinson and Lawrence",VN,tier_1,1992
+SUP0006,Blake and Sons,US,tier_3,1972
+SUP0007,"Henderson, Ramirez and Lewis",JP,tier_1,1988
+SUP0008,Garcia-James,MX,tier_1,2008
+SUP0009,Abbott-Munoz,DE,tier_3,1987
+SUP0010,Blair PLC,IN,tier_2,1969
+SUP0011,Dudley Group,VN,tier_2,1966
+SUP0012,Arnold Ltd,CN,tier_2,1966
+SUP0013,"Mcclure, Ward and Lee",IN,tier_2,1998
+SUP0014,Williams and Sons,MX,tier_1,2006
+SUP0015,Galloway-Wyatt,BR,tier_3,1967
+SUP0016,James Group,JP,tier_1,1995
+SUP0017,"Flowers, Martin and Kelly",MX,tier_3,1999
+SUP0018,"Adams, Zuniga and Wong",IN,tier_3,1972
+SUP0019,"Reid, Ferguson and Sanchez",CN,tier_1,2002
+SUP0020,Gray-Mayo,VN,tier_2,1965
+SUP0021,"Watts, Robinson and Nguyen",VN,tier_1,1984
+SUP0022,Perez Inc,MX,tier_2,2000
+SUP0023,Morales-Jones,IN,tier_1,1983
+SUP0024,"Walter, Edwards and Rios",IN,tier_1,2002
+SUP0025,Wilkerson-Day,MX,tier_3,2019
+SUP0026,Baker and Sons,CN,tier_3,2000
+SUP0027,"Hoffman, Baker and Richards",DE,tier_3,2006
+SUP0028,"Ross, Robinson and Bright",VN,tier_1,1989
+SUP0029,"Snyder, Campos and Callahan",JP,tier_2,2019
+SUP0030,Burton Ltd,VN,tier_3,1980
+SUP0031,Carlson-Cruz,US,tier_1,2012
+SUP0032,"Ferrell, Rice and Maddox",US,tier_2,1985
+SUP0033,Frazier Inc,MX,tier_1,1973
+SUP0034,"Dyer, Potter and Mack",IN,tier_1,2001
+SUP0035,Rodriguez-Graham,BR,tier_2,2016
+SUP0036,Smith-Bowen,BR,tier_1,1976
+SUP0037,"Baker, Mason and White",DE,tier_1,2007
+SUP0038,Harrell LLC,MX,tier_3,1997
+SUP0039,"Romero, Gonzalez and Brooks",JP,tier_3,1985
+SUP0040,Ryan PLC,IN,tier_1,1968
+SUP0041,George Group,BR,tier_1,2008
+SUP0042,Rodriguez LLC,US,tier_1,1969
+SUP0043,Allen-Allen,DE,tier_3,1987
+SUP0044,"Arroyo, Miller and Tucker",CN,tier_2,1984
+SUP0045,Spence PLC,BR,tier_3,1976
+SUP0046,Anderson Group,US,tier_3,2006
+SUP0047,"Martin, Rose and Obrien",CN,tier_3,2016
+SUP0048,Hickman Ltd,MX,tier_3,1981
+SUP0049,"Harris, Collins and Carney",CN,tier_2,1987
+SUP0050,"Brooks, Lam and Hayes",DE,tier_2,1960
+SUP0051,Walker LLC,MX,tier_3,2008
+SUP0052,Chapman and Sons,DE,tier_3,2018
+SUP0053,"Robinson, Jones and Welch",CN,tier_3,1979
+SUP0054,Jones Inc,VN,tier_1,1983
+SUP0055,Jones-Young,DE,tier_3,2009
+SUP0056,"Washington, Ryan and Cummings",US,tier_3,1980
+SUP0057,"Johnston, Sanchez and Kennedy",BR,tier_1,1967
+SUP0058,Lee-Davis,IN,tier_2,1975
+SUP0059,Gomez-Jenkins,US,tier_1,2016
+SUP0060,"Brown, Valdez and Lucas",CN,tier_1,2006
+SUP0061,Powell LLC,BR,tier_1,2008
+SUP0062,Wright and Sons,DE,tier_1,2002
+SUP0063,"West, Henderson and Ramirez",BR,tier_3,1970
+SUP0064,Baxter Inc,MX,tier_3,2015
+SUP0065,Morton-Chase,JP,tier_1,2019
+SUP0066,Williams PLC,VN,tier_3,1979
+SUP0067,Novak and Sons,JP,tier_3,2001
+SUP0068,Russell Group,IN,tier_2,2017
+SUP0069,Hancock Inc,BR,tier_1,1975
+SUP0070,Gray Group,VN,tier_1,1981
+SUP0071,House-Glover,US,tier_3,1995
+SUP0072,Henderson-Bernard,VN,tier_3,1974
+SUP0073,"Stanley, Tucker and Lee",US,tier_1,2005
+SUP0074,Novak PLC,US,tier_1,1964
+SUP0075,"Daniels, Adkins and Brown",US,tier_2,1964
+SUP0076,"Woods, Calhoun and Schmidt",VN,tier_2,2002
+SUP0077,Yu Inc,BR,tier_1,1994
+SUP0078,Jones Inc,DE,tier_3,2019
+SUP0079,"Hensley, Powell and David",BR,tier_1,2010

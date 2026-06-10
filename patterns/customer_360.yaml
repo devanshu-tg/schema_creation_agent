@@ -1,0 +1,69 @@
+use_case: CUSTOMER_360
+name: customer_360_baseline
+version: 1.0.0
+description: >
+  Unified customer view across orders, support tickets, and web sessions.
+
+vertices:
+  - name: Customer
+    primary_id: customer_id
+    dtype: STRING
+    name_aliases: [customer, party, account_holder]
+    canonical_attributes:
+      - { name: name,        dtype: STRING, optional: true }
+      - { name: email,       dtype: STRING, optional: true }
+      - { name: signup_date, dtype: DATETIME, optional: true }
+      - { name: segment,     dtype: CATEGORICAL, optional: true }
+  - name: Order
+    primary_id: order_id
+    dtype: STRING
+    name_aliases: [order, purchase]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: amount,    dtype: FLOAT, aliases: [total, value] }
+      - { name: timestamp, dtype: DATETIME, aliases: [order_date, placed_at] }
+      - { name: channel,   dtype: CATEGORICAL, optional: true }
+  - name: SupportTicket
+    primary_id: ticket_id
+    dtype: STRING
+    name_aliases: [ticket, support, case]
+    canonical_attributes:
+      - { name: opened_at, dtype: DATETIME, optional: true }
+      - { name: status,    dtype: CATEGORICAL, optional: true }
+      - { name: csat,      dtype: INT, optional: true }
+  - name: WebSession
+    primary_id: session_id
+    dtype: STRING
+    name_aliases: [session, visit]
+    canonical_attributes:
+      - { name: started_at, dtype: DATETIME, optional: true }
+      - { name: duration_s, dtype: INT, optional: true }
+  - name: Device
+    primary_id: device_id
+    dtype: STRING
+    name_aliases: [device]
+    promotion_rule: shared_identifier
+    optional: true
+
+edges:
+  - { name: Customer_PLACED_Order,         from: Customer, to: Order,         direction: DIRECTED_WITH_REVERSE, reverse_name: Order_PLACED_BY_Customer }
+  - { name: Customer_OPENED_Ticket,        from: Customer, to: SupportTicket, direction: DIRECTED_WITH_REVERSE, reverse_name: Ticket_OPENED_BY_Customer }
+  - { name: Customer_VISITED_WebSession,   from: Customer, to: WebSession,    direction: DIRECTED_WITH_REVERSE, reverse_name: WebSession_OF_Customer }
+  - { name: WebSession_FROM_Device,        from: WebSession, to: Device,      direction: DIRECTED_WITH_REVERSE, reverse_name: Device_USED_IN_WebSession, optional: true }
+
+target_questions:
+  - id: c360.order_history
+    text: "What is the full order history of a customer?"
+    required_vertices: [Customer, Order]
+    required_edges: [Customer_PLACED_Order]
+    max_hops: 1
+  - id: c360.ticket_with_orders
+    text: "What orders precede a support ticket?"
+    required_vertices: [Customer, Order, SupportTicket]
+    required_edges: [Customer_PLACED_Order, Customer_OPENED_Ticket]
+    max_hops: 2
+  - id: c360.session_funnel
+    text: "Which sessions led to an order?"
+    required_vertices: [Customer, WebSession, Order]
+    required_edges: [Customer_VISITED_WebSession, Customer_PLACED_Order]
+    max_hops: 2

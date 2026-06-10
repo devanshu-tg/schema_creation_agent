@@ -1,0 +1,116 @@
+{
+  "use_case": "FRAUD",
+  "name": "fraud_schema",
+  "version": "0.1.0",
+  "pattern_version": "1.0.0",
+  "vertices": [
+    {
+      "name": "Customer",
+      "primary_id": "customer_id",
+      "primary_id_dtype": "STRING",
+      "attributes": [],
+      "source": {
+        "kind": "table_column",
+        "table": "customers",
+        "columns": [
+          "customer_id"
+        ]
+      },
+      "rationale": "",
+      "pattern_origin": null
+    }
+  ],
+  "edges": [],
+  "target_questions": [
+    {
+      "id": "fraud.shared_device",
+      "text": "Which accounts share a device?",
+      "required_vertices": [
+        "Account",
+        "Device",
+        "Transaction"
+      ],
+      "required_edges": [
+        "Account_MADE_Transaction",
+        "Transaction_FROM_Device"
+      ],
+      "max_hops": 3
+    },
+    {
+      "id": "fraud.shared_card",
+      "text": "Which customers share a card?",
+      "required_vertices": [
+        "Customer",
+        "Card"
+      ],
+      "required_edges": [
+        "Customer_USES_Card"
+      ],
+      "max_hops": 2
+    },
+    {
+      "id": "fraud.shared_phone_email",
+      "text": "Which customers share a phone or email?",
+      "required_vertices": [
+        "Customer",
+        "Phone",
+        "Email"
+      ],
+      "required_edges": [
+        "Customer_HAS_Phone",
+        "Customer_HAS_Email"
+      ],
+      "max_hops": 2
+    },
+    {
+      "id": "fraud.shared_merchant",
+      "text": "Which accounts paid the same merchant?",
+      "required_vertices": [
+        "Account",
+        "Transaction",
+        "Merchant"
+      ],
+      "required_edges": [
+        "Account_MADE_Transaction",
+        "Transaction_PAID_Merchant"
+      ],
+      "max_hops": 3
+    },
+    {
+      "id": "fraud.ring_3hop",
+      "text": "Which accounts are within 3 hops of a known fraud transaction (is_fraud=1)?",
+      "required_vertices": [
+        "Account",
+        "Transaction"
+      ],
+      "required_edges": [
+        "Account_MADE_Transaction"
+      ],
+      "max_hops": 3
+    }
+  ],
+  "assumptions": [],
+  "business_context": null,
+  "design_rationale": {
+    "bullets": [
+      "Modeled Device + IPAddress as vertices so shared infra surfaces as edges"
+    ]
+  },
+  "recommendation": {
+    "entities": [
+      {
+        "name": "Customer",
+        "one_liner": "People who own accounts"
+      }
+    ],
+    "expected_outcomes": [
+      "Detect rings sharing devices"
+    ],
+    "future_enhancements": [
+      "Geospatial analysis",
+      "Real-time scoring"
+    ]
+  },
+  "generated_at": "2026-06-09T11:16:13.256853",
+  "inputs_hash": ""
+}

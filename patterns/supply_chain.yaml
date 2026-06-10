@@ -1,0 +1,70 @@
+use_case: SUPPLY_CHAIN
+name: supply_chain_baseline
+version: 1.0.0
+description: >
+  End-to-end visibility across suppliers, products, shipments, warehouses,
+  and orders. Optimized for dependency tracing, bottleneck detection, and
+  multi-hop disruption analysis.
+
+vertices:
+  - name: Supplier
+    primary_id: supplier_id
+    dtype: STRING
+    name_aliases: [vendor, manufacturer, source]
+    canonical_attributes:
+      - { name: name,       dtype: STRING, optional: true }
+      - { name: country,    dtype: STRING, optional: true }
+      - { name: tier,       dtype: CATEGORICAL, optional: true }
+  - name: Product
+    primary_id: product_id
+    dtype: STRING
+    name_aliases: [sku, item, part]
+    canonical_attributes:
+      - { name: name,       dtype: STRING, optional: true }
+      - { name: category,   dtype: CATEGORICAL, optional: true }
+  - name: Shipment
+    primary_id: shipment_id
+    dtype: STRING
+    name_aliases: [shipment, delivery, dispatch]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: shipped_at, dtype: DATETIME, optional: true }
+      - { name: delivered_at, dtype: DATETIME, optional: true }
+      - { name: status,     dtype: CATEGORICAL, optional: true }
+  - name: Warehouse
+    primary_id: warehouse_id
+    dtype: STRING
+    name_aliases: [warehouse, dc, facility]
+    canonical_attributes:
+      - { name: location,   dtype: STRING, optional: true }
+  - name: Order
+    primary_id: order_id
+    dtype: STRING
+    name_aliases: [order, purchase_order, po]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: placed_at,  dtype: DATETIME, optional: true }
+      - { name: quantity,   dtype: INT, optional: true }
+
+edges:
+  - { name: Supplier_PROVIDES_Product,    from: Supplier,  to: Product,   direction: DIRECTED_WITH_REVERSE, reverse_name: Product_SUPPLIED_BY_Supplier }
+  - { name: Product_IN_Shipment,          from: Product,   to: Shipment,  direction: DIRECTED_WITH_REVERSE, reverse_name: Shipment_CARRIES_Product }
+  - { name: Shipment_FROM_Warehouse,      from: Shipment,  to: Warehouse, direction: DIRECTED_WITH_REVERSE, reverse_name: Warehouse_SENT_Shipment }
+  - { name: Order_FULFILLED_BY_Shipment,  from: Order,     to: Shipment,  direction: DIRECTED_WITH_REVERSE, reverse_name: Shipment_FULFILLS_Order }
+
+target_questions:
+  - id: sc.bottleneck
+    text: "Which suppliers are upstream of delayed shipments?"
+    required_vertices: [Supplier, Product, Shipment]
+    required_edges: [Supplier_PROVIDES_Product, Product_IN_Shipment]
+    max_hops: 2
+  - id: sc.dependency
+    text: "Which products depend on a single supplier?"
+    required_vertices: [Supplier, Product]
+    required_edges: [Supplier_PROVIDES_Product]
+    max_hops: 1
+  - id: sc.fulfillment
+    text: "Which warehouses are slow to fulfill orders?"
+    required_vertices: [Order, Shipment, Warehouse]
+    required_edges: [Order_FULFILLED_BY_Shipment, Shipment_FROM_Warehouse]
+    max_hops: 2

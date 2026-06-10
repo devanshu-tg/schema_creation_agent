@@ -1,0 +1,24 @@
+.env
+.env.local
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+uv.lock
+
+# Node / frontend
+node_modules/
+.next/
+*.tsbuildinfo
+*.log
+
+# Stray large data file (duplicate of samples/fraud/transaction_fraud_part_1.csv)
+/transaction_fraud_part_1.csv

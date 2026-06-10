@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@xyflow/react/dist/style.css';
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+body {
+  @apply text-tg-ink antialiased;
+  background: #17181C;
+  color-scheme: dark;
+}
+
+/* Style native scrollbars for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #17181C;
+}
+::-webkit-scrollbar-thumb {
+  background: #34373E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4B4F58;
+}
+
+/* React Flow customizations — Savanna dark canvas look */
+.react-flow__node-vertex {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Hide React Flow's default node selection ring so our custom one shows through */
+.react-flow__node.selected .react-flow__handle {
+  opacity: 0 !important;
+}
+
+/* Dark controls */
+.react-flow__controls-button {
+  background: #22242A !important;
+  border-bottom: 1px solid #34373E !important;
+  color: #E8EAED !important;
+}
+.react-flow__controls-button:hover {
+  background: #2E3138 !important;
+}
+.react-flow__controls-button svg {
+  fill: #E8EAED;
+}
+
+/* Edge label backgrounds — give them a subtle dark pill so they're readable */
+.react-flow__edge-textbg {
+  fill: #17181C;
+  fill-opacity: 0.7;
+}
+.react-flow__edge-text {
+  fill: #CFD2D7;
+}
+
+/* Typing indicator animation */
+@keyframes tg-pulse {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* Chat bubble entry */
+@keyframes tg-fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tg-fade-in {
+  animation: tg-fade-in-up 0.2s ease-out;
+}
+
+/* Streaming-text blinking caret */
+@keyframes tg-caret-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.tg-caret {
+  display: inline-block;
+  width: 6px;
+  height: 12px;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: currentColor;
+  animation: tg-caret-blink 1s steps(1) infinite;
+  border-radius: 1px;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}

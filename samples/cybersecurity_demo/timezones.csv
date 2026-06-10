@@ -1,0 +1,11 @@
+tz_id,utc_offset
+UTC,0
+EST,-5
+PST,-8
+CET,1
+IST,5.5
+JST,9
+AEST,10
+GMT,0
+MST,-7
+BRT,-3

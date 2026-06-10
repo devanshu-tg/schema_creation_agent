@@ -1,0 +1,601 @@
+item_id,name,category_id,brand,price,release_date
+I00000,LightSteelBlue Young,CAT0026,Lin-Barnes,63.59,2026-04-11
+I00001,DimGray Teach,CAT0019,Peck-Griffith,615.9,2024-11-02
+I00002,DimGray Moment,CAT0019,"Owens, Koch and Jimenez",319.17,2024-08-16
+I00003,OrangeRed Mouth,CAT0024,Levy-Lewis,263.12,2025-03-09
+I00004,BurlyWood Apply,CAT0020,Simpson-Khan,220.84,2025-10-29
+I00005,SeaShell Feeling,CAT0014,"Smith, Rodriguez and Anderson",394.01,2024-12-30
+I00006,Moccasin South,CAT0011,Diaz-Morales,443.77,2025-08-24
+I00007,GoldenRod Him,CAT0012,"Roberts, Hughes and Cole",347.18,2025-08-09
+I00008,LightSeaGreen That,CAT0021,"Becker, Wilson and Hester",469.94,2025-04-09
+I00009,Navy Study,CAT0012,Grant-Diaz,71.3,2024-09-28
+I00010,Gray Play,CAT0019,"Morales, Williams and Williams",238.42,2025-12-14
+I00011,MediumSeaGreen Summer,CAT0007,Stone-Hernandez,571.35,2026-05-02
+I00012,Thistle Challenge,CAT0002,Velazquez-Flores,216.57,2025-04-09
+I00013,Lime Personal,CAT0012,Romero-Hicks,570.21,2025-06-23
+I00014,Lime May,CAT0020,Richardson Ltd,125.96,2024-09-01
+I00015,PapayaWhip Past,CAT0012,Robles-Swanson,255.39,2025-11-24
+I00016,Bisque Picture,CAT0003,Baker-Rios,75.94,2026-01-31
+I00017,Khaki Set,CAT0009,Silva and Sons,357.45,2025-07-20
+I00018,Olive Choose,CAT0024,"Allen, Armstrong and Graves",218.0,2024-11-03
+I00019,Azure Let,CAT0004,Barnes-Gutierrez,72.58,2024-11-13
+I00020,PaleVioletRed More,CAT0013,"Knapp, Salas and Fitzgerald",360.73,2024-07-26
+I00021,DarkSlateGray Natural,CAT0017,Hoffman Ltd,411.42,2025-06-14
+I00022,Violet However,CAT0003,Frye-Stevens,23.93,2025-07-27
+I00023,MediumSpringGreen Office,CAT0011,Lowe-Dillon,444.71,2025-11-18
+I00024,LightGray Poor,CAT0019,Lee-Wright,479.64,2025-08-15
+I00025,Lime Down,CAT0010,Wise-Bush,691.38,2025-11-26
+I00026,SlateGray Free,CAT0000,Bailey-Peck,235.6,2026-02-15
+I00027,LightSalmon Field,CAT0012,Berry PLC,624.0,2025-03-29
+I00028,Orchid Tell,CAT0023,Blevins-Ballard,721.21,2025-01-19
+I00029,BlueViolet Field,CAT0028,"Miller, Bradshaw and Douglas",794.21,2026-01-09
+I00030,Silver Difficult,CAT0007,Clayton LLC,458.85,2026-06-02
+I00031,LightPink Certain,CAT0005,Gilbert PLC,549.2,2024-12-10
+I00032,LemonChiffon Apply,CAT0005,"Stein, Perez and Hall",113.66,2024-08-24
+I00033,PaleVioletRed Give,CAT0009,"Kennedy, Maldonado and Taylor",216.92,2025-08-09
+I00034,DimGray Investment,CAT0004,"Donovan, Johns and Woods",53.42,2024-11-09
+I00035,LightSlateGray Full,CAT0013,Brewer-Velez,222.94,2024-08-16
+I00036,Lavender Nor,CAT0009,"Sharp, Zuniga and Gentry",388.93,2024-10-21
+I00037,PapayaWhip Us,CAT0002,Peck Inc,290.82,2026-03-19
+I00038,Orchid Store,CAT0007,Lopez-Curry,577.56,2026-04-16
+I00039,LightSteelBlue Under,CAT0015,Smith PLC,476.26,2025-09-19
+I00040,DarkMagenta Without,CAT0006,Mitchell-Hays,367.92,2025-08-03
+I00041,Violet Minute,CAT0004,Rosales Group,245.81,2025-01-05
+I00042,GoldenRod Table,CAT0012,Rivera Ltd,267.78,2025-05-30
+I00043,LightCyan Serious,CAT0019,Smith LLC,305.77,2026-02-12
+I00044,LightYellow Out,CAT0027,"Todd, Thompson and Chase",265.64,2026-05-05
+I00045,PaleGreen The,CAT0010,Robertson-Miller,346.2,2025-11-09
+I00046,DarkGray Crime,CAT0026,Woods and Sons,688.03,2024-06-13
+I00047,LightGoldenRodYellow Identify,CAT0019,Griffin LLC,111.49,2025-02-19
+I00048,LimeGreen Pass,CAT0010,"Berry, Green and Ward",483.76,2024-12-08
+I00049,Chocolate Region,CAT0022,Marshall and Sons,163.08,2025-04-18
+I00050,SteelBlue Wind,CAT0010,"Carrillo, Vaughn and Fowler",144.58,2026-06-08
+I00051,LightYellow Hold,CAT0012,"Walker, Bernard and Mendoza",775.07,2025-05-27
+I00052,Navy Just,CAT0009,"Dunn, Ruiz and Medina",588.69,2025-11-05
+I00053,IndianRed Sound,CAT0020,Becker PLC,394.33,2026-04-17
+I00054,Cyan Never,CAT0018,Rice-Cox,626.23,2026-05-21
+I00055,DarkOliveGreen Assume,CAT0010,"Leach, Harris and Herrera",302.72,2024-10-13
+I00056,MediumOrchid Too,CAT0026,"Ramos, Frazier and Love",629.34,2025-06-22
+I00057,DarkGoldenRod Way,CAT0011,"Griffin, Brown and Anderson",93.77,2025-04-26
+I00058,SaddleBrown Organization,CAT0018,Hansen Ltd,162.24,2026-02-24
+I00059,Linen Several,CAT0017,Foster Inc,146.4,2026-01-08
+I00060,IndianRed Particular,CAT0024,Williams LLC,441.43,2025-12-04
+I00061,Coral Number,CAT0023,Michael Inc,370.91,2026-06-03
+I00062,SeaShell Almost,CAT0022,Ortiz-Mack,170.09,2026-01-23
+I00063,PeachPuff House,CAT0025,West-Stark,235.19,2025-03-28
+I00064,OldLace Be,CAT0022,"Brandt, Baxter and Anderson",58.12,2026-04-07
+I00065,MediumVioletRed By,CAT0027,Haney Group,637.14,2025-07-23
+I00066,DarkSalmon Should,CAT0013,Davenport Inc,539.36,2025-01-25
+I00067,SandyBrown Report,CAT0004,"Stephens, Patel and Morrow",507.77,2024-12-17
+I00068,Salmon Half,CAT0007,Hill Ltd,204.39,2026-01-23
+I00069,DarkOliveGreen Almost,CAT0004,"Barnes, Miranda and Stephenson",573.04,2024-06-20
+I00070,LawnGreen Design,CAT0025,Garcia Inc,303.46,2025-05-20
+I00071,BurlyWood Election,CAT0014,"Williams, Gonzales and Fernandez",792.59,2026-01-14
+I00072,Chartreuse Challenge,CAT0015,"Holder, Young and Hendricks",467.05,2025-08-29
+I00073,MediumAquaMarine Participant,CAT0017,"Barton, Cardenas and Young",406.77,2026-04-19
+I00074,DarkTurquoise Recent,CAT0029,"Walker, Turner and Brown",696.1,2025-09-10
+I00075,ForestGreen Produce,CAT0013,"Simmons, Simpson and Compton",436.29,2025-10-20
+I00076,Olive Stock,CAT0025,"Flores, Butler and Hernandez",774.84,2025-03-27
+I00077,GhostWhite Somebody,CAT0022,"Wells, Atkinson and Turner",716.71,2025-12-09
+I00078,DarkTurquoise Sure,CAT0017,Melendez-Hart,476.27,2025-04-27
+I00079,Wheat Center,CAT0029,Sanchez-Harris,70.73,2025-10-23
+I00080,Cyan Win,CAT0024,Boone-Davis,200.84,2025-12-22
+I00081,Gold Approach,CAT0021,Bennett-Jacobs,285.94,2024-07-08
+I00082,Cornsilk Cup,CAT0020,"Ramsey, Hansen and Mendoza",491.3,2026-04-14
+I00083,MediumSeaGreen Floor,CAT0018,Lewis and Sons,786.94,2026-01-04
+I00084,DarkOrchid Skin,CAT0021,Rocha-Dominguez,518.45,2025-12-06
+I00085,GreenYellow Industry,CAT0024,Arnold LLC,267.28,2025-03-30
+I00086,SeaGreen None,CAT0025,"Howard, Green and Hunt",346.07,2025-06-29
+I00087,SeaGreen Billion,CAT0000,"Harrison, Franco and Rocha",81.59,2025-03-22
+I00088,Maroon Job,CAT0007,Hart and Sons,410.01,2026-01-04
+I00089,DarkViolet Admit,CAT0016,Tran-Silva,447.72,2025-12-19
+I00090,PapayaWhip Find,CAT0022,Gonzalez and Sons,461.46,2025-03-30
+I00091,LemonChiffon Money,CAT0014,"Pena, Cohen and Scott",301.17,2026-03-08
+I00092,SlateGray Several,CAT0014,"Singh, Murray and Oconnor",618.56,2025-03-08
+I00093,FloralWhite Challenge,CAT0018,"Payne, White and Preston",553.28,2025-10-19
+I00094,Chocolate Need,CAT0004,Combs Inc,277.94,2026-03-05
+I00095,BurlyWood South,CAT0000,Gutierrez Ltd,387.77,2024-12-04
+I00096,CornflowerBlue Second,CAT0009,Smith PLC,334.53,2025-05-28
+I00097,Navy As,CAT0002,"Little, Peck and Durham",95.51,2025-11-02
+I00098,SlateBlue Admit,CAT0023,Patel Group,115.92,2024-06-17
+I00099,Azure Next,CAT0009,"Hill, Madden and Smith",276.42,2026-03-01
+I00100,Plum Sure,CAT0025,Rodriguez Inc,167.87,2025-07-20
+I00101,DeepPink Effect,CAT0015,Harvey LLC,280.6,2026-03-03
+I00102,MidnightBlue Example,CAT0003,Miller-Chung,352.22,2025-05-30
+I00103,LemonChiffon Same,CAT0022,Evans Inc,363.6,2025-10-28
+I00104,BlanchedAlmond Better,CAT0002,Gray-Tran,242.31,2024-07-21
+I00105,Aqua Scientist,CAT0025,Miller Group,569.49,2025-10-21
+I00106,MediumPurple Others,CAT0000,Jacobson Inc,679.8,2024-12-03
+I00107,HotPink Wear,CAT0020,"Clay, Alvarez and Williams",90.16,2024-08-04
+I00108,LightSeaGreen Way,CAT0025,"Elliott, Johnson and Mcfarland",133.99,2025-02-07
+I00109,Azure Despite,CAT0023,"Thomas, Hoover and Nicholson",197.4,2026-05-30
+I00110,Crimson Firm,CAT0005,Elliott PLC,442.87,2026-03-18
+I00111,Orange Research,CAT0010,"Rivera, Campos and Taylor",449.2,2025-11-25
+I00112,Cyan Month,CAT0014,"Mccann, Brown and Kim",187.79,2026-03-21
+I00113,Crimson Grow,CAT0012,"Mack, Friedman and Sanders",504.92,2026-01-29
+I00114,MediumOrchid All,CAT0005,"Nelson, Riddle and Henry",513.46,2025-03-11
+I00115,OldLace Lay,CAT0013,Frazier Ltd,318.28,2025-03-30
+I00116,DarkBlue Sport,CAT0023,"Phillips, Wright and Jones",492.44,2025-01-02
+I00117,DeepSkyBlue Husband,CAT0006,"Bowers, Moore and Price",361.31,2025-03-15
+I00118,DarkMagenta Benefit,CAT0013,Hahn Group,312.9,2025-03-14
+I00119,LightPink Blue,CAT0022,Miller Group,174.19,2025-05-22
+I00120,Thistle Involve,CAT0008,Johnson LLC,602.6,2025-08-12
+I00121,DarkGoldenRod Picture,CAT0025,"Mueller, Shields and Smith",637.42,2025-04-25
+I00122,Orange Start,CAT0018,Hardy PLC,84.1,2026-05-12
+I00123,LemonChiffon Owner,CAT0027,"Jackson, James and Taylor",430.9,2025-01-27
+I00124,LightGreen Mind,CAT0011,Brown Group,262.81,2025-01-08
+I00125,PeachPuff Firm,CAT0014,Patton-Ward,93.82,2024-12-16
+I00126,Snow Phone,CAT0021,"Gonzalez, Rodriguez and Torres",690.52,2025-04-11
+I00127,MediumSeaGreen Thought,CAT0016,"James, Atkins and Alexander",772.84,2025-05-08
+I00128,DarkSlateBlue First,CAT0010,Morrison-Dominguez,478.79,2025-06-15
+I00129,Maroon Cost,CAT0019,Novak-Carter,315.86,2025-11-29
+I00130,SlateGray Parent,CAT0003,Nguyen LLC,280.3,2026-03-04
+I00131,OrangeRed His,CAT0027,Frederick and Sons,367.91,2025-09-10
+I00132,YellowGreen Couple,CAT0005,"Saunders, Johnson and Acosta",651.55,2025-12-10
+I00133,HoneyDew Left,CAT0022,Guerra-Jones,641.09,2026-03-28
+I00134,PaleTurquoise Report,CAT0029,Taylor-Turner,492.74,2024-12-21
+I00135,DeepSkyBlue Senior,CAT0002,Mccormick-Jones,538.67,2025-09-15
+I00136,Silver Pass,CAT0010,Ferguson-Mclean,96.94,2026-04-14
+I00137,PeachPuff Of,CAT0009,Gibbs LLC,96.21,2025-12-04
+I00138,WhiteSmoke Phone,CAT0011,"Rocha, Rodriguez and Wright",555.67,2025-11-06
+I00139,MidnightBlue Compare,CAT0016,"Salazar, Hart and Newman",312.61,2025-10-23
+I00140,PaleGoldenRod Soldier,CAT0019,Sheppard-Jordan,112.88,2024-06-16
+I00141,DarkGreen Evening,CAT0012,Dixon PLC,340.16,2025-08-15
+I00142,Indigo Like,CAT0015,Myers-Barton,509.49,2025-09-08
+I00143,SteelBlue City,CAT0022,Cuevas-Webb,735.57,2025-01-23
+I00144,PapayaWhip Wife,CAT0029,Wilson Ltd,799.92,2024-09-26
+I00145,MediumVioletRed Forget,CAT0017,Gibson-Clark,135.99,2025-06-18
+I00146,MediumVioletRed Maybe,CAT0009,Kim Ltd,114.82,2025-05-25
+I00147,MediumAquaMarine Audience,CAT0010,Williams-Page,674.06,2024-06-25
+I00148,MediumSpringGreen Raise,CAT0019,Byrd and Sons,45.73,2026-05-31
+I00149,LemonChiffon Name,CAT0011,Arnold LLC,761.62,2025-08-16
+I00150,Pink Maintain,CAT0015,Salinas Ltd,111.82,2024-10-29
+I00151,GhostWhite Push,CAT0026,"Reynolds, Johnson and Mendez",309.0,2024-11-08
+I00152,RoyalBlue Person,CAT0017,Price-Bush,405.83,2024-11-14
+I00153,LightSeaGreen Soldier,CAT0015,"Stokes, Brown and Garcia",329.08,2026-04-16
+I00154,WhiteSmoke Culture,CAT0015,Nguyen-Ellis,334.26,2024-12-28
+I00155,SlateGray News,CAT0026,"Edwards, Price and Long",356.75,2024-09-04
+I00156,MediumVioletRed He,CAT0005,Williamson-Cervantes,68.89,2025-12-08
+I00157,Lime Why,CAT0000,"Lawrence, Powers and Edwards",637.32,2024-12-10
+I00158,Linen But,CAT0007,Brooks and Sons,235.8,2025-07-09
+I00159,Orange Kid,CAT0008,"Taylor, Reyes and Lopez",182.2,2025-10-14
+I00160,WhiteSmoke Rule,CAT0009,"Arias, Thompson and Jackson",137.06,2025-01-18
+I00161,DarkSlateGray Culture,CAT0014,Wilkinson-Harvey,453.82,2026-04-11
+I00162,MintCream Act,CAT0024,Taylor-Ochoa,613.44,2025-08-18
+I00163,Tan Read,CAT0017,Ortiz-Vasquez,410.11,2025-12-11
+I00164,Red Middle,CAT0018,Miller Inc,94.02,2026-02-16
+I00165,Indigo Final,CAT0024,Hill PLC,435.86,2025-01-18
+I00166,FloralWhite Statement,CAT0011,Cunningham-Barton,435.01,2025-06-27
+I00167,Teal Budget,CAT0024,"Wilson, Hampton and Morrow",36.16,2025-03-19
+I00168,Yellow Test,CAT0023,Wolf Group,354.77,2025-08-06
+I00169,IndianRed Large,CAT0006,Fitzgerald Ltd,791.85,2026-01-12
+I00170,LightBlue Finish,CAT0003,Cole LLC,589.58,2026-04-08
+I00171,DarkCyan Leg,CAT0020,Rowe and Sons,601.82,2024-11-18
+I00172,MediumVioletRed Traditional,CAT0009,"Bishop, Patterson and Jensen",700.22,2026-02-07
+I00173,GreenYellow Teach,CAT0001,Trujillo PLC,361.44,2025-03-07
+I00174,White Fast,CAT0011,"Ryan, Morris and Padilla",690.17,2025-01-18
+I00175,LightGreen Toward,CAT0002,"Duke, Shelton and Davis",352.94,2026-01-11
+I00176,PaleVioletRed Why,CAT0003,Riddle Ltd,621.18,2024-09-14
+I00177,DarkSeaGreen Enjoy,CAT0007,Dawson and Sons,170.27,2026-01-20
+I00178,OrangeRed Might,CAT0023,Ray LLC,471.58,2025-10-08
+I00179,PapayaWhip How,CAT0011,Jones-Norton,689.26,2026-01-26
+I00180,DarkGoldenRod Interesting,CAT0019,"Brady, Neal and Wiley",507.32,2025-05-27
+I00181,SlateBlue Generation,CAT0005,"Smith, Schroeder and Oconnor",494.07,2025-12-27
+I00182,Salmon Prove,CAT0025,"Terry, Horn and Flynn",167.68,2025-04-12
+I00183,IndianRed Laugh,CAT0006,Simpson LLC,644.94,2026-03-13
+I00184,LightSkyBlue Green,CAT0018,"Lane, Knight and Washington",282.6,2025-03-01
+I00185,BurlyWood Any,CAT0008,Sims Group,478.7,2024-06-20
+I00186,DarkRed Woman,CAT0005,Alexander Inc,260.95,2025-05-06
+I00187,Green Risk,CAT0022,Khan LLC,236.23,2024-10-09
+I00188,LightSalmon Better,CAT0018,"Ward, Miller and Beck",216.07,2025-10-25
+I00189,FireBrick Area,CAT0027,Garrett-Barber,412.99,2026-01-15
+I00190,Lavender Laugh,CAT0028,"Davis, Davis and Lewis",544.4,2024-08-07
+I00191,DarkSeaGreen Personal,CAT0003,Stone Group,111.06,2024-06-15
+I00192,Aqua Safe,CAT0024,Montoya-Mcneil,629.2,2025-05-02
+I00193,DarkSeaGreen Mean,CAT0029,Perez Inc,50.25,2025-12-27
+I00194,DarkKhaki Board,CAT0008,Richardson-Evans,694.04,2025-04-01
+I00195,DarkSlateBlue Put,CAT0004,"Thomas, Moreno and Smith",562.04,2025-10-25
+I00196,FireBrick Less,CAT0004,Bowen-Fuller,201.99,2024-10-03
+I00197,PaleVioletRed Power,CAT0022,"Ramos, Robinson and Mosley",259.71,2024-09-24
+I00198,DarkRed Perform,CAT0007,"Cruz, Richmond and Edwards",609.89,2024-09-24
+I00199,LightBlue Factor,CAT0021,"Miller, Tran and Greene",315.98,2025-09-22
+I00200,LightSkyBlue Start,CAT0004,"Johnson, Boone and Liu",463.21,2024-11-14
+I00201,Tomato Policy,CAT0008,"Lopez, Myers and Lucas",503.37,2026-02-06
+I00202,LawnGreen Miss,CAT0012,Rodriguez-Porter,363.24,2025-09-12
+I00203,Cornsilk News,CAT0020,Hatfield LLC,636.3,2024-09-18
+I00204,Orange Traditional,CAT0024,"Fisher, Payne and Thompson",77.2,2025-06-08
+I00205,Cornsilk Adult,CAT0016,"Jones, Baker and Williams",600.59,2024-07-24
+I00206,Orchid Move,CAT0022,Fuller-Mason,749.26,2025-04-26
+I00207,Peru Science,CAT0011,Miller-Herrera,365.39,2025-09-29
+I00208,DeepSkyBlue Fall,CAT0015,Collins PLC,263.85,2026-05-24
+I00209,GreenYellow System,CAT0000,Herrera Group,695.52,2025-09-06
+I00210,Coral Force,CAT0027,"Kim, Ashley and Allen",586.98,2024-12-14
+I00211,DarkCyan Window,CAT0023,Wilson-Salazar,777.8,2024-07-20
+I00212,Magenta Reflect,CAT0020,"Barrett, Thompson and Smith",532.32,2024-09-22
+I00213,Aqua Common,CAT0011,Benton-Mills,680.53,2026-02-06
+I00214,LightGoldenRodYellow Compare,CAT0025,Martinez-Norman,428.94,2025-01-02
+I00215,DarkOrchid Spend,CAT0006,Rogers Group,774.6,2025-01-05
+I00216,Violet Attack,CAT0026,Joseph-Ray,171.85,2024-08-06
+I00217,SpringGreen Lose,CAT0008,"Ward, Porter and Bradley",260.32,2025-03-20
+I00218,DimGray Especially,CAT0009,Shannon Ltd,272.19,2025-12-21
+I00219,DarkOrange Drive,CAT0018,"Hicks, Williams and Roy",107.08,2024-12-14
+I00220,Brown Marriage,CAT0027,Reyes-Hernandez,389.81,2026-06-01
+I00221,Blue On,CAT0010,"Yang, Barnes and Morris",715.64,2025-04-27
+I00222,MediumAquaMarine Experience,CAT0024,Duncan Inc,41.58,2025-07-02
+I00223,CadetBlue Country,CAT0003,Brock Inc,502.07,2025-04-15
+I00224,CornflowerBlue Understand,CAT0026,Cline-Ayala,369.29,2025-02-04
+I00225,MediumOrchid Before,CAT0003,"Bryant, Wood and Carter",743.76,2026-02-07
+I00226,LimeGreen Sister,CAT0005,"Sanchez, Richardson and Bonilla",354.7,2026-01-29
+I00227,Gray Significant,CAT0000,"Hodges, Sanchez and Smith",793.5,2025-04-22
+I00228,Bisque Early,CAT0013,"Reed, Franco and Wiley",164.25,2025-02-23
+I00229,AliceBlue Song,CAT0022,"Bennett, Rojas and Parker",727.8,2024-11-14
+I00230,Wheat Economy,CAT0028,Vasquez-Brown,521.05,2024-09-26
+I00231,LightSeaGreen Better,CAT0005,Morse PLC,699.92,2025-04-24
+I00232,Navy Low,CAT0028,"Miller, Davis and Anderson",221.39,2026-03-06
+I00233,OrangeRed Bad,CAT0020,"Bradley, Graham and Brandt",290.27,2024-12-08
+I00234,LightSteelBlue Every,CAT0002,Howe-Long,299.36,2026-03-16
+I00235,MediumOrchid Friend,CAT0028,Nelson-Jones,520.18,2024-11-12
+I00236,DarkSlateBlue State,CAT0001,"Rodriguez, Garcia and Cole",318.88,2025-02-06
+I00237,PaleTurquoise Camera,CAT0009,"Howard, Townsend and Hayes",581.61,2025-06-02
+I00238,LightGray Together,CAT0024,Davis Ltd,189.61,2025-01-30
+I00239,BlueViolet Dinner,CAT0020,Hernandez-Dawson,75.69,2025-03-11
+I00240,Orchid Must,CAT0003,Byrd LLC,3.87,2026-03-06
+I00241,ForestGreen Allow,CAT0015,Bond-Hawkins,65.12,2025-08-09
+I00242,LightBlue Between,CAT0018,Garcia-Leon,183.27,2024-09-10
+I00243,Aquamarine Assume,CAT0021,Anderson Group,357.72,2025-03-24
+I00244,DarkBlue Pass,CAT0000,"Green, Hess and Johnson",557.39,2024-07-28
+I00245,Gray Weight,CAT0026,"Ramos, Anderson and Stein",99.11,2026-03-14
+I00246,MediumPurple Can,CAT0027,Dunlap Inc,339.58,2024-10-16
+I00247,Plum Term,CAT0004,"Foster, Johnson and Vega",383.73,2024-10-20
+I00248,MidnightBlue Difficult,CAT0007,Hill Group,308.31,2026-04-25
+I00249,DeepPink Already,CAT0023,"Harvey, Sanchez and Phillips",645.35,2025-04-24
+I00250,Silver Ask,CAT0003,Ramirez and Sons,252.74,2025-04-29
+I00251,Green Question,CAT0028,"Wright, Mcknight and Stephens",241.51,2024-06-23
+I00252,Olive Station,CAT0012,"Howard, Stephens and Washington",619.45,2026-05-17
+I00253,SteelBlue Fund,CAT0024,Nelson-Johnson,699.97,2025-09-14
+I00254,Indigo All,CAT0020,Brown-Frey,794.37,2025-07-24
+I00255,MintCream Speak,CAT0004,"Key, Dickson and Garcia",57.52,2025-10-31
+I00256,LawnGreen Exactly,CAT0018,"Velasquez, Stark and Brown",9.75,2024-11-25
+I00257,Orange Hear,CAT0020,Thompson PLC,133.8,2025-02-10
+I00258,MintCream White,CAT0011,"Johnson, Haynes and Meza",578.78,2025-08-19
+I00259,DarkTurquoise Order,CAT0020,Copeland Group,599.37,2025-08-03
+I00260,Magenta Continue,CAT0029,Johnson-Brown,331.13,2025-09-18
+I00261,Indigo Again,CAT0021,"Woods, Rivera and Mendez",355.58,2026-02-24
+I00262,DarkSeaGreen Grow,CAT0006,"Thompson, Lang and Oneill",72.09,2024-07-24
+I00263,Beige Choose,CAT0003,"Bush, Thomas and Rodriguez",114.59,2025-07-21
+I00264,Moccasin Baby,CAT0003,Bush-Bates,472.89,2025-09-06
+I00265,DarkGreen Great,CAT0012,Morris-Daugherty,283.17,2025-12-28
+I00266,PowderBlue Strong,CAT0013,"Yu, Banks and Thompson",253.66,2025-08-18
+I00267,MintCream Dog,CAT0004,"Chapman, Thompson and Parker",200.49,2025-11-24
+I00268,LightYellow Care,CAT0020,Daniel Ltd,70.15,2025-08-26
+I00269,OrangeRed Today,CAT0017,"Johnson, Guzman and Mccall",482.0,2025-09-25
+I00270,Indigo Purpose,CAT0023,"Garcia, Crawford and Rivera",487.25,2024-08-07
+I00271,LavenderBlush Hand,CAT0024,Jackson-Mcclure,753.2,2024-08-15
+I00272,MediumSeaGreen Likely,CAT0000,Baker and Sons,678.77,2025-11-28
+I00273,CornflowerBlue Hard,CAT0021,Buchanan-Le,701.03,2024-07-15
+I00274,OliveDrab Left,CAT0006,"Barnes, Jackson and Gutierrez",415.65,2026-04-23
+I00275,OldLace Have,CAT0016,"Bennett, Poole and Kramer",153.35,2025-08-30
+I00276,Ivory Commercial,CAT0012,Jones-Singleton,238.55,2025-01-23
+I00277,Beige From,CAT0001,Lynn-Jones,627.69,2024-10-18
+I00278,OldLace College,CAT0025,"Jones, Mcmahon and Spence",763.87,2025-02-25
+I00279,SkyBlue Sea,CAT0015,Reynolds Ltd,310.55,2024-10-14
+I00280,PowderBlue Close,CAT0007,Garcia and Sons,401.17,2024-11-02
+I00281,PaleTurquoise Same,CAT0019,"Bowen, Blair and Baker",59.6,2025-01-12
+I00282,Lime Economy,CAT0028,Williams PLC,782.22,2025-08-08
+I00283,SlateGray Class,CAT0011,Ward Group,747.34,2024-08-15
+I00284,LightYellow Than,CAT0004,"Weber, Castillo and Davis",311.31,2024-11-15
+I00285,FloralWhite Pull,CAT0026,Rowland-Wells,456.0,2024-09-05
+I00286,Linen Still,CAT0011,Ruiz-Jacobson,438.45,2024-12-30
+I00287,DarkGoldenRod Quality,CAT0005,"Hughes, Watson and James",610.89,2024-10-30
+I00288,RosyBrown Another,CAT0024,Gonzales-Baker,61.17,2026-03-20
+I00289,LightGreen Organization,CAT0018,Hernandez Ltd,56.82,2025-11-08
+I00290,DarkGray Bed,CAT0008,"Cooper, Weaver and Arellano",174.95,2025-09-09
+I00291,Khaki On,CAT0029,Randall PLC,51.19,2025-04-29
+I00292,WhiteSmoke Right,CAT0025,Armstrong-Young,320.19,2025-01-26
+I00293,Cyan Indicate,CAT0009,"Johnson, Duncan and Black",503.97,2025-08-25
+I00294,DarkViolet Camera,CAT0016,Thompson-Joyce,614.39,2024-11-19
+I00295,GoldenRod Card,CAT0013,Henderson Ltd,562.34,2025-05-12
+I00296,Green Test,CAT0002,"Hernandez, Larson and Flores",513.51,2025-12-24
+I00297,CornflowerBlue Begin,CAT0017,Hawkins-Arnold,493.99,2026-04-04
+I00298,LightSalmon Nature,CAT0008,Stark-Smith,69.63,2025-12-04
+I00299,Turquoise Station,CAT0002,Rodriguez-Hernandez,410.51,2025-08-22
+I00300,DarkGreen Wish,CAT0006,Hart Inc,779.53,2026-02-08
+I00301,LightSlateGray Trip,CAT0004,"Beard, Humphrey and Baker",430.5,2025-10-29
+I00302,SlateBlue Owner,CAT0012,"Kennedy, Jackson and Powell",470.39,2025-10-01
+I00303,PaleGoldenRod American,CAT0024,Preston-Rivera,668.12,2024-12-09
+I00304,BurlyWood Skill,CAT0021,Mccall-Prince,515.59,2024-06-23
+I00305,MediumSlateBlue Television,CAT0009,Collins-Cameron,559.84,2026-04-05
+I00306,DarkGreen Trouble,CAT0023,Taylor Ltd,762.88,2025-05-18
+I00307,MediumBlue Exist,CAT0007,"Butler, Brewer and Lopez",49.15,2024-11-19
+I00308,PaleTurquoise Sit,CAT0002,Malone-Camacho,739.93,2026-03-07
+I00309,Chartreuse Myself,CAT0003,Jones Ltd,364.34,2025-07-06
+I00310,PaleGreen Central,CAT0019,"Suarez, Johnson and Lee",46.86,2026-03-16
+I00311,Green Third,CAT0021,Wright Group,594.13,2024-07-17
+I00312,MistyRose Sea,CAT0023,Hill Group,142.99,2025-07-05
+I00313,Orchid Prove,CAT0000,Maldonado and Sons,567.2,2025-03-24
+I00314,SlateGray Phone,CAT0022,Thompson-Harrell,12.05,2025-09-06
+I00315,MediumVioletRed Guy,CAT0015,Monroe LLC,762.55,2026-01-10
+I00316,DarkGoldenRod Feel,CAT0016,Hughes and Sons,415.23,2026-04-02
+I00317,HotPink Tough,CAT0026,Holland Ltd,577.45,2024-11-15
+I00318,LightGreen Reach,CAT0005,Palmer-Hancock,299.38,2026-01-25
+I00319,Aqua Matter,CAT0023,Holland PLC,625.56,2026-02-20
+I00320,Aqua Door,CAT0008,Franklin-Hahn,587.15,2025-12-13
+I00321,LightSalmon Land,CAT0003,York-Stevens,617.83,2024-11-24
+I00322,SeaGreen Five,CAT0000,"Meyer, Hanson and Silva",270.0,2024-06-13
+I00323,Teal Recognize,CAT0013,Hoffman-Wheeler,219.77,2025-01-13
+I00324,Lime Return,CAT0002,Olson LLC,212.57,2025-01-08
+I00325,MediumOrchid Training,CAT0018,Green-Dawson,503.14,2026-05-02
+I00326,Lime Cup,CAT0015,Holmes and Sons,365.79,2026-05-07
+I00327,Chartreuse Support,CAT0011,"Powell, Flores and Taylor",47.18,2024-06-27
+I00328,SpringGreen Find,CAT0027,Meadows-Sullivan,454.81,2026-01-01
+I00329,Blue Past,CAT0011,"Cooley, Cabrera and Cooper",128.38,2025-12-14
+I00330,Indigo Rich,CAT0024,"Little, Alvarez and Shepard",85.02,2025-03-13
+I00331,Tan First,CAT0018,Pittman PLC,540.27,2024-10-26
+I00332,LightYellow Bill,CAT0003,Anderson-Green,185.04,2026-02-25
+I00333,Gainsboro Your,CAT0016,"Lam, Pena and Walker",5.05,2024-11-28
+I00334,Linen Kitchen,CAT0027,Watson-Richards,690.75,2025-06-03
+I00335,DarkOrchid Many,CAT0007,Delacruz PLC,39.65,2025-09-01
+I00336,Cornsilk Marriage,CAT0011,Mason Ltd,308.23,2025-03-31
+I00337,Wheat Fire,CAT0004,Brown-Dickerson,145.63,2024-09-22
+I00338,Green Guess,CAT0027,Benitez-Orozco,31.18,2025-05-29
+I00339,DarkTurquoise Four,CAT0025,"White, Miller and Cook",731.42,2024-10-23
+I00340,Maroon Protect,CAT0023,Smith LLC,525.6,2024-11-17
+I00341,FloralWhite Part,CAT0007,Burns Inc,259.48,2024-09-16
+I00342,PowderBlue Property,CAT0013,Powell-Sanford,732.94,2025-04-01
+I00343,AntiqueWhite Always,CAT0010,"Gonzalez, Watson and Smith",219.19,2025-02-13
+I00344,Wheat Cut,CAT0002,Rhodes Ltd,458.51,2025-12-29
+I00345,LightBlue Draw,CAT0003,"Wiley, Collins and Garcia",403.13,2025-07-03
+I00346,Linen Computer,CAT0028,Colon LLC,44.98,2025-01-19
+I00347,SaddleBrown Should,CAT0007,"Carlson, Morgan and Barron",644.06,2024-09-19
+I00348,MediumSpringGreen Week,CAT0001,Howard-Lopez,763.4,2026-05-13
+I00349,PaleGreen After,CAT0002,Walker and Sons,701.96,2024-11-19
+I00350,Beige Perform,CAT0027,"Jackson, Richardson and Santos",228.0,2024-07-07
+I00351,OldLace Under,CAT0027,"Scott, Nichols and Williams",250.63,2024-07-15
+I00352,DarkMagenta Ready,CAT0002,Williams Inc,443.81,2025-04-27
+I00353,Red Husband,CAT0000,Kelley Group,297.03,2025-12-05
+I00354,DeepSkyBlue Describe,CAT0009,"Jennings, Smith and Fisher",452.35,2024-08-25
+I00355,Turquoise Expect,CAT0009,"Obrien, Taylor and Rivas",592.44,2024-08-28
+I00356,Teal Serve,CAT0007,"Wilson, Wilson and Rodriguez",372.75,2024-11-09
+I00357,Green Star,CAT0018,Decker-Dudley,777.57,2025-03-13
+I00358,PaleTurquoise Find,CAT0024,Williams Group,621.38,2026-05-16
+I00359,HoneyDew Rise,CAT0023,Rivera-Smith,720.65,2025-11-11
+I00360,DarkCyan What,CAT0024,Conley Ltd,637.39,2025-06-26
+I00361,DeepPink Believe,CAT0004,"Jones, Cummings and Conway",8.08,2025-10-21
+I00362,Lavender Loss,CAT0013,Baker-Williams,22.06,2026-03-01
+I00363,ForestGreen Two,CAT0017,Phelps LLC,279.1,2026-02-20
+I00364,Maroon Last,CAT0026,"Wilson, York and Zamora",555.69,2024-06-15
+I00365,DarkSlateGray Record,CAT0000,"Jackson, Howard and Kim",760.94,2025-10-03
+I00366,LightGreen Unit,CAT0000,"Davis, Briggs and White",607.87,2025-04-15
+I00367,PaleGoldenRod Loss,CAT0012,Houston-Vaughn,679.66,2025-06-14
+I00368,PeachPuff Range,CAT0023,Wilson Ltd,248.09,2025-12-24
+I00369,Chocolate Yes,CAT0006,Garcia PLC,425.26,2025-06-17
+I00370,Purple Course,CAT0007,"James, Howard and Johnson",337.59,2025-11-21
+I00371,DarkSeaGreen Meeting,CAT0001,Rodriguez-Jenkins,778.13,2024-07-13
+I00372,Coral Every,CAT0004,"Edwards, Bush and Gregory",570.19,2026-01-25
+I00373,Ivory Relationship,CAT0002,Stone-Watts,37.99,2025-10-01
+I00374,DarkGray Lead,CAT0007,"Barber, Olson and Alvarado",718.14,2025-10-19
+I00375,OliveDrab Church,CAT0016,"Mcclain, Salazar and Smith",332.21,2026-06-03
+I00376,DimGray Mouth,CAT0028,Christian-Booth,299.88,2024-08-05
+I00377,SlateGray Full,CAT0023,Rivera LLC,70.67,2024-07-17
+I00378,Tan Dog,CAT0003,"Schneider, Powell and Young",405.83,2025-05-30
+I00379,Red Suddenly,CAT0020,"West, Gates and West",656.51,2024-09-08
+I00380,SpringGreen Skill,CAT0002,"Smith, Powell and Johnson",474.74,2025-08-08
+I00381,AliceBlue That,CAT0001,Conner PLC,349.68,2025-10-16
+I00382,LimeGreen Voice,CAT0004,"Hart, Pena and Bryant",191.71,2025-02-27
+I00383,Moccasin That,CAT0008,Velasquez Group,681.18,2025-02-20
+I00384,Sienna Sense,CAT0029,"Cox, Chavez and Davis",641.25,2025-11-01
+I00385,Indigo Able,CAT0022,Kelly-Schultz,666.02,2026-02-19
+I00386,LightSteelBlue Officer,CAT0010,"Brooks, Rodriguez and Prince",256.49,2025-06-25
+I00387,DarkSlateGray Term,CAT0008,"Newton, Ortiz and King",189.19,2024-11-07
+I00388,Gold Camera,CAT0006,Lewis-Summers,111.48,2024-11-03
+I00389,MediumSlateBlue Box,CAT0024,Williams-Schultz,469.01,2025-11-12
+I00390,DarkRed Sport,CAT0004,Ellis-Lawrence,87.21,2025-07-04
+I00391,DarkSlateBlue Moment,CAT0014,Moreno Inc,374.45,2025-08-11
+I00392,Plum This,CAT0013,"Webb, Romero and Morse",99.23,2024-10-23
+I00393,ForestGreen Side,CAT0011,Garcia Ltd,771.81,2025-09-17
+I00394,MediumBlue Mother,CAT0006,Barnes-Lynch,363.18,2025-11-27
+I00395,LightBlue Eye,CAT0014,Stuart-Waller,214.21,2025-05-25
+I00396,DarkSlateBlue Certainly,CAT0003,Morrison-Tanner,75.07,2025-07-10
+I00397,Lime Threat,CAT0025,"Kelley, Edwards and Doyle",549.79,2025-08-11
+I00398,IndianRed Deep,CAT0026,Weber LLC,564.65,2025-11-23
+I00399,MediumTurquoise Will,CAT0019,"Anderson, Page and Hester",35.14,2024-10-24
+I00400,SteelBlue Occur,CAT0026,"Walsh, Page and Hodges",685.69,2025-08-18
+I00401,Silver Pass,CAT0004,"Bender, Mckinney and Craig",75.7,2026-05-03
+I00402,White Feeling,CAT0007,Stokes-Mills,774.81,2024-06-27
+I00403,Olive Check,CAT0012,Santiago and Sons,412.23,2025-01-01
+I00404,DodgerBlue Few,CAT0021,"King, Franco and Vaughn",241.18,2025-01-23
+I00405,GreenYellow Some,CAT0026,"Johnson, Cervantes and Garcia",792.57,2026-04-13
+I00406,Ivory Situation,CAT0000,"Hoffman, Young and Mueller",761.82,2026-02-18
+I00407,LightSlateGray Room,CAT0027,"Williams, James and Butler",363.4,2026-02-10
+I00408,Maroon Old,CAT0023,Smith LLC,441.45,2024-11-12
+I00409,Red Themselves,CAT0003,Pruitt Ltd,371.25,2025-12-11
+I00410,NavajoWhite Someone,CAT0025,"Payne, Morrison and Parsons",635.67,2024-11-05
+I00411,LightYellow List,CAT0003,Lucero Inc,12.53,2024-10-31
+I00412,ForestGreen Simple,CAT0026,"Wilson, Williams and Ramirez",625.43,2024-12-30
+I00413,DarkSeaGreen College,CAT0007,"Singleton, Smith and Owens",107.18,2026-06-06
+I00414,DeepSkyBlue Among,CAT0026,Mcfarland PLC,322.26,2024-07-17
+I00415,LimeGreen Military,CAT0021,"Pierce, Jones and Zimmerman",505.35,2025-07-21
+I00416,Indigo Create,CAT0020,"Jones, Wagner and Perry",69.98,2025-07-30
+I00417,PaleGreen Best,CAT0018,Walker-Lewis,209.28,2025-02-20
+I00418,MediumPurple Herself,CAT0026,Robinson-Goodwin,62.76,2025-07-25
+I00419,Sienna Option,CAT0002,"Smith, Caldwell and Griffin",160.61,2026-05-11
+I00420,LemonChiffon Among,CAT0020,"Blackwell, James and Hogan",356.41,2024-09-04
+I00421,OliveDrab Establish,CAT0004,"Ramsey, Johnson and Black",76.31,2026-01-27
+I00422,Navy My,CAT0027,"Griffin, Williams and Villanueva",664.0,2024-11-04
+I00423,MediumBlue My,CAT0010,Vaughan and Sons,100.65,2026-01-29
+I00424,WhiteSmoke None,CAT0014,Sims and Sons,43.36,2025-11-10
+I00425,HotPink Treatment,CAT0029,"Coleman, Garcia and Medina",460.39,2025-12-05
+I00426,PowderBlue Radio,CAT0026,Burgess and Sons,580.37,2024-06-26
+I00427,Salmon Series,CAT0015,Johnson-Jones,26.5,2024-10-24
+I00428,LightCoral Open,CAT0021,Andrews and Sons,343.05,2026-05-16
+I00429,LightGoldenRodYellow Involve,CAT0011,Hayes-Sullivan,174.13,2025-02-08
+I00430,Azure Improve,CAT0005,"Wilson, Smith and Cortez",222.16,2024-07-27
+I00431,Brown School,CAT0014,Howard PLC,707.09,2024-08-29
+I00432,LightSteelBlue Stop,CAT0001,"Turner, Miller and Hubbard",492.44,2025-05-13
+I00433,Olive Indicate,CAT0019,"Johnson, Moore and Robinson",198.89,2026-01-09
+I00434,OrangeRed Style,CAT0009,"Phillips, Walters and Evans",400.62,2026-04-27
+I00435,Navy Activity,CAT0028,"Baxter, Thomas and Williams",441.9,2025-08-26
+I00436,OrangeRed Note,CAT0001,"Arroyo, Torres and Goodman",72.91,2026-05-10
+I00437,MediumTurquoise Development,CAT0012,Whitehead-York,112.38,2024-09-26
+I00438,DodgerBlue Create,CAT0006,Jensen LLC,515.19,2024-11-05
+I00439,DarkOrange Course,CAT0025,"Marsh, Phelps and York",422.07,2026-06-02
+I00440,SandyBrown Quite,CAT0020,"Jones, Powers and King",795.29,2024-11-08
+I00441,SlateBlue Give,CAT0017,Anderson-Rios,636.49,2024-08-24
+I00442,LightSkyBlue President,CAT0012,Mccullough LLC,626.19,2025-06-20
+I00443,RoyalBlue Get,CAT0011,"Hopkins, Steele and Hernandez",385.31,2025-08-22
+I00444,Moccasin System,CAT0025,Benjamin-Jackson,389.29,2025-02-06
+I00445,LightBlue Stock,CAT0029,Joseph Ltd,453.82,2025-05-12
+I00446,LightSalmon Though,CAT0010,Taylor-Quinn,312.54,2026-04-20
+I00447,Silver Maintain,CAT0005,Howard-Torres,23.77,2025-08-10
+I00448,DarkMagenta Continue,CAT0019,"Obrien, Wilkinson and Trevino",177.56,2024-09-24
+I00449,WhiteSmoke Debate,CAT0028,Gross-Sims,649.12,2025-12-25
+I00450,Crimson Wait,CAT0008,Atkinson Ltd,49.7,2024-07-02
+I00451,PaleGreen Specific,CAT0015,"Lewis, Johnson and Green",424.96,2026-05-03
+I00452,Yellow Marriage,CAT0024,"Rowe, Diaz and Walker",468.44,2026-01-28
+I00453,LightSteelBlue Center,CAT0007,Mason-Davis,779.26,2025-03-17
+I00454,SteelBlue Action,CAT0003,"Allen, Maynard and Holden",200.54,2025-11-21
+I00455,FireBrick Sometimes,CAT0007,"Taylor, Moore and Knight",215.42,2025-08-21
+I00456,DarkViolet Simply,CAT0026,"Webb, Howard and Robinson",633.62,2025-06-21
+I00457,Lavender At,CAT0023,Wood-Williams,47.56,2024-11-15
+I00458,Tomato Whatever,CAT0007,Hughes-Hardin,461.83,2026-04-23
+I00459,Brown Among,CAT0025,"Nguyen, Padilla and Boyd",312.57,2026-03-14
+I00460,LightSalmon They,CAT0029,"Baker, Stephens and Thompson",671.86,2025-10-28
+I00461,OldLace History,CAT0027,"Valdez, Houston and Black",141.45,2025-03-27
+I00462,Ivory Name,CAT0007,Gomez-Parrish,475.24,2025-06-21
+I00463,SkyBlue Very,CAT0025,"Smith, Macias and Gonzales",591.27,2024-12-03
+I00464,Crimson My,CAT0011,"Campbell, Hernandez and Moore",731.44,2025-09-18
+I00465,DarkOrchid Recent,CAT0000,Perry LLC,563.65,2025-12-19
+I00466,DarkOrange Meet,CAT0011,"Mendoza, Clark and Martin",758.2,2026-03-17
+I00467,PaleVioletRed Age,CAT0018,Williams PLC,116.26,2025-09-11
+I00468,DodgerBlue Center,CAT0006,"Hunt, Macdonald and Thomas",669.85,2024-10-15
+I00469,LightGoldenRodYellow Win,CAT0025,Black Group,705.66,2025-09-16
+I00470,Azure Unit,CAT0015,"Luna, Nicholson and Valentine",435.07,2024-11-23
+I00471,RosyBrown Policy,CAT0005,Dillon-Jackson,393.88,2026-03-14
+I00472,PaleVioletRed Plant,CAT0002,Norton and Sons,47.77,2025-10-05
+I00473,Teal Everything,CAT0019,Ramsey LLC,177.39,2026-05-25
+I00474,SaddleBrown Pick,CAT0016,"Jones, Gray and Anderson",383.96,2024-06-20
+I00475,Green Necessary,CAT0010,"Cohen, Serrano and Jacobs",734.56,2024-10-23
+I00476,Sienna Week,CAT0006,"Greene, Rich and Schmidt",645.74,2026-01-13
+I00477,DarkOrchid Better,CAT0010,Hopkins-Winters,574.4,2025-07-31
+I00478,AliceBlue Watch,CAT0029,"Banks, Boyd and Wood",642.53,2024-07-11
+I00479,Wheat Laugh,CAT0027,Mays Group,260.9,2026-02-11
+I00480,Olive Hard,CAT0000,"Ballard, Velez and Hood",120.73,2025-08-29
+I00481,DarkGreen Large,CAT0022,Scott and Sons,734.03,2026-05-15
+I00482,DarkBlue Federal,CAT0024,"Mcdowell, Ortiz and Lopez",91.4,2025-12-10
+I00483,AntiqueWhite Participant,CAT0016,"Wilson, Smith and Pena",688.95,2025-11-24
+I00484,Maroon Issue,CAT0002,Rodriguez-Simmons,300.75,2025-09-05
+I00485,LightCoral Every,CAT0021,"Henderson, Diaz and Hill",318.29,2025-11-18
+I00486,Orchid Someone,CAT0003,Gutierrez PLC,271.24,2025-06-17
+I00487,Fuchsia Hospital,CAT0010,"Peters, King and Parker",111.75,2025-03-02
+I00488,Orchid Simply,CAT0005,Wyatt Ltd,586.68,2024-09-08
+I00489,Khaki Likely,CAT0013,"Avery, Garcia and Romero",634.1,2026-02-08
+I00490,MediumSlateBlue Suddenly,CAT0015,"Mendez, Cohen and Williams",520.4,2025-04-06
+I00491,AntiqueWhite Summer,CAT0005,Morrow Group,566.62,2026-05-28
+I00492,PowderBlue Behavior,CAT0017,Baker LLC,555.77,2024-08-09
+I00493,Blue Shake,CAT0029,Arias-Morales,492.13,2025-10-30
+I00494,Turquoise Few,CAT0011,"Stuart, Brown and Ayala",180.92,2024-10-22
+I00495,Snow Leg,CAT0018,Harris Ltd,652.12,2026-05-31
+I00496,Tomato Feeling,CAT0012,Johnson PLC,247.54,2025-07-09
+I00497,Tomato Say,CAT0022,Gilbert Ltd,237.73,2024-07-06
+I00498,MistyRose Edge,CAT0005,"Smith, Moore and Shea",583.88,2026-02-03
+I00499,PaleGoldenRod Head,CAT0022,"Foster, Willis and Holmes",759.11,2026-01-01
+I00500,CornflowerBlue Wide,CAT0012,Dunn Ltd,681.05,2026-03-14
+I00501,MediumVioletRed Hand,CAT0024,Perez-Mccarty,772.25,2025-05-27
+I00502,PaleGreen Paper,CAT0001,Green Group,148.12,2025-07-06
+I00503,DarkMagenta Operation,CAT0010,Gordon LLC,737.07,2024-09-06
+I00504,Thistle Even,CAT0019,"Li, Andrews and Benson",179.05,2025-03-27
+I00505,SkyBlue Speech,CAT0018,Todd Group,85.98,2025-11-19
+I00506,Salmon Watch,CAT0015,"Atkins, Olson and Scott",115.09,2025-04-01
+I00507,Indigo Research,CAT0023,"Hall, Stewart and Moses",65.01,2025-07-14
+I00508,WhiteSmoke Act,CAT0011,"Collier, Wright and Davis",785.96,2025-11-13
+I00509,MediumSpringGreen Bag,CAT0005,"Velazquez, Woods and Gomez",510.04,2026-05-03
+I00510,LightGreen Cover,CAT0002,"Vega, Browning and Porter",657.86,2024-11-10
+I00511,LavenderBlush Simply,CAT0021,Salas and Sons,512.36,2024-12-03
+I00512,Green They,CAT0028,Huff LLC,270.59,2024-10-07
+I00513,DarkMagenta Call,CAT0000,Lowe Ltd,214.37,2025-06-25
+I00514,AntiqueWhite South,CAT0007,"Rubio, Charles and Watson",555.46,2025-02-07
+I00515,Snow Water,CAT0011,"Melton, Henry and Joyce",207.56,2026-05-20
+I00516,Teal Far,CAT0003,Walker-Ray,577.17,2024-07-20
+I00517,Violet Successful,CAT0001,Mendoza-Fernandez,310.59,2025-07-03
+I00518,MediumTurquoise Indeed,CAT0023,"Parsons, Bryant and Martinez",337.46,2025-07-15
+I00519,Salmon Four,CAT0005,"Smith, Craig and Gray",707.99,2024-08-25
+I00520,MediumOrchid High,CAT0015,"Hensley, Lopez and Baker",705.77,2025-01-03
+I00521,SeaShell Position,CAT0011,Diaz-Jimenez,438.18,2024-11-18
+I00522,PeachPuff School,CAT0003,Diaz-Morales,663.56,2025-05-24
+I00523,Gainsboro Owner,CAT0025,Krause Ltd,691.65,2024-12-02
+I00524,DarkGreen Set,CAT0020,Brock-Peters,607.32,2026-04-04
+I00525,Olive Deal,CAT0007,Marsh Ltd,132.64,2024-10-02
+I00526,Sienna Sure,CAT0002,Thompson Group,639.96,2024-09-20
+I00527,Tomato None,CAT0001,"Stewart, Tucker and King",238.04,2026-04-05
+I00528,BurlyWood Information,CAT0010,Vaughn Inc,211.12,2024-11-22
+I00529,LightCyan Maybe,CAT0003,"Davis, Garner and Green",62.14,2025-03-14
+I00530,LightCyan Guy,CAT0005,Jenkins LLC,710.68,2026-04-12
+I00531,Gray Part,CAT0005,"Santos, Ryan and Krause",586.39,2025-01-15
+I00532,MidnightBlue Garden,CAT0017,"Dixon, Hampton and Griffin",753.64,2024-08-07
+I00533,Olive Positive,CAT0002,Ford-Frye,272.35,2026-04-13
+I00534,FireBrick Push,CAT0019,Fisher-Salazar,714.9,2025-04-18
+I00535,Cornsilk Base,CAT0022,Cooper LLC,27.7,2025-02-09
+I00536,LightSteelBlue See,CAT0020,Jacobs-Foster,134.5,2026-04-28
+I00537,Red Statement,CAT0028,Adkins-Meyer,349.06,2025-05-23
+I00538,PaleVioletRed Computer,CAT0001,Dickerson and Sons,83.7,2025-12-25
+I00539,LavenderBlush Recently,CAT0006,Shepard-Haynes,779.6,2024-08-09
+I00540,HoneyDew Compare,CAT0013,Garcia-Brown,558.67,2026-04-21
+I00541,Sienna Official,CAT0023,Johnson Group,740.68,2025-07-19
+I00542,DarkBlue Body,CAT0017,Montgomery-Miller,214.42,2026-06-01
+I00543,Orange For,CAT0009,Wright LLC,240.03,2025-05-18
+I00544,DarkSalmon Catch,CAT0003,"Roberson, Johnson and Alvarado",42.56,2026-04-07
+I00545,MediumOrchid Treat,CAT0018,Mcdonald-Pitts,441.08,2026-06-04
+I00546,LightPink Official,CAT0015,Taylor-Fry,125.41,2025-07-31
+I00547,Fuchsia Perhaps,CAT0011,"Bryant, Curry and Wiley",6.04,2025-05-11
+I00548,Violet Push,CAT0002,"Ferguson, Stout and Olson",237.76,2024-12-01
+I00549,DarkCyan Letter,CAT0021,Diaz-Green,501.2,2025-01-29
+I00550,Aqua A,CAT0015,"Ochoa, Charles and Cooper",162.14,2025-06-07
+I00551,White Across,CAT0000,"Weeks, Arroyo and Woods",167.94,2024-06-15
+I00552,Plum Success,CAT0020,Harper-Robles,235.57,2025-08-07
+I00553,Navy Current,CAT0002,Khan-Kim,380.44,2024-12-19
+I00554,DodgerBlue Senior,CAT0003,"Brewer, Clayton and Walker",248.76,2024-08-08
+I00555,Peru Process,CAT0012,Black PLC,378.34,2026-02-25
+I00556,LightPink Feel,CAT0028,"Paul, Lamb and Gutierrez",529.85,2026-04-01
+I00557,CornflowerBlue Court,CAT0002,Roberts Ltd,514.57,2025-05-27
+I00558,RoyalBlue Expert,CAT0012,"Dean, Lopez and Smith",150.35,2024-07-16
+I00559,White Age,CAT0028,Compton LLC,307.01,2025-01-03
+I00560,DarkSalmon Senior,CAT0005,Acosta-Hall,358.28,2024-10-03
+I00561,Aquamarine Minute,CAT0008,Peterson LLC,353.47,2026-02-08
+I00562,SpringGreen Hot,CAT0008,Terry-Johnson,183.32,2024-08-09
+I00563,DarkViolet Arrive,CAT0008,Rowe-Jones,452.7,2025-06-08
+I00564,Gainsboro Dark,CAT0004,Roth-Clayton,602.53,2024-09-10
+I00565,LightBlue Image,CAT0021,Wright-Vang,80.07,2024-11-09
+I00566,Salmon Simple,CAT0021,Boyd and Sons,277.0,2025-06-10
+I00567,Orange Responsibility,CAT0017,Mayer-Moore,332.95,2025-12-25
+I00568,BlueViolet Size,CAT0024,"Meyer, King and Little",473.01,2024-11-09
+I00569,MistyRose Very,CAT0017,Boyer and Sons,51.6,2024-09-03
+I00570,LavenderBlush Property,CAT0012,Nguyen-Jackson,655.27,2025-01-08
+I00571,DarkOrchid Individual,CAT0013,Smith Inc,772.61,2025-09-02
+I00572,Sienna Rise,CAT0021,"Moore, Townsend and Wright",693.91,2025-07-01
+I00573,DarkGoldenRod Rich,CAT0015,"Morgan, Booker and Malone",459.45,2024-07-24
+I00574,Chocolate Heart,CAT0007,"Moore, Herrera and Rodriguez",382.58,2025-06-21
+I00575,Lavender Free,CAT0002,"Kramer, Sherman and Trujillo",317.66,2025-05-14
+I00576,GoldenRod Against,CAT0027,"Gray, Ramsey and King",572.3,2024-07-08
+I00577,SlateBlue Seat,CAT0016,Hansen-Daniels,458.26,2025-06-23
+I00578,Gold Our,CAT0016,Stephens LLC,640.96,2025-12-28
+I00579,SeaGreen Face,CAT0021,"Rocha, Spencer and Jones",786.26,2024-10-06
+I00580,RoyalBlue Find,CAT0004,Weaver-Gibson,98.86,2026-01-31
+I00581,Tan Hundred,CAT0024,"Lopez, Smith and Vincent",360.88,2026-01-31
+I00582,LawnGreen Full,CAT0005,"Brown, Coffey and Fuentes",777.82,2024-11-02
+I00583,Violet Result,CAT0025,Cannon-Moore,156.6,2025-01-13
+I00584,MediumBlue It,CAT0001,"Morris, Davis and Hopkins",340.43,2024-07-12
+I00585,DarkSeaGreen Could,CAT0021,Harris Group,350.01,2024-11-03
+I00586,DarkGreen Almost,CAT0026,"May, Price and Burns",502.9,2025-10-05
+I00587,LightCyan Appear,CAT0026,Walker-Robbins,477.25,2024-06-18
+I00588,HoneyDew Reality,CAT0010,Hebert-Collier,728.91,2025-06-06
+I00589,Chocolate Herself,CAT0029,"Paul, Zamora and Short",646.45,2026-02-14
+I00590,Chartreuse Than,CAT0002,"Baker, Williams and Jones",312.32,2025-01-30
+I00591,Crimson You,CAT0012,Yu Inc,442.99,2024-08-25
+I00592,Lavender Night,CAT0027,Lopez-Fox,223.13,2024-12-18
+I00593,Fuchsia Open,CAT0014,"Grant, Reese and Miranda",733.98,2025-08-29
+I00594,MintCream Represent,CAT0000,Park-Simmons,629.88,2024-08-27
+I00595,FireBrick Structure,CAT0019,Pierce PLC,471.3,2025-02-25
+I00596,DimGray None,CAT0025,"Ramos, Gomez and Edwards",337.42,2025-02-15
+I00597,Navy Itself,CAT0013,"Jordan, Swanson and Franklin",122.26,2025-08-19
+I00598,YellowGreen Difficult,CAT0018,Cannon-Howe,471.58,2024-12-22
+I00599,MistyRose Local,CAT0024,Moyer-Smith,771.97,2024-07-04

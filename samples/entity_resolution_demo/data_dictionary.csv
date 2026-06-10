@@ -1,0 +1,9 @@
+field,type,pii,owner_team
+first_name,string,True,legal
+last_name,string,True,support
+email,string,True,data-eng
+phone,varies,True,growth
+address,varies,False,data-eng
+dob,varies,True,data-eng
+account_status,varies,False,data-eng
+last_invoice_total,varies,False,data-eng

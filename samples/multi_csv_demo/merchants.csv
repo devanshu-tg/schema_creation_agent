@@ -1,0 +1,501 @@
+merchant_id,merchant_name,merchant_category,city,state,lat,long
+MER00000,"Thomas, Coleman and Robinson",online_retail,New Kathleenmouth,CO,-14.95685,104.8872
+MER00001,Garcia-Goodman,utilities,Parkerbury,MH,67.94158,-17.48413
+MER00002,"Parker, Phillips and Cordova",entertainment,West Jonathan,FM,64.62861,-10.23907
+MER00003,"Contreras, Hunter and Shannon",travel,West Katrina,WY,-39.49506,26.60701
+MER00004,Hardy PLC,travel,East Brandonshire,WA,28.36048,89.53268
+MER00005,"Anderson, Wheeler and Guerra",restaurant,Port Stevenville,PA,17.17152,128.39227
+MER00006,Green Inc,restaurant,New Jennifer,CO,89.25574,26.64325
+MER00007,"Kelley, Knox and Ruiz",gas_station,Port Brandonport,PR,4.31121,-138.2921
+MER00008,"Zavala, Guerrero and Roberts",grocery,Lake Christopherborough,GA,-25.88477,-122.66087
+MER00009,Walker-Rhodes,healthcare,Craigmouth,NH,31.76941,-51.06926
+MER00010,"Farrell, Randall and Ortiz",travel,Port Kelsey,RI,69.82123,131.41186
+MER00011,"Horton, Thompson and Garcia",entertainment,Lake Heatherview,IA,-49.9272,115.25145
+MER00012,Bartlett-Palmer,entertainment,New Ericberg,WV,51.28747,105.3028
+MER00013,Lawrence-Cunningham,utilities,Maureenville,OK,24.55956,-20.4527
+MER00014,"Jones, Gregory and Thomas",online_retail,Chadville,AL,-31.84135,-124.06103
+MER00015,Richards LLC,healthcare,Youngport,MA,25.98773,-16.71675
+MER00016,Bridges-Stevenson,gas_station,New Ericborough,ND,-53.87982,-16.81043
+MER00017,Johnson-Peterson,subscription,West Micheleport,ME,-76.01684,106.95816
+MER00018,Campbell-Zamora,entertainment,South Cathyport,WI,-15.91973,-93.05625
+MER00019,Wright-Martinez,education,South Tylerburgh,PR,-28.11276,176.99358
+MER00020,Hill-Smith,utilities,Clarktown,WI,78.54325,45.95724
+MER00021,Morales PLC,entertainment,Lake Michelle,NV,-58.42599,102.85144
+MER00022,"Bradley, Davis and Morris",restaurant,Port Markmouth,RI,-61.10982,-177.9335
+MER00023,Sparks Group,online_retail,South Joshuaborough,LA,78.25231,88.67521
+MER00024,Mercer Inc,utilities,Johnnystad,MO,44.51957,35.20924
+MER00025,Patel-Wood,grocery,Ramosview,IA,62.94578,-86.89719
+MER00026,Johnson-Stewart,restaurant,Fordberg,IA,-21.80648,75.34052
+MER00027,Johnson and Sons,healthcare,East Kristin,MP,67.54743,-168.59845
+MER00028,"Barry, Roberts and Vasquez",restaurant,Stephaniebury,ID,51.32245,-1.03394
+MER00029,Russell-Stone,restaurant,North Dorothy,WY,62.04265,100.91117
+MER00030,Johnson-Hopkins,restaurant,East Kimberly,PR,66.23505,9.55298
+MER00031,Brown LLC,gas_station,Toddchester,CA,-12.27022,-16.97358
+MER00032,"Arellano, Jones and Daniels",education,Wallacehaven,DE,45.53499,77.00678
+MER00033,Gray-Frederick,utilities,South Deborah,OK,-21.92209,29.48537
+MER00034,Roy LLC,travel,Joneston,AZ,32.11084,153.75345
+MER00035,Benson LLC,gas_station,East Holly,WV,38.09394,-113.11912
+MER00036,Rodriguez-Scott,gas_station,Kingport,MN,-70.78063,74.61262
+MER00037,"Weaver, Lee and Hart",healthcare,Michellefort,CO,17.20167,-131.63104
+MER00038,"Martinez, Webb and Holloway",entertainment,Lopezmouth,CO,-76.54366,177.72629
+MER00039,Green-Terry,education,Carolborough,IL,77.55194,42.15994
+MER00040,Pierce-Foster,subscription,Marktown,SC,42.22098,-73.95508
+MER00041,Scott-Owens,online_retail,Rachelhaven,LA,5.01272,28.37902
+MER00042,Robertson PLC,online_retail,Rachelville,MP,-34.69301,48.76276
+MER00043,"Glass, Brown and Fischer",online_retail,Justinville,IN,9.21259,-79.94062
+MER00044,Robinson and Sons,healthcare,South Jaclynhaven,SD,-9.47044,-125.09058
+MER00045,Jones Inc,education,West Lindaside,RI,11.84275,-141.79759
+MER00046,"Smith, Simon and Navarro",online_retail,Guerraview,GA,-53.89687,-85.71322
+MER00047,Rose Ltd,utilities,South Rebeccabury,PR,3.12834,-117.02412
+MER00048,"Huynh, Burns and Miller",subscription,Kimberlychester,IN,29.30751,-112.98308
+MER00049,Lynch Ltd,entertainment,New Joshuaberg,GA,-33.37156,-146.87026
+MER00050,"Lawson, Lucero and Sellers",utilities,Martintown,MI,56.82738,-127.8477
+MER00051,"Moon, Cortez and Mata",online_retail,Williamsstad,NY,57.22129,124.32975
+MER00052,Cruz-Wagner,healthcare,Robertsstad,MN,-42.22659,113.8438
+MER00053,Edwards-Smith,utilities,New Peter,IN,-77.62315,-53.3072
+MER00054,"Herring, Chaney and Wheeler",gas_station,Wagnerhaven,NY,51.66705,96.11606
+MER00055,Harris PLC,grocery,Scottland,VT,83.76915,-6.15178
+MER00056,Suarez-Guerra,restaurant,New Charles,WA,44.42965,-18.91825
+MER00057,Mason LLC,online_retail,Danielview,PA,67.11272,113.08321
+MER00058,"Strong, Warren and Garcia",healthcare,Taraburgh,WV,-38.59326,74.86963
+MER00059,"Beasley, Pope and Ashley",gas_station,Port Jennifer,PR,-36.2994,-139.38841
+MER00060,Robertson-Collins,subscription,Owensland,GU,-44.66283,-105.10958
+MER00061,Moore Ltd,grocery,North Rachael,CT,-46.6572,91.72476
+MER00062,Richardson PLC,subscription,Isaiahberg,VI,-27.25166,-81.23077
+MER00063,"Smith, Jackson and Phillips",subscription,New Angelaton,TN,10.21388,87.60296
+MER00064,Smith-Valencia,restaurant,Brightshire,MN,81.79657,56.22464
+MER00065,Thompson PLC,grocery,West Stephen,WA,-23.52242,-87.74357
+MER00066,Perez-Gilbert,entertainment,South Tiffany,PW,-42.15663,-169.46441
+MER00067,Boyer-Jones,grocery,New Loriburgh,TN,-58.27558,46.72308
+MER00068,"Freeman, Garcia and Hernandez",utilities,East Carlbury,WV,-27.06509,-108.50554
+MER00069,"Holmes, Hester and Jones",entertainment,Goldenport,NH,-79.35786,5.36904
+MER00070,Hernandez-Brock,restaurant,Bryanhaven,AS,-24.63677,-121.98437
+MER00071,Brown and Sons,travel,New Heatherfort,VT,71.11506,149.77877
+MER00072,Monroe Group,subscription,East Danielle,IN,-56.08211,-134.60919
+MER00073,"Parsons, Porter and Nolan",restaurant,South Jennifer,WV,87.75863,-62.07434
+MER00074,Ingram-Moore,grocery,Timothymouth,VI,-63.79179,61.54825
+MER00075,Blevins-Padilla,subscription,Susanhaven,OH,53.66121,-108.26656
+MER00076,"Bauer, Perez and Smith",gas_station,Katieberg,NY,-6.68439,54.81309
+MER00077,Dunn-Palmer,gas_station,Port Lauren,VI,-78.67928,79.55027
+MER00078,Kelly-Washington,restaurant,Lake Richardfurt,OH,-54.50972,125.21438
+MER00079,Perry LLC,travel,Kevinland,OK,-52.55669,103.93026
+MER00080,Nelson Inc,healthcare,East Ginaberg,OR,-46.22504,-67.43505
+MER00081,Evans-Nielsen,education,Patrickville,TX,43.80989,109.97123
+MER00082,Adams-Cochran,gas_station,North Andrew,MD,23.04674,61.27898
+MER00083,"Johnson, Collins and Mitchell",gas_station,East Alejandra,DE,57.82669,-121.0749
+MER00084,Hernandez-Ellis,restaurant,Marialand,FL,27.49456,75.90846
+MER00085,Bennett Ltd,education,Kevinfurt,PA,-49.07604,114.60914
+MER00086,Hopkins-Brown,entertainment,Lake Andreaville,MO,-29.46856,-75.3791
+MER00087,"Lester, Ward and Zimmerman",gas_station,Lake Jessicamouth,WV,27.49257,177.21862
+MER00088,Dixon-Moore,healthcare,Herringstad,AR,51.39606,44.10526
+MER00089,Brooks Ltd,restaurant,Andrewmouth,SC,-7.65043,-101.85905
+MER00090,Cohen-Riley,utilities,North Nicholas,AS,-30.55538,-132.91605
+MER00091,Santiago-Howard,utilities,Elizabethview,NC,-27.59691,-6.76571
+MER00092,Lang Group,travel,Waltersburgh,GU,-20.81567,95.97296
+MER00093,"Kane, Chase and Brown",subscription,Port Alexisside,CO,-34.27204,-153.68708
+MER00094,Grant LLC,entertainment,South Lauraberg,MH,-80.60244,-98.7638
+MER00095,"Lee, Gonzalez and Huerta",entertainment,Lake Amanda,MA,19.47555,21.94612
+MER00096,Williams Group,entertainment,Port Susan,NV,73.89719,139.90399
+MER00097,Norton-Martin,healthcare,Douglasstad,PR,68.22475,-118.21411
+MER00098,"Cochran, Allen and Hughes",online_retail,Lawsonborough,AR,-68.59151,40.75019
+MER00099,King-Burnett,utilities,New Ryan,ME,-8.23173,-78.18882
+MER00100,Byrd Inc,grocery,East Danielland,AR,-68.76794,-74.26046
+MER00101,"Everett, Pierce and Norris",online_retail,Port Robert,NJ,28.02047,65.4515
+MER00102,Schaefer-Barajas,gas_station,Juliestad,AL,-33.72642,-89.48785
+MER00103,Mcmillan LLC,utilities,Smithside,LA,42.36759,-46.76236
+MER00104,Gonzalez-Frazier,travel,North Erikhaven,LA,-38.11109,117.47891
+MER00105,Greer Inc,entertainment,North Stephanie,WY,45.23568,174.47492
+MER00106,"Mcbride, Chavez and Guerra",entertainment,Marshallport,RI,-11.09482,78.6553
+MER00107,Holland PLC,restaurant,North Anna,IN,52.5814,-131.0761
+MER00108,Vazquez-Davis,entertainment,Anaton,NM,-87.09608,33.79654
+MER00109,"Holmes, Howell and Taylor",education,South Shannon,NC,55.71572,83.65263
+MER00110,Olson LLC,education,Johnsonport,NV,-10.42688,175.41405
+MER00111,Bowen and Sons,travel,East Morganberg,WY,-76.80797,-7.63537
+MER00112,Ochoa Group,utilities,Tamarashire,GA,1.56174,-163.14316
+MER00113,Coleman LLC,subscription,Marybury,NH,-27.72834,-113.09198
+MER00114,"Morse, Thompson and Daniels",travel,Garzaport,AS,-65.34331,124.13908
+MER00115,Byrd Ltd,restaurant,South Jeffreystad,DC,80.45722,-128.08784
+MER00116,Meyer Group,education,West Dawnfort,MD,-42.32694,111.96811
+MER00117,"Mccarthy, Long and Smith",utilities,New Jenniferhaven,PA,81.78118,10.85201
+MER00118,Pitts-Maldonado,entertainment,West Joseport,TX,34.36002,-124.34135
+MER00119,Turner-Frazier,education,Lopezmouth,WY,48.14998,-172.82061
+MER00120,Wolf PLC,online_retail,Taylorton,KS,-41.68475,-149.98549
+MER00121,Underwood and Sons,education,Jacksonmouth,DE,4.03698,92.68447
+MER00122,"Parker, Ellis and Weeks",education,East Richard,VI,-43.86004,24.56772
+MER00123,Jackson Inc,healthcare,South Vanessa,WY,-35.48819,-8.95882
+MER00124,Contreras-Holmes,subscription,Jacksonview,MN,-0.69005,167.13869
+MER00125,"Thompson, Hall and Kelly",travel,Lake Brianton,WY,75.17924,40.2964
+MER00126,Morris Inc,restaurant,Lake Laura,FM,-84.56951,45.6234
+MER00127,"Logan, Garcia and Johnson",utilities,West Jimmy,ID,87.74066,151.12812
+MER00128,Brown Inc,education,West Elizabethstad,CA,1.55726,-154.51341
+MER00129,Brown-Rodriguez,utilities,East Cory,VT,-46.24438,-44.84191
+MER00130,"Webb, Olson and Joseph",gas_station,Johnsonchester,NV,4.79359,106.73635
+MER00131,"Bridges, Williams and Krueger",entertainment,North Chloe,NE,-73.14562,-26.94555
+MER00132,"Lopez, Pacheco and Gallegos",gas_station,Shaunstad,MO,-68.26631,-95.28964
+MER00133,Andrews-Harper,restaurant,West Samuel,MI,25.56225,-88.85802
+MER00134,"Hamilton, Parker and Martinez",gas_station,Jerryside,NV,-24.06812,156.16626
+MER00135,Hughes-Fox,utilities,Nathanielfurt,WA,-29.56785,70.90061
+MER00136,Mcdaniel Ltd,utilities,South Samuelview,AL,21.52522,-170.00063
+MER00137,Blake-Maldonado,online_retail,Erikview,MH,34.53985,160.57738
+MER00138,"James, Oconnor and Davis",grocery,Lake Deborahmouth,AL,67.45735,70.12617
+MER00139,George-Moody,subscription,Port Jeffreyfurt,AZ,-80.7033,-31.12715
+MER00140,Peterson-Schultz,entertainment,North Monicaborough,MN,-32.44676,-137.83577
+MER00141,Cooper and Sons,online_retail,Foleybury,NM,-89.7101,-4.90222
+MER00142,Brooks-Jones,gas_station,West Benjamin,ID,-25.79505,-79.77473
+MER00143,"Bishop, Hughes and Huang",restaurant,South Michael,IN,-73.91503,-101.95617
+MER00144,Freeman-Robinson,healthcare,Port Laura,NC,22.38116,113.03941
+MER00145,"Barnes, Brown and Jackson",education,Walkerland,VA,63.76086,80.58535
+MER00146,"Guerrero, Ramirez and Davis",education,Port George,NY,69.30409,-114.37735
+MER00147,Jenkins Group,online_retail,West Ericamouth,CA,33.94336,139.35664
+MER00148,Nelson-Kidd,healthcare,Tammytown,IA,-73.81206,71.73891
+MER00149,Miller-Hughes,utilities,New Vincentmouth,PA,58.7792,111.32172
+MER00150,Mccarty and Sons,travel,Ricefort,PW,-79.34224,-61.42032
+MER00151,Ramsey-Downs,utilities,East Nicoleview,NH,-16.22604,10.87537
+MER00152,"Larson, Ellis and Smith",subscription,Danielsville,MI,35.71762,69.2669
+MER00153,Smith Inc,gas_station,West Jessica,WA,-16.55381,-60.94137
+MER00154,Sharp-Willis,online_retail,New Patrickburgh,CT,-37.22153,141.60326
+MER00155,"Gibson, Castro and Reed",online_retail,South Tammy,KY,-36.21033,-8.90559
+MER00156,Goodman LLC,education,Rogersfort,VA,-58.56415,-8.02472
+MER00157,Turner Inc,restaurant,Port Robertchester,AZ,-86.63429,172.92252
+MER00158,"Quinn, Montes and Williams",restaurant,New Seth,TX,-84.7965,-9.39216
+MER00159,Welch-Wallace,healthcare,New Jennifer,CA,11.60146,106.55562
+MER00160,Fisher LLC,gas_station,Lake Charlotte,NV,-63.20594,-116.32708
+MER00161,Little LLC,online_retail,Danielberg,NY,-29.05922,-32.71594
+MER00162,Hammond Ltd,utilities,Bellside,GA,-79.24729,-26.60412
+MER00163,Miranda LLC,subscription,South Michaelbury,MS,74.27538,-41.68405
+MER00164,Compton-Davis,subscription,Mosleyland,IL,-6.72115,1.93143
+MER00165,"Garza, Clark and Schmitt",entertainment,Jonesfort,NV,63.39592,112.37009
+MER00166,Wagner-Molina,entertainment,Kirbyborough,TN,56.5863,-21.17517
+MER00167,"Collins, Atkinson and Goodman",online_retail,Denisemouth,WA,-8.42411,107.96643
+MER00168,"Farrell, Smith and Gomez",gas_station,Lake Theresa,AZ,-49.98903,-143.43183
+MER00169,"Walton, Lewis and Smith",travel,Tiffanystad,ME,32.93546,0.53148
+MER00170,Long-Austin,gas_station,New Jennifer,NH,-14.64003,94.14178
+MER00171,"Webb, Hernandez and Moran",restaurant,West Colleenchester,IL,-61.85195,100.96747
+MER00172,"Jones, Johnson and Sanchez",gas_station,Kristieport,MO,-83.80173,9.16444
+MER00173,Johnson-Henson,utilities,New Josetown,GA,-50.7657,59.11183
+MER00174,"Bishop, Bailey and Mcguire",utilities,Millsside,KY,-77.05825,126.72823
+MER00175,Newton Group,online_retail,Taylorbury,PA,9.44299,29.01743
+MER00176,Tate-Lewis,education,West Amanda,NJ,85.87902,-12.14398
+MER00177,Gray Group,utilities,North Cherylton,MH,54.04928,44.158
+MER00178,"Moon, Brewer and Johnson",healthcare,East Ericstad,MD,5.38018,2.59845
+MER00179,Sherman Ltd,subscription,New Warren,HI,1.44558,-30.42112
+MER00180,"Ford, Anthony and Wiley",online_retail,West Kara,AR,-14.65338,162.53038
+MER00181,Brown-Weaver,healthcare,North Kyle,AR,82.40196,72.0324
+MER00182,Leon-Garcia,restaurant,Clarkstad,AK,78.3411,4.88478
+MER00183,Nash Group,online_retail,Williamberg,CO,-57.22048,-94.57558
+MER00184,"Perkins, Hernandez and Nelson",education,Port Susanland,AZ,-3.32414,-97.10096
+MER00185,Sparks PLC,grocery,Michaelborough,VA,11.0641,133.78854
+MER00186,"Norris, Lambert and Williams",restaurant,New Robertmouth,ID,-24.5853,100.8085
+MER00187,Rodriguez Ltd,restaurant,Port Christopherfurt,RI,-58.50302,-128.89899
+MER00188,Morton LLC,healthcare,South Courtney,LA,79.5547,-40.83116
+MER00189,Ellis-Robinson,subscription,East Christopherton,MN,55.85155,-123.74651
+MER00190,Conley-Solis,online_retail,Thomasburgh,VI,16.25124,161.35308
+MER00191,Lewis PLC,entertainment,Lake Josephborough,ME,47.41873,-144.89246
+MER00192,"Miranda, Collins and Lawson",education,North Mistymouth,SD,-14.80007,-125.9049
+MER00193,Lang-Norman,education,East Elizabeth,FL,-51.19501,35.80834
+MER00194,"Gibbs, Howe and Arnold",gas_station,Lisamouth,FM,-56.81254,112.07145
+MER00195,Frey Inc,utilities,Scottport,NJ,36.79042,-12.98333
+MER00196,Martinez-Huber,restaurant,West Joshua,AL,82.26235,143.66724
+MER00197,Martinez-Nelson,online_retail,Bensonstad,MI,-88.7974,-130.87771
+MER00198,Howard-Miller,subscription,Tommychester,MD,-8.64638,-95.13642
+MER00199,"Ramirez, Hoffman and Colon",gas_station,South Jerryport,KS,-89.51441,-130.17486
+MER00200,Gates LLC,entertainment,East Tracieville,MA,27.09759,4.21042
+MER00201,Ruiz-Logan,education,Ronaldchester,AS,-11.11039,-166.16485
+MER00202,English Group,utilities,Feliciafort,OH,77.02828,-31.46385
+MER00203,"Garza, Wilson and Bates",grocery,Williamsonton,FL,-63.26709,-148.70574
+MER00204,"Johnson, Velazquez and Andrade",entertainment,Port Kellymouth,VI,84.27295,-110.93824
+MER00205,"Schultz, Clark and White",education,Kington,AZ,-55.31792,112.28066
+MER00206,Roberts-Orr,entertainment,North Erica,MD,-6.47593,-125.75349
+MER00207,"Olsen, Evans and Cummings",subscription,North Jessica,AS,-23.77818,-29.58864
+MER00208,Le PLC,grocery,Maryborough,MH,2.03627,119.04049
+MER00209,"Barton, Marshall and Allen",healthcare,Ayersville,NE,-70.19556,-9.00506
+MER00210,Donaldson and Sons,utilities,Miatown,TX,-68.85857,-163.81903
+MER00211,Suarez Inc,healthcare,South Howardton,GU,-29.60475,-43.71513
+MER00212,"Bowman, Snyder and Green",education,Roachchester,NH,-21.62468,-41.13218
+MER00213,Turner Ltd,utilities,Mcleanport,MP,-70.19396,-14.41788
+MER00214,"Davis, Frey and Coleman",utilities,Sandrastad,GU,31.09732,-148.71403
+MER00215,Welch-Blevins,travel,Donnamouth,WI,86.97419,-166.26253
+MER00216,Vazquez-Hayes,subscription,West Christopher,NJ,85.42547,76.11433
+MER00217,Garrison PLC,entertainment,Katieberg,IA,39.05926,-162.95786
+MER00218,Leonard-Clayton,travel,Carlmouth,MO,-18.31585,106.51157
+MER00219,"Dudley, Adams and Lewis",subscription,New Carolyn,MA,25.75205,-133.49215
+MER00220,Logan Group,gas_station,Kendraview,VT,39.60643,-61.373
+MER00221,Williams Ltd,utilities,West Aaronmouth,NJ,28.48321,22.83098
+MER00222,Wilson-Moreno,subscription,West Richardmouth,IN,-37.30568,145.88954
+MER00223,Williams-Phillips,gas_station,South Douglasland,AS,-52.70515,120.38717
+MER00224,Thompson-Simon,online_retail,Morganside,MO,72.18947,-114.61524
+MER00225,Maldonado Inc,healthcare,Josephberg,IL,42.14994,-20.26473
+MER00226,Stevenson-Casey,education,West Elizabeth,IA,-28.36514,-40.11886
+MER00227,"Maldonado, Taylor and Williams",subscription,Marcusberg,KY,69.54364,-161.13955
+MER00228,"Benson, Edwards and Anderson",gas_station,Browningberg,MH,-26.70408,-15.41877
+MER00229,Foster Inc,subscription,Lake Kristinberg,AS,-52.58038,131.75604
+MER00230,"Fletcher, Bowen and Washington",online_retail,South David,MT,69.15181,59.4304
+MER00231,"Moore, Daniels and Smith",travel,Lake Amberside,ID,-88.74105,56.49417
+MER00232,"Gill, James and Oneill",education,Hinestown,FM,67.20339,3.94515
+MER00233,Rodriguez LLC,healthcare,Jessicaberg,OH,37.10999,-8.85857
+MER00234,Bowman-Kline,subscription,South Miguel,CO,18.25433,24.34902
+MER00235,Payne-Simmons,gas_station,Walterburgh,TN,53.36869,58.69964
+MER00236,Hampton PLC,utilities,Walkerfurt,PW,-3.66411,21.50623
+MER00237,"Solomon, Campbell and Keith",online_retail,East Christophershire,GU,-45.68753,4.42255
+MER00238,Bradley-King,entertainment,Smithburgh,CO,-4.34171,167.27254
+MER00239,Smith and Sons,subscription,South Julie,KS,-53.05623,-0.25597
+MER00240,Nelson Group,utilities,South Kristin,GU,-83.62756,167.21412
+MER00241,Ewing-Marquez,gas_station,North Melissa,OR,63.68529,-139.23227
+MER00242,Hunt Inc,grocery,Onealshire,FM,-19.90624,113.87133
+MER00243,"Thornton, Valentine and Mcdowell",subscription,West Carolshire,TN,-76.96696,-101.84861
+MER00244,Kim and Sons,online_retail,South Kelly,FM,13.08943,78.18889
+MER00245,Davis and Sons,utilities,East Haydenhaven,WA,29.14354,100.61887
+MER00246,Harris-Jones,grocery,East Sarahshire,MT,-70.22549,-171.59311
+MER00247,Wade and Sons,subscription,East Scottfurt,OK,14.98036,79.34774
+MER00248,"Lane, Owens and Estrada",entertainment,Haleychester,OH,-36.6829,-170.88963
+MER00249,"Smith, Love and Odonnell",education,Lake Amanda,AS,25.94887,144.24342
+MER00250,Harris-Powell,entertainment,Monroefort,RI,-2.95221,-19.7882
+MER00251,"Manning, Scott and Williams",utilities,South Rodneymouth,AR,28.58018,98.23322
+MER00252,Lopez-Santana,travel,Lewistown,OK,-30.78482,-112.7813
+MER00253,Bradford-Hickman,restaurant,Matthewtown,SC,-67.49258,32.24871
+MER00254,Hicks-Sharp,grocery,Taylorstad,PR,17.30801,123.40674
+MER00255,"Brown, Cox and Oconnor",online_retail,Oscarshire,LA,85.06042,75.42644
+MER00256,Lee-Johnson,utilities,Port Vincentchester,GU,-78.37861,114.653
+MER00257,"Cruz, Montoya and Smith",education,East Corey,WI,84.69045,91.72624
+MER00258,"Campbell, Nicholson and Wallace",travel,North Markchester,CT,-54.46243,17.94561
+MER00259,Jackson-Estrada,education,East Daniel,NE,33.96927,-63.58626
+MER00260,"Green, Hernandez and Sanchez",restaurant,Lake Misty,UT,67.25427,75.0358
+MER00261,Hancock PLC,healthcare,Carolstad,FL,15.93971,-31.89601
+MER00262,Barton-Landry,gas_station,New Jessicamouth,WA,53.43349,26.41699
+MER00263,Gonzalez-Kaiser,utilities,New James,OK,-77.88742,19.35577
+MER00264,Frost and Sons,entertainment,Kathleenport,VI,22.15633,-103.46979
+MER00265,"Brown, Hughes and Burton",grocery,Tammyshire,MH,67.48293,-38.82419
+MER00266,"Maddox, Anderson and Miller",restaurant,New Michael,WY,45.27431,-81.42987
+MER00267,Williamson-Hall,grocery,Port Ashleyville,MO,47.2098,57.49154
+MER00268,Harris LLC,entertainment,South Gary,TN,-36.67587,-69.76874
+MER00269,Fitzgerald-Fuentes,online_retail,West Joeview,RI,-39.82541,-3.50126
+MER00270,"Armstrong, Leon and Hall",online_retail,Lisaport,NM,-67.88694,85.42936
+MER00271,Chang PLC,travel,New Carolchester,CO,39.73038,139.21501
+MER00272,Doyle-Crosby,entertainment,New Patricia,VT,75.67814,-92.1784
+MER00273,Barnes-Gates,education,East Ryanport,WV,82.48069,81.72611
+MER00274,Vance Ltd,entertainment,Anthonyville,MS,49.29956,29.64304
+MER00275,"Cox, King and Collins",grocery,North Tiffany,GU,43.61124,-83.91985
+MER00276,Rojas Inc,subscription,North Miguelton,TX,6.74172,126.79507
+MER00277,Matthews-Harvey,subscription,Obrienburgh,AZ,-27.22287,29.35638
+MER00278,"Chen, Lane and Pratt",restaurant,Marshallfurt,MN,-70.65566,-126.60017
+MER00279,Nolan Group,utilities,South Hunterville,TX,51.16712,132.36699
+MER00280,"Yu, English and Brown",restaurant,Rhondaville,GU,-77.22715,-77.36359
+MER00281,"Clarke, Allen and Robbins",entertainment,North Virginia,NY,-14.09555,47.04924
+MER00282,Thomas LLC,travel,Brandonport,OR,18.07946,-19.58588
+MER00283,Humphrey Inc,education,Edwardsburgh,WI,27.32899,-141.19705
+MER00284,Vargas Ltd,online_retail,South Jessicaville,CO,26.29032,-169.38883
+MER00285,Lewis-Banks,gas_station,Jenniferhaven,CA,75.72171,-51.87398
+MER00286,Campbell-Everett,grocery,Lake Tina,WY,-43.44134,-153.60612
+MER00287,Mcconnell-Dunn,grocery,Melanieside,VA,-16.71359,-68.84589
+MER00288,Moore Inc,restaurant,East Markburgh,VA,-45.43423,-143.22242
+MER00289,Lee Ltd,education,Lopezview,ME,63.82362,62.34677
+MER00290,"Moore, Stewart and Thompson",utilities,Lyonston,WY,-15.55563,85.12573
+MER00291,Banks-Reid,education,South Andreabury,MS,-74.11884,-31.13714
+MER00292,Clayton LLC,gas_station,Butlertown,SC,89.65022,-75.42687
+MER00293,Gray-Baxter,entertainment,Nortonmouth,MA,-48.2573,-73.25771
+MER00294,Mcmillan Ltd,grocery,Port Kristin,AL,-89.49793,93.97794
+MER00295,Robinson-Pratt,utilities,Patrickfurt,MS,-83.20375,-90.8049
+MER00296,"Fisher, Patel and Turner",grocery,Jamesburgh,NH,41.85218,42.6847
+MER00297,Rosario Ltd,grocery,Lake Shannonmouth,OH,25.64105,176.41076
+MER00298,Kemp-Gibson,gas_station,Dixonbury,HI,68.78882,-90.54867
+MER00299,Bailey PLC,gas_station,Muellerland,NM,31.40313,32.41399
+MER00300,"Harrington, Wiggins and Bruce",utilities,Martinezton,NY,-3.73708,179.69725
+MER00301,"Williams, Brown and Graham",healthcare,Davidview,OR,62.16963,103.94905
+MER00302,"Williams, Thompson and Mitchell",utilities,Hillstad,FL,11.8156,-53.88378
+MER00303,Hill LLC,education,Robinton,AR,5.53294,157.86358
+MER00304,Scott Group,entertainment,West Maryside,AL,-23.07977,134.35268
+MER00305,Henry-Steele,grocery,Mariahfort,ID,22.28305,82.79874
+MER00306,Wilson Ltd,travel,West Davidland,KY,-68.26375,-82.17494
+MER00307,Herrera Group,restaurant,Gomezside,PR,81.77788,63.90024
+MER00308,"Anderson, Robinson and Williams",healthcare,New Christy,PA,18.43446,18.13683
+MER00309,Banks Inc,healthcare,Kingview,DC,24.6534,94.9388
+MER00310,Montgomery Ltd,online_retail,Lake Adamhaven,WV,-56.95038,154.90788
+MER00311,Stone Group,subscription,Cruzstad,KY,55.68061,35.22898
+MER00312,Taylor-Francis,online_retail,Marshallside,MD,-37.82547,130.0577
+MER00313,"Bennett, Miller and Potter",restaurant,Nguyenport,MA,-23.63059,-155.94479
+MER00314,Watson-Mack,travel,Lake Samanthabury,MH,89.36633,-146.63573
+MER00315,"Kelley, Price and Russell",gas_station,Hendrixview,CA,49.86054,33.37363
+MER00316,Valencia Inc,utilities,Ryanton,AL,-20.19772,164.55291
+MER00317,"Greene, Vasquez and Carpenter",online_retail,East Richard,NJ,-58.22182,-178.43389
+MER00318,Chavez PLC,restaurant,Port Dennisville,AS,-19.79725,-115.02084
+MER00319,"Wagner, Baldwin and Braun",utilities,Mitchellhaven,NE,-73.84859,34.82487
+MER00320,Ingram Group,healthcare,Williamsonton,TX,-74.55153,-133.05826
+MER00321,Kelly-Reyes,education,Smallview,MP,-20.96829,153.57956
+MER00322,Smith PLC,entertainment,Williamburgh,KY,-68.45432,137.1396
+MER00323,Martin PLC,entertainment,Mitchellside,IL,84.77639,105.02168
+MER00324,"Cooper, Spears and Rivera",online_retail,Port Williamport,MH,31.82187,36.67525
+MER00325,Carter-Miller,online_retail,Frankville,WY,45.37355,76.16809
+MER00326,Holder LLC,entertainment,Port Tiffany,NY,78.7839,-177.51281
+MER00327,"Mendoza, Goodman and Davis",entertainment,Chungmouth,SC,62.15921,176.05043
+MER00328,Roberts-Anderson,entertainment,Thompsonland,FL,-62.79893,-178.5773
+MER00329,"Montgomery, Dickson and Cox",grocery,Lake Jamesside,VI,43.10418,24.02067
+MER00330,Ryan Inc,grocery,East Janice,TN,76.80803,-84.80941
+MER00331,Vance-Gray,subscription,Port Shannon,UT,67.15726,155.13119
+MER00332,Stone-Lewis,restaurant,North Elizabeth,DE,-26.71443,-19.79253
+MER00333,Harris Inc,entertainment,East Lucastown,UT,60.60506,-122.28306
+MER00334,Bailey Group,online_retail,Lake Christy,CO,-3.72678,-141.56065
+MER00335,Fuller and Sons,education,Robertport,KY,21.9054,-160.32985
+MER00336,Contreras-Curtis,entertainment,Autumnborough,AZ,87.16048,-103.13558
+MER00337,May Group,gas_station,Jacquelineville,RI,4.14471,-172.17134
+MER00338,Johnson PLC,online_retail,Sanchezburgh,GU,8.96766,-140.95695
+MER00339,Lee-Aguilar,utilities,New Scottview,NV,24.19541,152.32031
+MER00340,Carr LLC,entertainment,Rushchester,RI,67.93955,-87.29735
+MER00341,"Pierce, Smith and Kirk",grocery,Matthewton,ME,19.49264,-87.68867
+MER00342,Taylor PLC,grocery,Taylorport,LA,-77.65044,-167.68496
+MER00343,Wallace and Sons,gas_station,Erikburgh,UT,-36.2122,-94.40211
+MER00344,Mckinney Inc,gas_station,Riverabury,AR,54.81694,-6.98854
+MER00345,Black and Sons,restaurant,New Megan,CT,-56.18899,29.65664
+MER00346,"Warren, George and Alvarado",gas_station,Elizabethberg,MH,82.10509,-85.51532
+MER00347,Evans Ltd,subscription,New Carolshire,GU,-48.73623,176.66887
+MER00348,Greene-Martinez,online_retail,North Leahberg,NJ,30.14081,-82.35187
+MER00349,Peterson-Hernandez,gas_station,Maryland,CO,78.65414,8.72333
+MER00350,"Richards, Duffy and Dominguez",utilities,New Ashley,SD,72.85455,85.38564
+MER00351,Carpenter Inc,entertainment,Susanfurt,PR,13.94039,110.07334
+MER00352,Hall and Sons,entertainment,Rachelmouth,SD,66.8305,70.73057
+MER00353,"Williams, Johnson and Hanson",restaurant,Julieberg,CT,-78.47728,73.71527
+MER00354,Merritt-Frazier,entertainment,South Andrea,CA,-32.23646,109.64056
+MER00355,"Mclean, Rice and Mccarthy",utilities,Port Nathaniel,AK,52.07287,175.01873
+MER00356,Hood and Sons,restaurant,Lake Stevenfurt,OK,-30.72813,-118.67114
+MER00357,Stevens Inc,online_retail,South Hannah,LA,-27.8164,-116.79297
+MER00358,"Copeland, Miller and Webster",education,Amberburgh,TN,24.18464,25.4553
+MER00359,Bruce Group,grocery,Lake Jennifer,AZ,-82.87609,147.70971
+MER00360,Hobbs-Lozano,utilities,East Alec,VT,21.06648,79.79313
+MER00361,Moon Group,utilities,Port Joshuaberg,SD,-71.08014,139.09035
+MER00362,Leon-Hardin,education,West Christopherport,UT,-35.89339,111.48912
+MER00363,Miller-French,education,North Sarahton,MA,72.96421,33.48337
+MER00364,Carter-Rush,entertainment,Danielburgh,NY,-36.36267,-159.3849
+MER00365,Levy and Sons,grocery,East Lindamouth,TX,74.16902,-17.64728
+MER00366,Larsen PLC,travel,Williamville,CA,-89.47662,-166.12412
+MER00367,Higgins-Hoffman,gas_station,Port Cory,IL,-65.35326,20.52284
+MER00368,Duffy-Miller,grocery,Amberland,SC,1.21723,-31.69611
+MER00369,Miranda PLC,subscription,Nicolefurt,FM,3.8887,-37.39294
+MER00370,Taylor Ltd,travel,Jenningsmouth,NH,-54.40683,30.60255
+MER00371,Taylor PLC,education,North Tammytown,PA,84.03734,120.18548
+MER00372,Barron Ltd,education,West Jennifer,WV,-28.96856,86.27787
+MER00373,Martinez Group,healthcare,Kevinshire,NJ,3.31209,-51.28607
+MER00374,Garcia LLC,online_retail,East Josestad,NY,68.79959,-151.9903
+MER00375,Valdez Inc,education,Angelaville,ME,15.71813,-65.59355
+MER00376,Hutchinson Inc,gas_station,Calderonview,CA,88.91157,39.87246
+MER00377,Grimes Inc,utilities,East Stephen,PR,-42.7421,58.1978
+MER00378,"Patterson, Ruiz and Brown",utilities,North Cherylhaven,CT,-25.99135,-103.2963
+MER00379,"Dunn, Burns and Bailey",restaurant,Walkerhaven,OR,-82.45591,-167.1958
+MER00380,Luna-Woods,entertainment,New Melanieberg,IA,52.9281,-123.83352
+MER00381,Stein and Sons,grocery,Edwardston,NV,-49.80764,156.38056
+MER00382,Ramos LLC,gas_station,East Deanna,MI,42.38521,118.09105
+MER00383,"Dominguez, Jefferson and Johnson",gas_station,Davidport,DC,-49.00998,165.2711
+MER00384,Ware LLC,online_retail,New Johnland,PW,26.5858,-76.06721
+MER00385,"Porter, Hayes and Spencer",utilities,West Timmouth,OH,32.38348,-56.40025
+MER00386,Maxwell-Beltran,grocery,Jacobstad,NC,35.43802,10.7069
+MER00387,Francis Group,entertainment,Lake Jason,PW,-1.25081,-79.47136
+MER00388,"Wiley, Nelson and Morris",grocery,New Karen,AZ,-5.09818,19.04586
+MER00389,Oconnell-Phillips,travel,North Leah,PA,-74.42303,81.37637
+MER00390,Johnson-Newman,utilities,Lake Antonioberg,ME,-77.98062,-22.87608
+MER00391,"Pierce, Scott and Gray",healthcare,Marcshire,KS,-22.60439,-72.61832
+MER00392,Anderson Ltd,grocery,East Anthony,UT,79.9747,-141.43033
+MER00393,Beck-Douglas,grocery,New Paul,IL,19.65491,15.31908
+MER00394,Simon-Cruz,online_retail,South Tamara,WY,77.48351,-32.00284
+MER00395,Watson-Lynch,entertainment,New Robert,MS,-73.65755,120.64919
+MER00396,Harrington-Lewis,restaurant,East Benjamin,DC,83.74725,11.62087
+MER00397,Goodwin LLC,grocery,Port Krista,PR,-65.3405,-101.68087
+MER00398,"Ball, Green and Jackson",travel,South Melissa,TN,-50.33569,74.38589
+MER00399,"Robinson, Turner and Peterson",subscription,Georgestad,NY,84.65932,-69.13559
+MER00400,Hughes-Rodriguez,restaurant,South Christineville,TN,-0.81502,71.83992
+MER00401,Chang-Reid,online_retail,Lake Kelsey,MN,16.27103,12.30548
+MER00402,Scott-Campbell,education,North Cindy,MP,-21.4475,128.58462
+MER00403,"Mccullough, Walters and Moyer",grocery,South Latashaside,ND,-80.44959,-67.54601
+MER00404,"Joyce, Merritt and Wall",restaurant,West Kimberlyville,GA,41.48069,82.79049
+MER00405,Smith-Morales,online_retail,Ellisland,FM,76.33577,-169.34432
+MER00406,Martinez-Lambert,online_retail,West Jimmy,SC,-47.04713,-4.47719
+MER00407,Snyder Ltd,education,Payneton,MA,69.42327,146.21309
+MER00408,Foster PLC,utilities,Jenkinsberg,IL,76.49252,-110.45901
+MER00409,Stewart-Peterson,online_retail,Cameronshire,MS,-61.07926,-53.78927
+MER00410,Anderson Ltd,subscription,Amandafurt,NE,-13.49135,-125.87792
+MER00411,Rojas and Sons,restaurant,Port Williamhaven,ID,-60.04605,91.10006
+MER00412,"Jenkins, Stephens and Wilson",entertainment,West Ryanberg,KY,-51.72108,28.02852
+MER00413,Torres-Gutierrez,entertainment,Lake Dianaville,CA,78.6113,166.56576
+MER00414,Conrad-Simmons,subscription,Monicashire,UT,18.00469,93.94714
+MER00415,"West, Shea and Walker",gas_station,New Patricia,IN,3.45968,83.74574
+MER00416,Munoz-Williams,gas_station,Christinaton,SD,29.9352,29.86479
+MER00417,Lawson Inc,subscription,Morganfurt,AS,77.56767,152.39847
+MER00418,"Sanchez, Howard and Summers",subscription,Hamiltontown,WI,-80.11966,88.41216
+MER00419,"Combs, Martinez and Thomas",travel,Port Craigfurt,ME,44.87446,-85.30712
+MER00420,Campbell-Daniels,restaurant,Careyborough,NH,84.09644,-88.18912
+MER00421,"Wells, Richards and Williams",travel,Lake Stephenshire,PW,81.12238,136.22229
+MER00422,"Brown, Welch and Horne",restaurant,South Theresa,SD,31.10141,-60.86311
+MER00423,"Bryant, Gibson and Patterson",travel,South Aaronburgh,OR,20.04218,-30.85316
+MER00424,"Shelton, Hardin and Miller",utilities,New Melanietown,GU,-75.83294,-52.17449
+MER00425,Anderson-Johnston,entertainment,North Melissaside,DC,-75.50465,-69.40517
+MER00426,"Myers, Rodriguez and Rivera",healthcare,Lake Tiffanyburgh,DE,-7.5192,111.86454
+MER00427,Davenport PLC,grocery,East Michealport,DC,38.11907,-19.18753
+MER00428,Lester Ltd,entertainment,Andreaton,MS,47.11314,33.93401
+MER00429,Smith-Knox,travel,East Jamesberg,VA,-13.68505,-149.11847
+MER00430,"Lopez, Schmidt and Doyle",travel,Jacksonchester,MA,-80.05034,20.30822
+MER00431,Hernandez LLC,healthcare,Port Krystal,KY,-50.31817,-154.43122
+MER00432,Holland and Sons,education,Hansenbury,WI,-4.84532,54.64826
+MER00433,Singleton-Gonzales,gas_station,East Mariahborough,MT,-89.667,-105.04526
+MER00434,Hudson Ltd,healthcare,North Amberchester,NC,-47.18257,-16.34205
+MER00435,Fleming Group,restaurant,Greenbury,FM,44.40926,-5.62133
+MER00436,Walker LLC,subscription,Richardmouth,ND,-30.9732,-68.07751
+MER00437,"Adams, Perry and Martinez",entertainment,Brianberg,TN,6.17739,-84.00065
+MER00438,Smith Inc,education,South Susanland,MH,30.93583,134.16672
+MER00439,Wheeler Inc,entertainment,West Monique,FM,68.03867,41.69696
+MER00440,Beck-Simpson,subscription,New Thomasland,NH,70.8239,-137.47753
+MER00441,"Clark, Torres and Hunt",utilities,Fitzgeraldburgh,DC,86.54949,82.99412
+MER00442,Underwood-Ward,utilities,Lake Davidfurt,OH,1.04669,-122.56949
+MER00443,Allen Group,travel,Woodwardmouth,TN,0.31252,-121.22401
+MER00444,Stone Group,education,Lake Thomashaven,PW,53.61881,-55.34696
+MER00445,"Murphy, Underwood and Vega",subscription,Comptonmouth,KS,-47.85013,158.0283
+MER00446,"Washington, Cruz and Price",online_retail,Hayeschester,ND,41.11859,-82.49212
+MER00447,Lutz Inc,utilities,Kurtfurt,UT,-19.8683,-154.89779
+MER00448,Scott-Lamb,education,West Anthonyberg,AR,40.76978,45.81856
+MER00449,"Weaver, Johnson and Carter",online_retail,North Amandaberg,WA,-12.84436,115.64015
+MER00450,Palmer Ltd,utilities,Lake Brandon,AK,-31.66391,-126.6591
+MER00451,Cole Ltd,utilities,Kennethhaven,MH,-69.60665,165.78694
+MER00452,Taylor-Mcfarland,utilities,Hendersonfurt,ND,-18.24647,-152.0692
+MER00453,Brandt-Norris,online_retail,West Christieland,HI,-16.142,145.52955
+MER00454,Gates-Bell,subscription,Maureenfurt,PR,75.16628,30.27107
+MER00455,Thompson Group,subscription,Lake Lauren,TN,10.67422,-5.56193
+MER00456,Bailey-West,utilities,South Howard,IL,-71.37285,34.96543
+MER00457,Mason LLC,grocery,Annettefort,WI,-47.1116,-79.37808
+MER00458,"Turner, Sims and Miller",subscription,Lisafort,WY,28.47647,171.49681
+MER00459,"Koch, Rodriguez and Williams",travel,South Pamelaton,NH,86.63246,-171.19464
+MER00460,Sanchez-Allen,subscription,South Sarah,CO,-77.54425,-91.01428
+MER00461,Anthony LLC,grocery,South Samantha,MD,-10.903,-39.68773
+MER00462,Cook LLC,grocery,East Grace,AL,-10.09369,-73.26068
+MER00463,"Stanley, Jones and Ortiz",gas_station,Turnerton,MN,64.57514,-10.74976
+MER00464,"Gray, Alvarado and Bryant",grocery,Josephfurt,WA,87.57935,84.74192
+MER00465,Martin and Sons,healthcare,Jameschester,CO,21.42065,-173.26546
+MER00466,"Russell, Simmons and Wolfe",grocery,Lake Jamesberg,WY,-22.56356,-139.48298
+MER00467,"Sharp, Lynn and Rivera",restaurant,Ochoaland,RI,-34.31553,5.89701
+MER00468,Wilson and Sons,grocery,West Samuel,WY,-62.07335,-151.73957
+MER00469,Ruiz Inc,gas_station,North Laceymouth,AK,-28.13748,-100.89116
+MER00470,Gutierrez Ltd,education,Isaacland,WV,2.10141,-52.13421
+MER00471,"Buchanan, Green and Gonzales",utilities,New Lauren,VA,-82.09729,-174.02012
+MER00472,"Reyes, Lucas and Smith",utilities,East Melinda,CO,2.2841,-141.19824
+MER00473,Gomez-Higgins,healthcare,Millerton,MT,-57.25418,61.52163
+MER00474,Stone-Figueroa,travel,Markfurt,MO,61.73748,-16.22703
+MER00475,"Sosa, Harrison and Lewis",healthcare,West Judithville,CT,-27.6763,-158.44469
+MER00476,Jackson Ltd,online_retail,East Lynn,NJ,-81.51164,-159.05626
+MER00477,Dudley-Davis,restaurant,Kristinehaven,WI,-37.73474,78.50585
+MER00478,"Livingston, Hicks and Haney",entertainment,New Charlesport,IL,-73.11411,137.17435
+MER00479,Brown Ltd,subscription,Stephanieborough,LA,84.22298,63.64109
+MER00480,Smith Ltd,education,West Teresa,NH,52.4148,-87.88769
+MER00481,Norton Ltd,online_retail,East Alexander,NM,10.25276,-161.78542
+MER00482,"Perkins, Ward and Grimes",utilities,Whiteton,AL,-26.39353,-76.45574
+MER00483,Neal LLC,online_retail,North Jason,SC,30.83792,95.12036
+MER00484,Jackson-Stanley,subscription,Stevenland,TX,16.58876,4.71492
+MER00485,Bowman Group,utilities,Olsenchester,MH,62.54351,-43.25631
+MER00486,Edwards Inc,gas_station,Georgeshire,GA,-53.55459,-164.12277
+MER00487,Gutierrez Ltd,travel,Kylefurt,PA,73.38097,-43.34258
+MER00488,"Lawrence, James and Robinson",entertainment,Angelafurt,MS,-73.62777,95.84756
+MER00489,Davis-Oconnor,utilities,Aaronborough,MP,-84.81652,-48.28357
+MER00490,Marshall-Harper,online_retail,East Shelbyport,UT,7.59472,-91.7178
+MER00491,Flores-Erickson,restaurant,Heathermouth,MT,-14.28182,15.27083
+MER00492,Mcclure-Evans,utilities,Steinmouth,WI,-17.5179,173.76871
+MER00493,"Boyd, Sanchez and Collins",utilities,Meghanton,WI,-22.10708,169.73866
+MER00494,Miller PLC,online_retail,North Steven,GU,-89.08572,10.35957
+MER00495,Chavez-Potter,online_retail,Stewartmouth,IA,-20.80052,88.9633
+MER00496,Blake Ltd,grocery,New Thomas,MP,-48.47582,130.8348
+MER00497,"Riley, Williams and Clark",utilities,Patelburgh,CT,31.72541,-146.5584
+MER00498,Garcia Group,online_retail,Lake Joann,IN,42.79967,88.40923
+MER00499,"Lewis, Parker and Barber",education,Graystad,NV,-15.6861,55.78428

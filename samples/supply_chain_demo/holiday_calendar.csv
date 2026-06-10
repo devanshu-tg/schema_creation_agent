@@ -1,0 +1,17 @@
+holiday_id,name,year,date,country
+H_2024_New_Year,New Year,2024,2024-02-13,US
+H_2024_MLK,MLK,2024,2024-07-08,US
+H_2024_Presidents,Presidents,2024,2024-07-14,US
+H_2024_Memorial,Memorial,2024,2024-03-25,US
+H_2024_Independence,Independence,2024,2024-03-17,US
+H_2024_Labor,Labor,2024,2024-05-12,US
+H_2024_Thanksgiving,Thanksgiving,2024,2024-06-10,US
+H_2024_Christmas,Christmas,2024,2024-02-10,US
+H_2025_New_Year,New Year,2025,2025-01-18,US
+H_2025_MLK,MLK,2025,2025-11-11,US
+H_2025_Presidents,Presidents,2025,2025-08-20,US
+H_2025_Memorial,Memorial,2025,2025-07-05,US
+H_2025_Independence,Independence,2025,2025-03-19,US
+H_2025_Labor,Labor,2025,2025-06-03,US
+H_2025_Thanksgiving,Thanksgiving,2025,2025-02-21,US
+H_2025_Christmas,Christmas,2025,2025-01-17,US

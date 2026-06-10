@@ -1,0 +1,75 @@
+use_case: CYBERSECURITY
+name: cybersecurity_baseline
+version: 1.0.0
+description: >
+  Investigation graph for security events — users, assets, processes,
+  network endpoints, and alerts. Optimized for lateral-movement traversal,
+  blast-radius analysis, and threat-actor attribution.
+
+vertices:
+  - name: User
+    primary_id: user_id
+    dtype: STRING
+    name_aliases: [user, account, principal]
+    canonical_attributes:
+      - { name: username,    dtype: STRING, optional: true }
+      - { name: department,  dtype: CATEGORICAL, optional: true }
+  - name: Asset
+    primary_id: asset_id
+    dtype: STRING
+    name_aliases: [host, machine, endpoint, device]
+    canonical_attributes:
+      - { name: hostname,    dtype: STRING, optional: true }
+      - { name: os,          dtype: CATEGORICAL, optional: true }
+  - name: Process
+    primary_id: process_id
+    dtype: STRING
+    name_aliases: [process, pid]
+    canonical_attributes:
+      - { name: command,     dtype: STRING, optional: true }
+      - { name: started_at,  dtype: DATETIME, optional: true }
+  - name: IPAddress
+    primary_id: ip_address
+    dtype: STRING
+    name_aliases: [ip, source_ip, dest_ip]
+    promotion_rule: shared_identifier
+  - name: Domain
+    primary_id: domain
+    dtype: STRING
+    name_aliases: [hostname, fqdn]
+    promotion_rule: shared_identifier
+    optional: true
+  - name: Alert
+    primary_id: alert_id
+    dtype: STRING
+    name_aliases: [alert, detection, incident]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: severity,    dtype: CATEGORICAL, optional: true }
+      - { name: detected_at, dtype: DATETIME, optional: true }
+      - { name: rule_name,   dtype: STRING, optional: true }
+
+edges:
+  - { name: User_LOGGED_INTO_Asset,       from: User,    to: Asset,    direction: DIRECTED_WITH_REVERSE, reverse_name: Asset_USED_BY_User }
+  - { name: Asset_RAN_Process,            from: Asset,   to: Process,  direction: DIRECTED_WITH_REVERSE, reverse_name: Process_ON_Asset }
+  - { name: Process_CONNECTED_TO_IPAddress, from: Process, to: IPAddress, direction: DIRECTED_WITH_REVERSE, reverse_name: IPAddress_SEEN_FROM_Process }
+  - { name: IPAddress_RESOLVES_TO_Domain, from: IPAddress, to: Domain,  direction: DIRECTED_WITH_REVERSE, reverse_name: Domain_RESOLVES_AS_IPAddress, optional: true }
+  - { name: Alert_TRIGGERED_BY_Asset,     from: Alert,   to: Asset,    direction: DIRECTED_WITH_REVERSE, reverse_name: Asset_TRIGGERED_Alert }
+  - { name: Alert_INVOLVES_User,          from: Alert,   to: User,     direction: DIRECTED_WITH_REVERSE, reverse_name: User_INVOLVED_IN_Alert }
+
+target_questions:
+  - id: cy.lateral_movement
+    text: "Which users authenticated to multiple assets in a short window?"
+    required_vertices: [User, Asset]
+    required_edges: [User_LOGGED_INTO_Asset]
+    max_hops: 2
+  - id: cy.blast_radius
+    text: "From a compromised asset, which other assets are reachable?"
+    required_vertices: [Asset, Process, IPAddress]
+    required_edges: [Asset_RAN_Process, Process_CONNECTED_TO_IPAddress]
+    max_hops: 3
+  - id: cy.shared_infra
+    text: "Which alerts share a common IP or domain?"
+    required_vertices: [Alert, Asset, IPAddress]
+    required_edges: [Alert_TRIGGERED_BY_Asset, Asset_RAN_Process, Process_CONNECTED_TO_IPAddress]
+    max_hops: 3

@@ -1,0 +1,201 @@
+product_id,name,category,brand,price
+P00000,CadetBlue Plus Break,beauty,"Reyes, Burns and Anderson",85.51
+P00001,IndianRed Pro Audience,apparel,"Richards, Christensen and Moss",150.98
+P00002,Olive Max Wall,sports,"Schultz, Kelly and Chang",476.07
+P00003,Gainsboro Pro Mention,books,"Gonzales, Rosales and Baker",89.2
+P00004,DarkGoldenRod Mini Fire,home,"Williams, Robinson and Garrison",367.33
+P00005,MediumBlue Plus Able,electronics,Paul LLC,172.29
+P00006,MediumSpringGreen Plus Attack,outdoor,"Bowen, Clark and Zuniga",353.73
+P00007,LightPink Mini State,home,Schaefer-Scott,305.62
+P00008,PaleGoldenRod Mini Medical,home,White PLC,31.51
+P00009,Khaki Max Page,beauty,Turner and Sons,487.33
+P00010,Lavender Mini Attorney,sports,Buckley-Hill,332.0
+P00011,DarkBlue Max Hour,beauty,"Olson, Carpenter and Gonzalez",52.48
+P00012,MintCream Mini Better,outdoor,Green PLC,81.03
+P00013,Salmon Max Never,apparel,"Owens, Holloway and Lewis",216.66
+P00014,DarkSlateBlue Max Two,outdoor,"Smith, Smith and Morris",103.84
+P00015,LemonChiffon Pro Let,beauty,Curtis-Coleman,89.56
+P00016,Thistle Max Daughter,electronics,Hale LLC,239.42
+P00017,SteelBlue Pro Approach,sports,Garcia Ltd,393.51
+P00018,WhiteSmoke Mini Media,outdoor,Miller and Sons,447.96
+P00019,DarkBlue Max Garden,electronics,Mays LLC,322.72
+P00020,Khaki Mini Lead,home,Nichols-Jackson,188.66
+P00021,DarkKhaki Mini You,books,Tucker PLC,97.36
+P00022,Crimson Pro Official,sports,Davis-Gilbert,222.67
+P00023,PaleGreen Max Program,beauty,"Flores, Turner and Rivera",419.35
+P00024,SaddleBrown Plus Those,apparel,Russell PLC,79.81
+P00025,AliceBlue Pro Character,electronics,Short-Douglas,335.73
+P00026,LemonChiffon Plus Window,grocery,"Jones, Mcmahon and White",485.5
+P00027,Gray Plus Actually,beauty,Johnson-Lopez,279.03
+P00028,CadetBlue Mini Crime,grocery,"Reynolds, Rogers and Holland",482.99
+P00029,MediumSeaGreen Mini Where,beauty,"Smith, Nguyen and Guerra",240.75
+P00030,FloralWhite Pro Fight,grocery,"Davis, Roberts and Hernandez",451.87
+P00031,PaleGreen Pro Issue,home,Johnson-Edwards,64.54
+P00032,LightCyan Mini Front,home,"Chapman, Thomas and Davis",474.79
+P00033,PaleGoldenRod Lite Language,beauty,Harris Ltd,405.19
+P00034,Tomato Lite Chance,apparel,Taylor and Sons,214.57
+P00035,LightSeaGreen Mini Always,beauty,Esparza and Sons,498.65
+P00036,DarkSeaGreen Lite Create,sports,"Thompson, Watson and Taylor",163.28
+P00037,Black Pro Beyond,electronics,"Stevenson, Todd and Jefferson",197.11
+P00038,DarkOrange Mini Son,books,Scott LLC,429.03
+P00039,HoneyDew Plus Dog,outdoor,"Garcia, Perez and Thompson",459.0
+P00040,Gainsboro Pro Nation,grocery,Moses-Wilson,60.7
+P00041,HotPink Lite Cold,home,Quinn LLC,285.46
+P00042,MediumSeaGreen Plus There,electronics,Shelton-Cook,462.84
+P00043,IndianRed Plus Fly,electronics,Mason LLC,393.94
+P00044,Lime Plus Poor,books,Patterson-Smith,439.56
+P00045,LightGray Max Past,grocery,"Jordan, Lee and Thompson",329.12
+P00046,CadetBlue Plus Show,outdoor,"Sampson, Wright and Christensen",23.55
+P00047,Sienna Max Process,grocery,Hill PLC,76.21
+P00048,MistyRose Plus Cost,grocery,"Kennedy, Hall and Sullivan",24.2
+P00049,DarkGoldenRod Max Good,beauty,"Thompson, Reyes and Moyer",29.4
+P00050,NavajoWhite Mini Teach,sports,Hart-Jones,449.03
+P00051,SlateBlue Pro South,books,Horne-Wood,409.61
+P00052,LightBlue Max Turn,sports,"Dixon, Harvey and Butler",143.77
+P00053,Lime Mini Book,electronics,Kennedy-Riddle,486.39
+P00054,Indigo Lite Enjoy,home,Sweeney-Wolfe,153.74
+P00055,DimGray Mini Fight,books,Waters-Rush,138.36
+P00056,OrangeRed Mini Leader,electronics,"Stewart, Hall and Clark",98.03
+P00057,PaleTurquoise Lite Care,grocery,"Gilmore, Ray and Beasley",371.77
+P00058,LightBlue Plus Class,books,Harris-Bartlett,411.4
+P00059,Orange Plus Minute,home,"Hernandez, Garcia and Wells",37.48
+P00060,DimGray Plus Put,grocery,Boyer-Wolfe,72.15
+P00061,PeachPuff Plus Debate,apparel,"Garrett, Velazquez and Nguyen",91.0
+P00062,HotPink Lite Yard,apparel,"Mitchell, Dunn and Porter",128.5
+P00063,Pink Mini Employee,apparel,"Lane, Gutierrez and Garcia",459.43
+P00064,WhiteSmoke Lite Choice,sports,Cunningham-Lawrence,187.33
+P00065,LavenderBlush Mini Power,grocery,"Goodwin, Blake and Cobb",319.53
+P00066,Crimson Pro Just,apparel,Gomez and Sons,124.76
+P00067,SteelBlue Mini Because,outdoor,Long PLC,92.9
+P00068,Gray Mini Run,books,Davis-Sanchez,175.4
+P00069,SpringGreen Max Sure,electronics,Wells Group,146.11
+P00070,Chocolate Mini Market,apparel,"Martin, Greer and Smith",85.64
+P00071,DarkGray Plus Eye,beauty,"Austin, Olsen and Haley",429.27
+P00072,Azure Lite Only,beauty,Hughes LLC,138.2
+P00073,HoneyDew Mini Buy,apparel,Krause LLC,432.99
+P00074,Orchid Pro Step,outdoor,Vargas LLC,456.2
+P00075,Red Lite Industry,apparel,Morris LLC,115.77
+P00076,DarkTurquoise Plus Smile,sports,"Frey, Chen and Price",357.81
+P00077,LightYellow Max Guy,grocery,Harris-Cabrera,448.26
+P00078,DarkMagenta Max Magazine,outdoor,Adkins PLC,129.74
+P00079,Lime Mini Activity,sports,Foster PLC,340.21
+P00080,LightGray Plus Mouth,grocery,"Miller, Contreras and White",294.32
+P00081,PaleVioletRed Pro Scientist,books,Higgins-Bradley,282.92
+P00082,DarkCyan Plus Pressure,sports,Hayes-Chambers,152.75
+P00083,PaleVioletRed Pro Rest,outdoor,"Walker, Murphy and Greene",36.6
+P00084,BlanchedAlmond Max Book,books,Rodriguez-Bell,431.44
+P00085,Black Max Build,sports,Parsons-Wright,98.24
+P00086,LightPink Plus Side,beauty,"Johnson, Webster and Lee",450.35
+P00087,Lavender Plus Expert,grocery,Lewis-Lowery,331.96
+P00088,PeachPuff Lite These,apparel,Douglas-Harris,329.42
+P00089,LightSalmon Max None,sports,Campbell PLC,453.92
+P00090,YellowGreen Mini Subject,grocery,"Baker, Chandler and Friedman",369.68
+P00091,PowderBlue Plus Minute,beauty,"Robinson, Jones and King",174.87
+P00092,YellowGreen Lite Benefit,outdoor,Morales LLC,453.73
+P00093,DarkBlue Max Sport,sports,Williams LLC,423.48
+P00094,DodgerBlue Plus Wall,home,Hernandez PLC,150.42
+P00095,PapayaWhip Mini Tonight,home,Frost-Powell,371.75
+P00096,YellowGreen Plus Alone,home,"Hanna, Walter and Guzman",473.73
+P00097,LightBlue Max Film,electronics,Martinez and Sons,115.02
+P00098,LightGoldenRodYellow Lite More,sports,"Michael, Turner and Green",213.13
+P00099,DeepSkyBlue Max As,books,Flores Inc,133.98
+P00100,Peru Max Ask,outdoor,"Woods, Joyce and Davis",426.35
+P00101,DarkGreen Mini Describe,apparel,"Reyes, Miller and Cobb",433.86
+P00102,DarkGreen Plus Top,electronics,"Stephenson, Gibbs and Wilson",238.75
+P00103,DarkSlateBlue Lite Stay,electronics,"Davis, Maldonado and Howe",434.41
+P00104,Azure Mini Central,sports,Escobar-Caldwell,209.49
+P00105,AntiqueWhite Lite Color,home,"Peters, Rios and Roberts",496.21
+P00106,DarkOrchid Max Cause,grocery,"Stevens, Chen and Stewart",493.66
+P00107,SlateBlue Mini World,home,"Jones, Noble and Lewis",161.61
+P00108,PowderBlue Lite Maybe,electronics,"Richardson, James and Dalton",246.35
+P00109,Gold Lite Point,books,Allen Inc,319.08
+P00110,Blue Pro Why,outdoor,"Porter, Mendez and Rodriguez",140.4
+P00111,Olive Lite Can,home,"Lutz, Jackson and May",247.34
+P00112,DarkOrchid Pro Happen,home,Wiley-Jones,309.17
+P00113,LavenderBlush Mini Beautiful,grocery,Robinson-Williams,217.37
+P00114,Plum Mini Recently,grocery,Price Group,7.31
+P00115,LightCoral Plus Teach,beauty,Rogers-Murillo,366.68
+P00116,ForestGreen Pro Sometimes,books,"Crawford, Collins and Jones",379.64
+P00117,DarkSlateGray Plus Property,beauty,Campbell-Le,13.87
+P00118,Coral Pro World,beauty,"Owens, Daniels and Bush",117.0
+P00119,LightSalmon Max Near,sports,"Melendez, Howard and Myers",68.82
+P00120,LightSkyBlue Mini Move,sports,"Hendrix, Harper and Zavala",87.67
+P00121,Black Pro Hope,sports,Garza Ltd,474.49
+P00122,MediumSpringGreen Mini Lead,books,Bailey-Alvarado,219.66
+P00123,PaleGoldenRod Lite Detail,books,Cox-Wagner,498.09
+P00124,DarkViolet Mini Together,books,West Ltd,376.31
+P00125,DarkCyan Lite Lose,grocery,Price and Sons,14.47
+P00126,MistyRose Lite Interview,home,Johnson-Reyes,109.54
+P00127,Aqua Pro Maybe,home,Alvarado Inc,65.97
+P00128,LightYellow Pro Town,grocery,"Mccall, Rodriguez and Walker",438.89
+P00129,OldLace Max Mr,apparel,"Sosa, Fisher and White",298.99
+P00130,BlueViolet Pro Store,electronics,"Hunt, Strickland and Garcia",328.52
+P00131,AntiqueWhite Pro About,apparel,"Hooper, Jenkins and Weaver",346.43
+P00132,Chocolate Mini Remember,outdoor,Mcneil-Brock,193.23
+P00133,DarkGreen Plus Mention,sports,Herrera Inc,239.83
+P00134,SeaShell Lite Involve,beauty,Lee Ltd,349.12
+P00135,DarkOliveGreen Pro Campaign,sports,Berg-Keller,213.33
+P00136,DarkSlateGray Pro Drop,sports,Arnold and Sons,313.28
+P00137,ForestGreen Lite Only,grocery,Campbell PLC,416.17
+P00138,LightSeaGreen Pro Market,electronics,Cline-Fox,144.94
+P00139,MintCream Pro Police,outdoor,"Larson, Johnson and Nelson",103.33
+P00140,Blue Lite She,sports,"Adams, Jacobs and Wilson",416.59
+P00141,Navy Lite Voice,books,Bush and Sons,353.2
+P00142,MediumTurquoise Max Region,home,Mckenzie LLC,24.51
+P00143,GoldenRod Mini From,beauty,Pennington-Martin,345.66
+P00144,Wheat Mini Person,books,Mclean Inc,121.08
+P00145,PowderBlue Pro Figure,electronics,Bowman Ltd,453.91
+P00146,MistyRose Plus Might,outdoor,"Hooper, George and Marshall",78.83
+P00147,LawnGreen Pro Air,electronics,House Inc,363.16
+P00148,Cornsilk Pro Agent,sports,Garcia-Roberts,323.95
+P00149,MediumPurple Mini Eight,sports,Jones-Cook,135.74
+P00150,DarkSalmon Pro Stop,electronics,"Hodges, Davis and Rios",407.52
+P00151,LightSlateGray Pro Manager,sports,"Ortiz, Gibson and Oconnor",183.31
+P00152,DarkSalmon Max Oil,grocery,Thompson Ltd,370.58
+P00153,Teal Pro Represent,apparel,"House, Walker and Cruz",9.79
+P00154,MediumTurquoise Lite Modern,home,"Day, Donaldson and Nunez",167.69
+P00155,Khaki Mini Majority,sports,"Richards, Wilson and Thomas",439.85
+P00156,Indigo Pro Than,books,"Oliver, Stein and Wallace",408.41
+P00157,LawnGreen Lite Term,electronics,"Powell, Johnston and Flores",203.38
+P00158,MediumPurple Mini Old,sports,Rosario-Melendez,418.68
+P00159,Navy Mini Person,grocery,"Torres, Tate and Gardner",326.18
+P00160,LightSeaGreen Lite Culture,electronics,"Jacobson, Smith and Barnes",70.59
+P00161,Plum Pro Our,home,"Williams, Evans and English",56.34
+P00162,Turquoise Plus Political,outdoor,"Patterson, Bennett and Luna",402.12
+P00163,Orange Mini Glass,home,Stevens-Hall,307.6
+P00164,LightPink Max Hot,apparel,English-Miller,431.98
+P00165,MediumAquaMarine Lite Charge,outdoor,Perry-House,460.6
+P00166,PeachPuff Pro Record,grocery,"Jones, Matthews and Arnold",223.14
+P00167,DarkSlateGray Pro Help,sports,Reid PLC,329.21
+P00168,LightSeaGreen Pro Day,beauty,Sharp-Gilbert,489.06
+P00169,DodgerBlue Max Push,electronics,"Sweeney, Phillips and Turner",219.26
+P00170,SpringGreen Lite Trade,outdoor,Morris Inc,176.15
+P00171,White Mini Father,home,"Lopez, Manning and Santana",420.32
+P00172,ForestGreen Plus Difference,apparel,Hunt-Wang,10.76
+P00173,LightSalmon Lite Base,outdoor,Fletcher-Parker,426.68
+P00174,MediumPurple Lite Guess,electronics,Dunlap Group,376.96
+P00175,DarkMagenta Max Generation,beauty,"Morgan, Ellis and Singleton",168.79
+P00176,Black Max If,apparel,Flowers PLC,255.93
+P00177,OldLace Plus Administration,grocery,Ramirez LLC,204.62
+P00178,RoyalBlue Lite Ask,electronics,Barajas and Sons,232.25
+P00179,Indigo Plus Realize,outdoor,Oliver LLC,48.57
+P00180,LightSteelBlue Mini Her,outdoor,Galvan Inc,161.45
+P00181,MediumBlue Mini Push,apparel,"Dorsey, Taylor and Hughes",55.81
+P00182,Brown Mini Far,apparel,Buck and Sons,280.78
+P00183,PowderBlue Pro Including,electronics,Conway Ltd,396.93
+P00184,DarkGoldenRod Plus Level,sports,Garcia LLC,445.6
+P00185,DimGray Plus Plan,beauty,Calderon Inc,329.03
+P00186,LimeGreen Mini Begin,books,Marshall-Pennington,184.85
+P00187,Fuchsia Pro West,beauty,Howard and Sons,422.94
+P00188,Fuchsia Max We,outdoor,Reyes-Clark,359.75
+P00189,AntiqueWhite Max Individual,outdoor,Andersen LLC,61.44
+P00190,BlanchedAlmond Lite Dinner,apparel,Combs PLC,173.97
+P00191,DimGray Max Month,books,Turner LLC,352.54
+P00192,AntiqueWhite Pro Crime,home,Williams Inc,248.75
+P00193,BurlyWood Mini Born,electronics,"Allen, Sanchez and Brooks",130.87
+P00194,Ivory Lite Might,beauty,"Freeman, Munoz and Smith",64.77
+P00195,Beige Mini Create,beauty,"Perkins, Peterson and Garcia",231.24
+P00196,DarkViolet Lite Create,books,Bennett-Robbins,58.34
+P00197,LightSeaGreen Mini Scene,apparel,Brown-Singh,463.68
+P00198,MidnightBlue Plus Plan,electronics,Smith-Cole,387.21
+P00199,DarkTurquoise Mini Dream,outdoor,Mitchell LLC,330.94

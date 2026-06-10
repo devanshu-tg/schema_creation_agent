@@ -1,0 +1,69 @@
+use_case: ENTITY_RESOLUTION
+name: entity_resolution_baseline
+version: 1.0.0
+description: >
+  Resolve heterogeneous person/business records into ResolvedEntity clusters via shared
+  identifiers (email, phone, address, document IDs).
+
+vertices:
+  - name: PersonRecord
+    primary_id: record_id
+    dtype: STRING
+    name_aliases: [record, person, party]
+    canonical_attributes:
+      - { name: source,      dtype: CATEGORICAL, optional: true }
+      - { name: full_name,   dtype: STRING, aliases: [name], optional: true }
+      - { name: first_name,  dtype: STRING, aliases: [first], optional: true }
+      - { name: last_name,   dtype: STRING, aliases: [last], optional: true }
+      - { name: dob,         dtype: DATETIME, optional: true }
+  - name: ResolvedEntity
+    primary_id: entity_id
+    dtype: STRING
+    name_aliases: [entity, resolved, cluster]
+  - name: Email
+    primary_id: email
+    dtype: STRING
+    pii: EMAIL
+    promotion_rule: shared_identifier
+  - name: Phone
+    primary_id: phone
+    dtype: STRING
+    pii: PHONE
+    promotion_rule: shared_identifier
+    name_aliases: [phone_number, mobile, cell]
+  - name: Address
+    primary_id: address_id
+    dtype: STRING
+    pii: ADDRESS
+    composed_from: [street, city, state, zip]
+    name_aliases: [billing_address, mailing_address]
+  - name: Document
+    primary_id: document_id
+    dtype: STRING
+    pii: DOC_ID
+    name_aliases: [passport, license, national_id, tax_id]
+    optional: true
+
+edges:
+  - { name: PersonRecord_MATCHES_ResolvedEntity, from: PersonRecord, to: ResolvedEntity, direction: DIRECTED_WITH_REVERSE, reverse_name: ResolvedEntity_CONTAINS_PersonRecord, attributes: [{name: confidence, dtype: FLOAT}, {name: match_reason, dtype: STRING}] }
+  - { name: PersonRecord_HAS_Email,              from: PersonRecord, to: Email,          direction: DIRECTED_WITH_REVERSE, reverse_name: Email_OF_PersonRecord }
+  - { name: PersonRecord_HAS_Phone,              from: PersonRecord, to: Phone,          direction: DIRECTED_WITH_REVERSE, reverse_name: Phone_OF_PersonRecord }
+  - { name: PersonRecord_LIVES_AT_Address,       from: PersonRecord, to: Address,        direction: DIRECTED_WITH_REVERSE, reverse_name: Address_OF_PersonRecord, optional: true }
+  - { name: PersonRecord_HAS_Document,           from: PersonRecord, to: Document,       direction: DIRECTED_WITH_REVERSE, reverse_name: Document_OF_PersonRecord, optional: true }
+
+target_questions:
+  - id: er.shared_email
+    text: "Which records share an email address?"
+    required_vertices: [PersonRecord, Email]
+    required_edges: [PersonRecord_HAS_Email]
+    max_hops: 2
+  - id: er.shared_phone
+    text: "Which records share a phone number?"
+    required_vertices: [PersonRecord, Phone]
+    required_edges: [PersonRecord_HAS_Phone]
+    max_hops: 2
+  - id: er.cluster_membership
+    text: "Which records belong to the same ResolvedEntity?"
+    required_vertices: [PersonRecord, ResolvedEntity]
+    required_edges: [PersonRecord_MATCHES_ResolvedEntity]
+    max_hops: 2

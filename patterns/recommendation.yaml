@@ -1,0 +1,58 @@
+use_case: RECOMMENDATION
+name: recommendation_baseline
+version: 1.0.0
+description: >
+  User-item interaction graph for similarity / collaborative filtering / category-based
+  recommendation queries.
+
+vertices:
+  - name: User
+    primary_id: user_id
+    dtype: STRING
+    name_aliases: [user, account_holder]
+    canonical_attributes:
+      - { name: signup_date, dtype: DATETIME, optional: true }
+      - { name: age_bucket,  dtype: CATEGORICAL, optional: true }
+      - { name: region,      dtype: CATEGORICAL, optional: true }
+  - name: Item
+    primary_id: item_id
+    dtype: STRING
+    name_aliases: [item, product, sku]
+    canonical_attributes:
+      - { name: category, dtype: CATEGORICAL, optional: true }
+      - { name: price,    dtype: FLOAT, optional: true }
+  - name: Interaction
+    primary_id: interaction_id
+    dtype: STRING
+    name_aliases: [interaction, event]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: type,      dtype: CATEGORICAL, aliases: [event_type] }
+      - { name: timestamp, dtype: DATETIME }
+      - { name: rating,    dtype: FLOAT, aliases: [score], optional: true }
+  - name: Category
+    primary_id: category_id
+    dtype: STRING
+    optional: true
+
+edges:
+  - { name: User_PERFORMED_Interaction,    from: User,        to: Interaction, direction: DIRECTED_WITH_REVERSE, reverse_name: Interaction_BY_User }
+  - { name: Interaction_TARGETED_Item,     from: Interaction, to: Item,        direction: DIRECTED_WITH_REVERSE, reverse_name: Item_RECEIVED_Interaction }
+  - { name: Item_IN_Category,              from: Item,        to: Category,    direction: DIRECTED_WITH_REVERSE, reverse_name: Category_CONTAINS_Item, optional: true }
+
+target_questions:
+  - id: rec.user_history
+    text: "What items has a user interacted with?"
+    required_vertices: [User, Interaction, Item]
+    required_edges: [User_PERFORMED_Interaction, Interaction_TARGETED_Item]
+    max_hops: 2
+  - id: rec.similar_users
+    text: "Which users interacted with the same items?"
+    required_vertices: [User, Interaction, Item]
+    required_edges: [User_PERFORMED_Interaction, Interaction_TARGETED_Item]
+    max_hops: 3
+  - id: rec.category_popularity
+    text: "Which categories receive the most interactions?"
+    required_vertices: [Interaction, Item, Category]
+    required_edges: [Interaction_TARGETED_Item, Item_IN_Category]
+    max_hops: 2

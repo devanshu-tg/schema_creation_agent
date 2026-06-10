@@ -1,0 +1,196 @@
+use_case: FRAUD
+name: fraud_baseline
+version: 1.0.0
+description: >
+  Canonical fraud-detection schema. Optimized for shared-identifier ring detection,
+  N-hop traversal between accounts and merchants, and temporal transaction analysis.
+
+vertices:
+  - name: Customer
+    primary_id: customer_id
+    dtype: STRING
+    name_aliases: [customer, party, account_holder, person, ssn]
+    canonical_attributes:
+      - { name: first_name, dtype: STRING, aliases: [first], optional: true }
+      - { name: last_name,  dtype: STRING, aliases: [last],  optional: true }
+      - { name: gender,     dtype: CATEGORICAL, optional: true }
+      - { name: dob,        dtype: DATETIME, optional: true }
+      - { name: job,        dtype: STRING, optional: true }
+      - { name: profile,    dtype: CATEGORICAL, optional: true }
+
+  - name: Account
+    primary_id: account_id
+    dtype: STRING
+    name_aliases: [account, acct, acct_num, account_number]
+
+  - name: Card
+    primary_id: card_id
+    dtype: STRING
+    name_aliases: [card, cc_num, credit_card, card_number]
+    pii: CARD
+
+  - name: Transaction
+    primary_id: transaction_id
+    dtype: STRING
+    name_aliases: [transaction, txn, payment, trans_num, tran_primary_id]
+    promotion_rule: event_signature
+    canonical_attributes:
+      - { name: amount,    dtype: FLOAT,       aliases: [amt, value] }
+      - { name: timestamp, dtype: DATETIME,    aliases: [trans_date_time, unix_time, datetime] }
+      - { name: category,  dtype: CATEGORICAL, aliases: [type, channel] }
+      - { name: is_fraud,  dtype: BOOL,        optional: true }
+
+  - name: Merchant
+    primary_id: merchant_id
+    dtype: STRING
+    name_aliases: [merchant, merch]
+    canonical_attributes:
+      - { name: lat,  dtype: FLOAT, aliases: [merch_lat],  optional: true }
+      - { name: long, dtype: FLOAT, aliases: [merch_long], optional: true }
+
+  - name: Device
+    primary_id: device_id
+    dtype: STRING
+    name_aliases: [device, mac]
+    promotion_rule: shared_identifier
+
+  - name: IPAddress
+    primary_id: ip_address
+    dtype: STRING
+    name_aliases: [ip, ipaddr]
+    pii: IP
+    promotion_rule: shared_identifier
+
+  - name: Email
+    primary_id: email
+    dtype: STRING
+    name_aliases: [email_address]
+    pii: EMAIL
+    promotion_rule: shared_identifier
+
+  - name: Phone
+    primary_id: phone
+    dtype: STRING
+    name_aliases: [phone_number, mobile, cell]
+    pii: PHONE
+    promotion_rule: shared_identifier
+
+  - name: Address
+    primary_id: address_id
+    dtype: STRING
+    pii: ADDRESS
+    composed_from: [street, city, state, zip]
+    optional: true
+
+  # -- Geographic decomposition (use when lat/long/city/state columns present) --
+  - name: City
+    primary_id: city_id
+    dtype: STRING
+    name_aliases: [city]
+    canonical_attributes:
+      - { name: city_pop, dtype: INT, optional: true }
+    optional: true
+  - name: State
+    primary_id: state_id
+    dtype: STRING
+    name_aliases: [state, region, province]
+    optional: true
+  - name: Geolocation
+    primary_id: geo_id
+    dtype: STRING
+    name_aliases: [coords, geolocation, geo]
+    composed_from: [lat, long]
+    canonical_attributes:
+      - { name: lat,  dtype: FLOAT }
+      - { name: long, dtype: FLOAT }
+    optional: true
+  - name: MerchantGeolocation
+    primary_id: merch_geo_id
+    dtype: STRING
+    name_aliases: [merch_geo, merchant_geo]
+    composed_from: [merch_lat, merch_long]
+    canonical_attributes:
+      - { name: lat,  dtype: FLOAT, aliases: [merch_lat] }
+      - { name: long, dtype: FLOAT, aliases: [merch_long] }
+    optional: true
+
+  # -- Behavioral / categorical decomposition --
+  - name: Job
+    primary_id: job_id
+    dtype: STRING
+    name_aliases: [job, occupation, profession]
+    optional: true
+  - name: Segment
+    primary_id: segment_id
+    dtype: STRING
+    name_aliases: [profile, segment, persona, customer_segment]
+    optional: true
+  - name: Category
+    primary_id: category_id
+    dtype: STRING
+    name_aliases: [category, merchant_category, txn_category]
+    optional: true
+
+  # -- Label / case tracking --
+  - name: FraudCase
+    primary_id: case_id
+    dtype: STRING
+    name_aliases: [fraud_case, case]
+    canonical_attributes:
+      - { name: is_fraud, dtype: BOOL, optional: true }
+    optional: true
+
+edges:
+  - { name: Customer_OWNS_Account,        from: Customer,    to: Account,    direction: DIRECTED_WITH_REVERSE, reverse_name: Account_OWNED_BY_Customer }
+  - { name: Customer_USES_Card,           from: Customer,    to: Card,       direction: DIRECTED_WITH_REVERSE, reverse_name: Card_USED_BY_Customer }
+  - { name: Card_USED_IN_Transaction,     from: Card,        to: Transaction,direction: DIRECTED_WITH_REVERSE, reverse_name: Transaction_USED_Card }
+  - { name: Account_MADE_Transaction,     from: Account,     to: Transaction,direction: DIRECTED_WITH_REVERSE, reverse_name: Transaction_MADE_BY_Account }
+  - { name: Transaction_PAID_Merchant,    from: Transaction, to: Merchant,   direction: DIRECTED_WITH_REVERSE, reverse_name: Merchant_RECEIVED_Transaction }
+  - { name: Transaction_FROM_Device,      from: Transaction, to: Device,     direction: DIRECTED_WITH_REVERSE, reverse_name: Device_USED_IN_Transaction }
+  - { name: Transaction_FROM_IPAddress,   from: Transaction, to: IPAddress,  direction: DIRECTED_WITH_REVERSE, reverse_name: IPAddress_USED_IN_Transaction }
+  - { name: Customer_HAS_Email,           from: Customer,    to: Email,      direction: DIRECTED_WITH_REVERSE, reverse_name: Email_OF_Customer }
+  - { name: Customer_HAS_Phone,           from: Customer,    to: Phone,      direction: DIRECTED_WITH_REVERSE, reverse_name: Phone_OF_Customer }
+  - { name: Customer_LIVES_AT_Address,    from: Customer,    to: Address,    direction: DIRECTED_WITH_REVERSE, reverse_name: Address_OF_Customer, optional: true }
+  - { name: Merchant_LOCATED_AT_Address,  from: Merchant,    to: Address,    direction: DIRECTED_WITH_REVERSE, reverse_name: Address_OF_Merchant,  optional: true }
+
+  # -- Geographic edges --
+  - { name: Address_IN_City,              from: Address,     to: City,       direction: DIRECTED_WITH_REVERSE, reverse_name: City_CONTAINS_Address, optional: true }
+  - { name: City_IN_State,                from: City,        to: State,      direction: DIRECTED_WITH_REVERSE, reverse_name: State_CONTAINS_City, optional: true }
+  - { name: Customer_LIVES_AT_Geolocation,from: Customer,    to: Geolocation,direction: DIRECTED_WITH_REVERSE, reverse_name: Geolocation_OF_Customer, optional: true }
+  - { name: Merchant_AT_MerchantGeolocation, from: Merchant, to: MerchantGeolocation, direction: DIRECTED_WITH_REVERSE, reverse_name: MerchantGeolocation_OF_Merchant, optional: true }
+  - { name: Transaction_OCCURRED_AT_MerchantGeolocation, from: Transaction, to: MerchantGeolocation, direction: DIRECTED_WITH_REVERSE, reverse_name: MerchantGeolocation_OF_Transaction, optional: true }
+
+  # -- Behavioral / categorical edges --
+  - { name: Customer_HAS_Job,             from: Customer,    to: Job,        direction: DIRECTED_WITH_REVERSE, reverse_name: Job_OF_Customer, optional: true }
+  - { name: Customer_IN_Segment,          from: Customer,    to: Segment,    direction: DIRECTED_WITH_REVERSE, reverse_name: Segment_CONTAINS_Customer, optional: true }
+  - { name: Transaction_IN_Category,      from: Transaction, to: Category,   direction: DIRECTED_WITH_REVERSE, reverse_name: Category_CONTAINS_Transaction, optional: true }
+
+  # -- Label / case edges --
+  - { name: Transaction_FLAGGED_AS_FraudCase, from: Transaction, to: FraudCase, direction: DIRECTED_WITH_REVERSE, reverse_name: FraudCase_FLAGS_Transaction, optional: true }
+
+target_questions:
+  - id: fraud.shared_device
+    text: "Which accounts share a device?"
+    required_vertices: [Account, Device, Transaction]
+    required_edges: [Account_MADE_Transaction, Transaction_FROM_Device]
+    max_hops: 3
+  - id: fraud.shared_card
+    text: "Which customers share a card?"
+    required_vertices: [Customer, Card]
+    required_edges: [Customer_USES_Card]
+    max_hops: 2
+  - id: fraud.shared_phone_email
+    text: "Which customers share a phone or email?"
+    required_vertices: [Customer, Phone, Email]
+    required_edges: [Customer_HAS_Phone, Customer_HAS_Email]
+    max_hops: 2
+  - id: fraud.shared_merchant
+    text: "Which accounts paid the same merchant?"
+    required_vertices: [Account, Transaction, Merchant]
+    required_edges: [Account_MADE_Transaction, Transaction_PAID_Merchant]
+    max_hops: 3
+  - id: fraud.ring_3hop
+    text: "Which accounts are within 3 hops of a known fraud transaction (is_fraud=1)?"
+    required_vertices: [Account, Transaction]
+    required_edges: [Account_MADE_Transaction]
+    max_hops: 3

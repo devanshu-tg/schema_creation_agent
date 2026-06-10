@@ -1,0 +1,49 @@
+# Deterministic configuration: name patterns, thresholds, scoring weights.
+# This file is part of the "control plane" — the rule engine reads it but does not edit it.
+
+name_patterns:
+  device:      [device, device_id, mac]
+  ip:          [ip, ip_address, ipaddr]
+  email:       [email, email_address]
+  phone:       [phone, phone_number, mobile, cell]
+  card:        [card, cc_num, credit_card, card_number, card_id]
+  ssn:         [ssn, social, tax_id]
+  account:     [account, acct, acct_num, account_id, account_number]
+  customer:    [customer, customer_id, party_id]
+  transaction: [transaction, txn, payment, trans_num, tran_primary_id, transaction_id]
+  merchant:    [merchant, merchant_id, merch]
+  address:     [address, street, city, state, zip, postal]
+  amount:      [amount, amt, value, total]
+  timestamp:   [timestamp, date, time, trans_date_time, unix_time, datetime, created_at]
+  category:    [category, type, kind, channel]
+  fraud_label: [is_fraud, fraud_flag, fraud_label, label]
+  user:        [user, user_id]
+  item:        [item, item_id, product, product_id, sku]
+  interaction: [interaction, event, click, view, purchase]
+  rating:      [rating, score, stars]
+
+pii_patterns:
+  EMAIL:  [email]
+  PHONE:  [phone, mobile, cell]
+  ADDRESS: [street, city, zip, postal, address]
+  NAME:   [first, last, full_name, name]
+  IP:     [ip, ip_address]
+  SSN:    [ssn, social, tax_id]
+  CARD:   [cc_num, card_number, card_id]
+  DOC_ID: [passport, license, document_id]
+
+cardinality_thresholds:
+  unique_ratio: 1.0
+  high_ratio:   0.5
+  medium_ratio: 0.05
+
+scoring_weights:
+  use_case_fit: 1.0
+  query_coverage: 1.5
+  traversal_efficiency: 1.0
+  data_completeness: 1.0
+  entity_reuse: 1.0
+  attribute_placement: 1.0
+  graph_algo_readiness: 0.5
+  ml_graphrag_readiness: 0.5
+  simplicity: 0.5

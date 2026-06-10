@@ -1,0 +1,801 @@
+ticket_id,customer_id,subject,opened_at,status,csat,channel
+T000000,C001203,Login problem,2025-05-13T00:00:00,resolved,0,social
+T000001,C000032,Discount inquiry,2025-08-08T00:00:00,open,1,email
+T000002,C001242,Where is my order?,2025-07-24T00:00:00,resolved,5,phone
+T000003,C000796,Product damaged,2025-03-22T00:00:00,resolved,4,chat
+T000004,C001073,Product damaged,2025-04-06T00:00:00,resolved,4,chat
+T000005,C001340,Login problem,2025-01-05T00:00:00,resolved,5,chat
+T000006,C000537,Wrong item received,2024-09-27T00:00:00,resolved,5,social
+T000007,C000497,Product damaged,2025-08-01T00:00:00,resolved,4,social
+T000008,C000976,Product damaged,2025-05-09T00:00:00,resolved,4,email
+T000009,C000290,Discount inquiry,2024-08-15T00:00:00,resolved,4,chat
+T000010,C000785,Discount inquiry,2024-03-15T00:00:00,resolved,4,social
+T000011,C000680,Login problem,2025-01-17T00:00:00,resolved,3,phone
+T000012,C000259,Discount inquiry,2024-07-10T00:00:00,resolved,3,email
+T000013,C000662,Where is my order?,2025-08-26T00:00:00,resolved,5,email
+T000014,C000897,Login problem,2024-08-23T00:00:00,resolved,5,email
+T000015,C000660,Where is my order?,2025-08-03T00:00:00,resolved,5,phone
+T000016,C000594,Refund request,2025-02-22T00:00:00,escalated,3,social
+T000017,C000211,Refund request,2024-05-17T00:00:00,resolved,5,email
+T000018,C000832,Refund request,2024-12-10T00:00:00,resolved,2,phone
+T000019,C001461,Discount inquiry,2025-01-12T00:00:00,closed,5,email
+T000020,C001168,Refund request,2025-02-09T00:00:00,resolved,3,email
+T000021,C001217,Where is my order?,2025-02-17T00:00:00,resolved,4,chat
+T000022,C001296,Discount inquiry,2025-04-26T00:00:00,resolved,4,social
+T000023,C000389,Login problem,2025-04-21T00:00:00,resolved,4,social
+T000024,C000933,Discount inquiry,2024-08-12T00:00:00,resolved,4,phone
+T000025,C000895,Login problem,2025-01-29T00:00:00,resolved,4,social
+T000026,C001030,Product damaged,2024-11-29T00:00:00,closed,3,email
+T000027,C001405,Product damaged,2025-10-20T00:00:00,resolved,5,email
+T000028,C000908,Discount inquiry,2024-05-23T00:00:00,resolved,1,email
+T000029,C001405,Where is my order?,2024-03-24T00:00:00,closed,4,phone
+T000030,C001412,Login problem,2024-05-31T00:00:00,resolved,4,phone
+T000031,C000707,Login problem,2024-10-23T00:00:00,resolved,5,chat
+T000032,C001373,Wrong item received,2024-03-21T00:00:00,resolved,4,email
+T000033,C000939,Product damaged,2025-03-28T00:00:00,resolved,4,social
+T000034,C000337,Wrong item received,2024-10-11T00:00:00,resolved,5,social
+T000035,C001373,Discount inquiry,2024-02-05T00:00:00,resolved,5,social
+T000036,C000674,Refund request,2024-11-18T00:00:00,resolved,2,chat
+T000037,C000400,Product damaged,2025-02-05T00:00:00,resolved,4,social
+T000038,C001068,Discount inquiry,2024-08-10T00:00:00,closed,5,social
+T000039,C001429,Product damaged,2024-01-25T00:00:00,resolved,5,email
+T000040,C000837,Login problem,2025-09-12T00:00:00,resolved,5,phone
+T000041,C001095,Product damaged,2024-04-19T00:00:00,resolved,5,social
+T000042,C000057,Login problem,2024-07-06T00:00:00,escalated,4,chat
+T000043,C000459,Discount inquiry,2025-04-05T00:00:00,escalated,4,phone
+T000044,C000228,Wrong item received,2024-10-22T00:00:00,resolved,5,phone
+T000045,C000968,Login problem,2024-04-15T00:00:00,resolved,2,social
+T000046,C001410,Discount inquiry,2024-07-15T00:00:00,resolved,0,chat
+T000047,C001086,Where is my order?,2024-08-08T00:00:00,resolved,5,phone
+T000048,C000870,Where is my order?,2025-06-12T00:00:00,resolved,5,social
+T000049,C000871,Wrong item received,2024-12-10T00:00:00,resolved,1,social
+T000050,C000984,Product damaged,2025-01-15T00:00:00,resolved,4,phone
+T000051,C000669,Where is my order?,2024-10-24T00:00:00,open,5,social
+T000052,C000985,Refund request,2025-11-05T00:00:00,resolved,5,email
+T000053,C000366,Wrong item received,2024-12-02T00:00:00,escalated,3,email
+T000054,C000052,Discount inquiry,2025-10-05T00:00:00,closed,2,social
+T000055,C000309,Product damaged,2024-08-04T00:00:00,resolved,5,chat
+T000056,C000967,Refund request,2025-10-06T00:00:00,resolved,5,chat
+T000057,C000233,Product damaged,2024-01-17T00:00:00,resolved,5,social
+T000058,C000620,Refund request,2025-08-16T00:00:00,resolved,5,email
+T000059,C000876,Where is my order?,2025-11-27T00:00:00,resolved,4,social
+T000060,C000894,Refund request,2024-04-01T00:00:00,resolved,5,chat
+T000061,C000902,Wrong item received,2025-11-10T00:00:00,resolved,5,chat
+T000062,C000687,Product damaged,2025-07-19T00:00:00,resolved,4,phone
+T000063,C000266,Login problem,2025-10-03T00:00:00,resolved,2,email
+T000064,C001332,Product damaged,2025-01-28T00:00:00,resolved,5,phone
+T000065,C000680,Wrong item received,2025-03-23T00:00:00,resolved,3,email
+T000066,C001388,Wrong item received,2024-08-18T00:00:00,resolved,4,social
+T000067,C000599,Refund request,2025-05-13T00:00:00,escalated,5,chat
+T000068,C001044,Login problem,2024-04-09T00:00:00,resolved,3,phone
+T000069,C000715,Product damaged,2024-03-07T00:00:00,escalated,3,chat
+T000070,C000557,Wrong item received,2025-10-24T00:00:00,escalated,4,social
+T000071,C000822,Refund request,2025-12-20T00:00:00,resolved,5,email
+T000072,C001494,Product damaged,2024-02-05T00:00:00,resolved,4,email
+T000073,C000559,Wrong item received,2025-12-19T00:00:00,resolved,3,social
+T000074,C001015,Refund request,2025-10-09T00:00:00,escalated,5,email
+T000075,C001407,Login problem,2025-08-12T00:00:00,resolved,4,social
+T000076,C000431,Login problem,2024-03-16T00:00:00,escalated,0,email
+T000077,C000815,Discount inquiry,2025-02-20T00:00:00,closed,5,email
+T000078,C000470,Discount inquiry,2025-10-03T00:00:00,resolved,4,phone
+T000079,C001125,Product damaged,2024-04-08T00:00:00,resolved,5,chat
+T000080,C000534,Login problem,2025-02-22T00:00:00,closed,5,phone
+T000081,C000228,Product damaged,2024-06-07T00:00:00,resolved,5,social
+T000082,C000824,Discount inquiry,2025-08-30T00:00:00,resolved,5,phone
+T000083,C001196,Login problem,2024-12-29T00:00:00,open,4,chat
+T000084,C001000,Product damaged,2024-10-13T00:00:00,resolved,5,social
+T000085,C000245,Refund request,2025-04-22T00:00:00,resolved,5,chat
+T000086,C001015,Login problem,2024-04-06T00:00:00,resolved,5,social
+T000087,C000168,Product damaged,2024-09-28T00:00:00,resolved,2,chat
+T000088,C000075,Product damaged,2024-09-28T00:00:00,open,5,social
+T000089,C000535,Product damaged,2024-10-17T00:00:00,resolved,4,phone
+T000090,C001227,Wrong item received,2025-02-28T00:00:00,resolved,3,chat
+T000091,C000526,Wrong item received,2024-03-29T00:00:00,resolved,4,email
+T000092,C000448,Discount inquiry,2025-04-19T00:00:00,resolved,4,social
+T000093,C000877,Where is my order?,2024-05-18T00:00:00,resolved,2,phone
+T000094,C000909,Discount inquiry,2024-09-09T00:00:00,resolved,5,phone
+T000095,C000639,Login problem,2024-06-26T00:00:00,resolved,5,social
+T000096,C000576,Wrong item received,2025-11-06T00:00:00,resolved,4,chat
+T000097,C000006,Login problem,2024-06-23T00:00:00,resolved,5,phone
+T000098,C000578,Product damaged,2024-06-07T00:00:00,resolved,5,phone
+T000099,C000293,Wrong item received,2025-03-16T00:00:00,resolved,5,chat
+T000100,C000251,Product damaged,2025-12-05T00:00:00,resolved,2,chat
+T000101,C000559,Wrong item received,2024-05-15T00:00:00,resolved,5,social
+T000102,C000694,Product damaged,2024-01-07T00:00:00,resolved,4,email
+T000103,C001045,Wrong item received,2024-10-07T00:00:00,escalated,1,email
+T000104,C000898,Login problem,2024-06-09T00:00:00,resolved,5,phone
+T000105,C000628,Wrong item received,2024-02-03T00:00:00,resolved,3,phone
+T000106,C001000,Where is my order?,2025-06-26T00:00:00,open,5,social
+T000107,C000962,Login problem,2024-06-11T00:00:00,resolved,5,social
+T000108,C000256,Login problem,2025-04-04T00:00:00,closed,4,chat
+T000109,C000889,Product damaged,2025-09-21T00:00:00,closed,3,email
+T000110,C001189,Product damaged,2025-10-11T00:00:00,open,4,social
+T000111,C001311,Product damaged,2025-04-13T00:00:00,resolved,5,chat
+T000112,C000549,Discount inquiry,2025-09-13T00:00:00,resolved,5,social
+T000113,C001001,Wrong item received,2024-12-20T00:00:00,escalated,5,social
+T000114,C000837,Product damaged,2025-05-31T00:00:00,open,4,email
+T000115,C001406,Refund request,2024-12-04T00:00:00,resolved,4,social
+T000116,C001323,Refund request,2025-05-28T00:00:00,open,5,email
+T000117,C000812,Wrong item received,2024-05-06T00:00:00,open,5,email
+T000118,C000990,Discount inquiry,2025-04-05T00:00:00,resolved,5,email
+T000119,C000424,Wrong item received,2025-07-21T00:00:00,resolved,5,email
+T000120,C001339,Wrong item received,2024-11-22T00:00:00,closed,3,email
+T000121,C000215,Login problem,2025-02-11T00:00:00,resolved,2,phone
+T000122,C000511,Refund request,2025-03-09T00:00:00,resolved,2,phone
+T000123,C001025,Wrong item received,2025-06-25T00:00:00,open,4,chat
+T000124,C000397,Where is my order?,2024-03-14T00:00:00,resolved,3,phone
+T000125,C001153,Discount inquiry,2025-05-10T00:00:00,closed,5,phone
+T000126,C000532,Product damaged,2024-03-29T00:00:00,resolved,5,social
+T000127,C000873,Discount inquiry,2024-01-13T00:00:00,resolved,5,social
+T000128,C000723,Product damaged,2024-03-02T00:00:00,resolved,0,social
+T000129,C001337,Refund request,2024-06-27T00:00:00,resolved,0,phone
+T000130,C000296,Where is my order?,2024-12-10T00:00:00,resolved,4,phone
+T000131,C000872,Where is my order?,2025-10-18T00:00:00,closed,3,chat
+T000132,C000088,Refund request,2025-03-01T00:00:00,resolved,4,email
+T000133,C000158,Login problem,2024-11-26T00:00:00,escalated,2,social
+T000134,C001334,Login problem,2024-01-19T00:00:00,resolved,4,email
+T000135,C000076,Discount inquiry,2025-07-31T00:00:00,resolved,5,social
+T000136,C001087,Login problem,2025-02-09T00:00:00,closed,5,phone
+T000137,C000857,Where is my order?,2025-07-19T00:00:00,open,4,phone
+T000138,C000232,Where is my order?,2024-10-24T00:00:00,resolved,5,phone
+T000139,C000110,Wrong item received,2025-06-22T00:00:00,closed,5,chat
+T000140,C000404,Where is my order?,2025-08-15T00:00:00,resolved,5,phone
+T000141,C000053,Product damaged,2024-02-23T00:00:00,escalated,3,social
+T000142,C000362,Where is my order?,2025-02-11T00:00:00,resolved,4,chat
+T000143,C001008,Discount inquiry,2024-10-19T00:00:00,escalated,2,social
+T000144,C001277,Wrong item received,2025-06-19T00:00:00,resolved,4,phone
+T000145,C000129,Refund request,2024-08-24T00:00:00,resolved,4,chat
+T000146,C000356,Discount inquiry,2024-06-05T00:00:00,open,5,phone
+T000147,C001177,Wrong item received,2025-04-09T00:00:00,resolved,0,chat
+T000148,C000524,Where is my order?,2024-02-08T00:00:00,resolved,3,phone
+T000149,C001127,Product damaged,2025-12-01T00:00:00,resolved,2,chat
+T000150,C000480,Where is my order?,2025-10-18T00:00:00,resolved,4,chat
+T000151,C000739,Product damaged,2025-09-06T00:00:00,resolved,5,social
+T000152,C001288,Refund request,2025-08-10T00:00:00,open,5,social
+T000153,C000443,Login problem,2025-02-13T00:00:00,closed,2,phone
+T000154,C000979,Product damaged,2024-12-24T00:00:00,closed,4,email
+T000155,C000573,Discount inquiry,2024-12-10T00:00:00,resolved,4,email
+T000156,C000027,Wrong item received,2025-05-26T00:00:00,resolved,5,email
+T000157,C001498,Where is my order?,2024-07-11T00:00:00,resolved,5,email
+T000158,C000464,Discount inquiry,2025-01-06T00:00:00,open,5,phone
+T000159,C000429,Where is my order?,2024-08-30T00:00:00,open,5,social
+T000160,C001189,Product damaged,2025-03-06T00:00:00,resolved,5,chat
+T000161,C000830,Where is my order?,2024-02-01T00:00:00,escalated,3,phone
+T000162,C000669,Where is my order?,2024-07-09T00:00:00,escalated,4,phone
+T000163,C000784,Wrong item received,2024-02-25T00:00:00,resolved,5,social
+T000164,C000565,Login problem,2024-05-13T00:00:00,resolved,1,phone
+T000165,C000239,Where is my order?,2025-01-23T00:00:00,resolved,1,phone
+T000166,C000389,Where is my order?,2024-04-17T00:00:00,resolved,5,social
+T000167,C000247,Discount inquiry,2025-09-08T00:00:00,resolved,4,chat
+T000168,C000094,Where is my order?,2024-12-08T00:00:00,resolved,4,chat
+T000169,C000059,Where is my order?,2025-07-21T00:00:00,resolved,3,email
+T000170,C000681,Login problem,2025-02-26T00:00:00,open,5,chat
+T000171,C000322,Refund request,2025-03-03T00:00:00,resolved,5,social
+T000172,C000885,Product damaged,2024-09-01T00:00:00,resolved,5,email
+T000173,C000307,Discount inquiry,2024-07-09T00:00:00,open,5,email
+T000174,C000111,Login problem,2025-02-10T00:00:00,resolved,4,phone
+T000175,C000603,Refund request,2025-08-18T00:00:00,closed,5,social
+T000176,C000901,Product damaged,2025-03-30T00:00:00,resolved,5,email
+T000177,C000752,Where is my order?,2025-04-27T00:00:00,resolved,5,phone
+T000178,C001460,Wrong item received,2025-05-22T00:00:00,resolved,4,social
+T000179,C001421,Product damaged,2025-11-24T00:00:00,resolved,0,chat
+T000180,C001079,Discount inquiry,2025-04-20T00:00:00,resolved,1,email
+T000181,C000821,Refund request,2025-07-21T00:00:00,resolved,0,chat
+T000182,C000232,Where is my order?,2024-04-05T00:00:00,resolved,3,email
+T000183,C000321,Wrong item received,2024-10-26T00:00:00,open,5,chat
+T000184,C000625,Login problem,2025-03-02T00:00:00,resolved,1,phone
+T000185,C000908,Wrong item received,2024-03-17T00:00:00,resolved,2,chat
+T000186,C000189,Where is my order?,2025-08-10T00:00:00,resolved,4,chat
+T000187,C000635,Wrong item received,2024-11-21T00:00:00,resolved,5,email
+T000188,C000393,Where is my order?,2024-09-17T00:00:00,escalated,4,email
+T000189,C001009,Where is my order?,2025-02-16T00:00:00,resolved,5,phone
+T000190,C001331,Where is my order?,2024-02-07T00:00:00,resolved,5,phone
+T000191,C001090,Where is my order?,2024-08-14T00:00:00,resolved,4,email
+T000192,C000931,Where is my order?,2024-06-15T00:00:00,closed,0,social
+T000193,C001202,Product damaged,2025-01-24T00:00:00,closed,4,email
+T000194,C000062,Discount inquiry,2024-03-06T00:00:00,resolved,3,chat
+T000195,C000595,Login problem,2024-05-12T00:00:00,open,3,social
+T000196,C001132,Product damaged,2024-06-01T00:00:00,resolved,4,chat
+T000197,C000421,Wrong item received,2024-10-04T00:00:00,resolved,0,email
+T000198,C000250,Login problem,2024-09-16T00:00:00,resolved,5,social
+T000199,C000893,Product damaged,2024-05-27T00:00:00,closed,4,phone
+T000200,C000468,Wrong item received,2024-03-04T00:00:00,resolved,0,chat
+T000201,C000258,Where is my order?,2024-03-16T00:00:00,resolved,4,social
+T000202,C000112,Discount inquiry,2024-08-17T00:00:00,open,1,chat
+T000203,C000200,Wrong item received,2025-10-04T00:00:00,resolved,5,chat
+T000204,C001411,Login problem,2025-03-08T00:00:00,resolved,5,social
+T000205,C000587,Product damaged,2025-03-10T00:00:00,resolved,3,phone
+T000206,C000201,Product damaged,2025-03-19T00:00:00,resolved,5,social
+T000207,C000069,Wrong item received,2024-11-27T00:00:00,escalated,5,phone
+T000208,C000974,Where is my order?,2025-10-30T00:00:00,closed,4,chat
+T000209,C001312,Wrong item received,2025-03-11T00:00:00,escalated,5,email
+T000210,C001400,Login problem,2024-01-13T00:00:00,resolved,2,email
+T000211,C001308,Discount inquiry,2025-05-10T00:00:00,resolved,2,chat
+T000212,C000927,Where is my order?,2025-01-19T00:00:00,resolved,2,phone
+T000213,C000028,Where is my order?,2024-10-07T00:00:00,resolved,5,chat
+T000214,C001308,Login problem,2024-10-17T00:00:00,resolved,4,phone
+T000215,C000547,Refund request,2025-12-19T00:00:00,resolved,3,social
+T000216,C000509,Discount inquiry,2025-03-18T00:00:00,resolved,5,social
+T000217,C001028,Refund request,2025-01-03T00:00:00,escalated,5,phone
+T000218,C000156,Wrong item received,2025-11-12T00:00:00,resolved,2,email
+T000219,C000520,Discount inquiry,2024-01-05T00:00:00,resolved,5,email
+T000220,C001061,Discount inquiry,2024-12-01T00:00:00,resolved,4,social
+T000221,C000550,Where is my order?,2025-10-21T00:00:00,open,5,email
+T000222,C000670,Product damaged,2025-11-03T00:00:00,resolved,5,phone
+T000223,C001028,Discount inquiry,2024-03-10T00:00:00,resolved,3,social
+T000224,C000815,Where is my order?,2025-06-01T00:00:00,resolved,5,phone
+T000225,C000589,Login problem,2024-03-19T00:00:00,closed,5,chat
+T000226,C000551,Wrong item received,2024-02-06T00:00:00,open,1,social
+T000227,C000363,Discount inquiry,2025-05-14T00:00:00,resolved,2,email
+T000228,C001045,Wrong item received,2025-06-29T00:00:00,open,5,phone
+T000229,C000182,Refund request,2024-05-05T00:00:00,closed,2,social
+T000230,C001193,Discount inquiry,2024-12-06T00:00:00,resolved,4,phone
+T000231,C000429,Where is my order?,2024-09-04T00:00:00,resolved,5,social
+T000232,C000280,Where is my order?,2024-12-20T00:00:00,escalated,3,phone
+T000233,C001063,Login problem,2024-12-18T00:00:00,resolved,5,social
+T000234,C001432,Product damaged,2024-04-28T00:00:00,resolved,5,phone
+T000235,C001017,Wrong item received,2025-10-30T00:00:00,resolved,5,chat
+T000236,C001332,Refund request,2025-05-18T00:00:00,resolved,2,phone
+T000237,C000207,Product damaged,2025-11-23T00:00:00,open,5,chat
+T000238,C000379,Login problem,2024-02-05T00:00:00,resolved,2,chat
+T000239,C000229,Wrong item received,2025-01-13T00:00:00,resolved,5,chat
+T000240,C000293,Where is my order?,2024-12-16T00:00:00,closed,3,phone
+T000241,C001358,Refund request,2024-12-03T00:00:00,closed,1,email
+T000242,C001176,Product damaged,2025-01-07T00:00:00,resolved,3,social
+T000243,C001012,Wrong item received,2025-09-14T00:00:00,resolved,5,phone
+T000244,C001000,Login problem,2024-08-03T00:00:00,resolved,4,phone
+T000245,C001066,Where is my order?,2025-10-03T00:00:00,resolved,3,email
+T000246,C000261,Refund request,2025-08-19T00:00:00,resolved,5,email
+T000247,C001351,Where is my order?,2025-10-13T00:00:00,resolved,5,email
+T000248,C000060,Product damaged,2025-05-01T00:00:00,resolved,1,email
+T000249,C000364,Login problem,2024-09-23T00:00:00,closed,5,chat
+T000250,C001457,Refund request,2024-04-16T00:00:00,resolved,2,phone
+T000251,C000371,Refund request,2024-08-21T00:00:00,closed,4,phone
+T000252,C001072,Wrong item received,2024-11-25T00:00:00,escalated,4,chat
+T000253,C000424,Where is my order?,2025-08-21T00:00:00,resolved,5,chat
+T000254,C001150,Discount inquiry,2025-03-26T00:00:00,resolved,4,email
+T000255,C000461,Login problem,2024-04-24T00:00:00,open,3,phone
+T000256,C000287,Wrong item received,2025-01-19T00:00:00,resolved,5,phone
+T000257,C000914,Product damaged,2024-03-10T00:00:00,resolved,5,social
+T000258,C001112,Product damaged,2024-11-04T00:00:00,open,4,phone
+T000259,C001106,Refund request,2024-01-04T00:00:00,resolved,5,social
+T000260,C000473,Where is my order?,2025-07-10T00:00:00,resolved,3,social
+T000261,C000125,Product damaged,2025-11-18T00:00:00,resolved,5,chat
+T000262,C000750,Product damaged,2024-11-16T00:00:00,resolved,2,email
+T000263,C000031,Refund request,2024-11-24T00:00:00,closed,5,phone
+T000264,C000418,Discount inquiry,2024-09-27T00:00:00,open,3,email
+T000265,C001367,Refund request,2025-07-22T00:00:00,resolved,3,chat
+T000266,C000118,Wrong item received,2024-05-19T00:00:00,closed,5,social
+T000267,C001211,Refund request,2025-07-20T00:00:00,closed,4,chat
+T000268,C000448,Where is my order?,2025-04-20T00:00:00,closed,4,chat
+T000269,C000205,Refund request,2024-11-24T00:00:00,resolved,5,email
+T000270,C000780,Login problem,2025-02-24T00:00:00,resolved,4,social
+T000271,C000436,Where is my order?,2024-08-26T00:00:00,resolved,3,email
+T000272,C001471,Wrong item received,2025-03-17T00:00:00,resolved,5,chat
+T000273,C000690,Where is my order?,2024-08-13T00:00:00,resolved,4,email
+T000274,C000389,Wrong item received,2024-09-18T00:00:00,resolved,4,email
+T000275,C000955,Refund request,2024-01-09T00:00:00,resolved,4,phone
+T000276,C000056,Where is my order?,2025-02-28T00:00:00,open,4,email
+T000277,C000029,Product damaged,2024-10-20T00:00:00,resolved,5,phone
+T000278,C000197,Refund request,2025-02-04T00:00:00,escalated,4,chat
+T000279,C000260,Login problem,2024-11-01T00:00:00,resolved,1,phone
+T000280,C000301,Product damaged,2025-01-03T00:00:00,resolved,4,chat
+T000281,C000275,Wrong item received,2025-08-12T00:00:00,resolved,5,phone
+T000282,C000787,Discount inquiry,2025-03-27T00:00:00,resolved,5,social
+T000283,C000325,Discount inquiry,2024-02-05T00:00:00,resolved,4,email
+T000284,C000479,Wrong item received,2024-11-17T00:00:00,closed,5,email
+T000285,C001164,Login problem,2025-09-10T00:00:00,resolved,2,chat
+T000286,C000568,Login problem,2024-11-25T00:00:00,resolved,3,email
+T000287,C001493,Product damaged,2025-04-02T00:00:00,resolved,5,chat
+T000288,C000533,Wrong item received,2024-02-26T00:00:00,resolved,5,chat
+T000289,C001414,Product damaged,2025-11-12T00:00:00,resolved,3,chat
+T000290,C000019,Refund request,2025-07-31T00:00:00,resolved,3,social
+T000291,C000647,Wrong item received,2025-09-07T00:00:00,resolved,5,email
+T000292,C000146,Product damaged,2024-08-17T00:00:00,escalated,5,email
+T000293,C000714,Discount inquiry,2025-10-06T00:00:00,resolved,4,email
+T000294,C001169,Product damaged,2024-03-14T00:00:00,open,5,social
+T000295,C000735,Discount inquiry,2024-11-12T00:00:00,resolved,0,email
+T000296,C000082,Where is my order?,2024-10-27T00:00:00,resolved,3,chat
+T000297,C000734,Discount inquiry,2024-09-14T00:00:00,resolved,4,phone
+T000298,C000605,Login problem,2025-07-02T00:00:00,resolved,5,email
+T000299,C000577,Discount inquiry,2025-07-18T00:00:00,resolved,2,social
+T000300,C000870,Product damaged,2024-05-17T00:00:00,resolved,5,phone
+T000301,C001086,Wrong item received,2024-02-10T00:00:00,resolved,5,email
+T000302,C000182,Where is my order?,2025-06-03T00:00:00,resolved,2,social
+T000303,C000722,Wrong item received,2024-06-30T00:00:00,resolved,5,email
+T000304,C000753,Product damaged,2025-08-02T00:00:00,resolved,5,email
+T000305,C000692,Login problem,2024-01-23T00:00:00,escalated,1,email
+T000306,C001018,Where is my order?,2024-09-19T00:00:00,resolved,3,social
+T000307,C000991,Login problem,2025-11-08T00:00:00,escalated,2,email
+T000308,C001281,Wrong item received,2024-02-10T00:00:00,closed,5,phone
+T000309,C001434,Where is my order?,2024-09-10T00:00:00,resolved,4,email
+T000310,C000332,Product damaged,2025-01-05T00:00:00,closed,5,chat
+T000311,C000599,Login problem,2024-10-11T00:00:00,resolved,5,phone
+T000312,C000514,Product damaged,2025-11-30T00:00:00,resolved,3,phone
+T000313,C000379,Where is my order?,2025-06-04T00:00:00,escalated,2,phone
+T000314,C000909,Refund request,2025-10-09T00:00:00,resolved,3,chat
+T000315,C001009,Wrong item received,2025-09-01T00:00:00,resolved,4,chat
+T000316,C001176,Wrong item received,2024-04-04T00:00:00,escalated,1,chat
+T000317,C001085,Product damaged,2025-08-12T00:00:00,resolved,5,chat
+T000318,C000787,Discount inquiry,2024-12-13T00:00:00,resolved,4,phone
+T000319,C001319,Discount inquiry,2024-10-23T00:00:00,open,2,social
+T000320,C001147,Wrong item received,2024-01-19T00:00:00,closed,3,social
+T000321,C000813,Wrong item received,2025-11-13T00:00:00,resolved,4,chat
+T000322,C001171,Refund request,2025-04-26T00:00:00,resolved,5,phone
+T000323,C000561,Product damaged,2024-05-31T00:00:00,resolved,5,social
+T000324,C000251,Refund request,2025-03-09T00:00:00,escalated,4,chat
+T000325,C000904,Login problem,2025-03-21T00:00:00,resolved,3,social
+T000326,C000117,Discount inquiry,2025-12-09T00:00:00,resolved,5,phone
+T000327,C000747,Login problem,2024-06-16T00:00:00,escalated,5,phone
+T000328,C000231,Login problem,2025-04-04T00:00:00,escalated,4,email
+T000329,C001087,Login problem,2024-12-29T00:00:00,open,4,email
+T000330,C000053,Product damaged,2025-10-05T00:00:00,escalated,4,phone
+T000331,C001210,Wrong item received,2025-10-29T00:00:00,escalated,4,email
+T000332,C001354,Product damaged,2024-11-06T00:00:00,open,4,social
+T000333,C000227,Where is my order?,2024-10-05T00:00:00,resolved,4,social
+T000334,C000113,Product damaged,2024-05-18T00:00:00,closed,3,email
+T000335,C000737,Product damaged,2025-01-12T00:00:00,resolved,5,chat
+T000336,C000938,Refund request,2024-11-27T00:00:00,resolved,0,phone
+T000337,C001004,Product damaged,2024-09-21T00:00:00,closed,4,chat
+T000338,C000689,Wrong item received,2024-12-10T00:00:00,resolved,4,social
+T000339,C000431,Product damaged,2024-09-04T00:00:00,resolved,0,email
+T000340,C001451,Where is my order?,2024-12-07T00:00:00,closed,2,phone
+T000341,C000020,Login problem,2025-12-03T00:00:00,resolved,1,social
+T000342,C000267,Wrong item received,2025-06-24T00:00:00,open,3,social
+T000343,C000796,Product damaged,2025-08-08T00:00:00,resolved,2,social
+T000344,C000123,Discount inquiry,2025-07-22T00:00:00,closed,2,phone
+T000345,C001321,Login problem,2025-03-12T00:00:00,resolved,4,social
+T000346,C001249,Where is my order?,2025-07-07T00:00:00,open,5,social
+T000347,C000891,Product damaged,2025-11-28T00:00:00,resolved,5,chat
+T000348,C000402,Product damaged,2025-12-09T00:00:00,resolved,0,social
+T000349,C000210,Product damaged,2025-03-18T00:00:00,resolved,4,social
+T000350,C001394,Product damaged,2025-06-22T00:00:00,resolved,4,social
+T000351,C000589,Where is my order?,2025-07-31T00:00:00,resolved,5,social
+T000352,C001191,Where is my order?,2024-12-07T00:00:00,escalated,3,phone
+T000353,C000702,Refund request,2025-09-13T00:00:00,resolved,5,email
+T000354,C000714,Discount inquiry,2025-03-13T00:00:00,resolved,5,phone
+T000355,C000426,Login problem,2024-02-24T00:00:00,resolved,5,email
+T000356,C000402,Wrong item received,2024-08-08T00:00:00,resolved,3,email
+T000357,C000289,Login problem,2024-08-01T00:00:00,resolved,5,social
+T000358,C001175,Product damaged,2024-06-28T00:00:00,resolved,5,email
+T000359,C000184,Login problem,2025-12-14T00:00:00,resolved,4,email
+T000360,C000241,Wrong item received,2025-10-22T00:00:00,resolved,2,social
+T000361,C000538,Refund request,2024-02-10T00:00:00,resolved,5,phone
+T000362,C001133,Discount inquiry,2025-04-18T00:00:00,closed,5,chat
+T000363,C001208,Where is my order?,2024-12-23T00:00:00,closed,3,email
+T000364,C000386,Discount inquiry,2024-08-24T00:00:00,open,3,email
+T000365,C000752,Login problem,2025-09-09T00:00:00,closed,3,chat
+T000366,C000315,Discount inquiry,2024-08-10T00:00:00,closed,5,phone
+T000367,C001142,Refund request,2025-11-22T00:00:00,open,5,chat
+T000368,C000325,Discount inquiry,2025-06-26T00:00:00,resolved,5,social
+T000369,C000494,Wrong item received,2024-11-09T00:00:00,resolved,3,email
+T000370,C000498,Wrong item received,2024-01-10T00:00:00,resolved,4,phone
+T000371,C001400,Login problem,2024-03-22T00:00:00,resolved,2,social
+T000372,C000324,Where is my order?,2025-01-01T00:00:00,closed,5,phone
+T000373,C000323,Login problem,2025-03-10T00:00:00,resolved,5,chat
+T000374,C001383,Discount inquiry,2025-12-20T00:00:00,resolved,4,social
+T000375,C001143,Wrong item received,2025-04-17T00:00:00,resolved,2,chat
+T000376,C001217,Refund request,2024-03-22T00:00:00,escalated,0,social
+T000377,C000339,Login problem,2025-06-02T00:00:00,resolved,4,social
+T000378,C001262,Where is my order?,2024-03-26T00:00:00,resolved,4,phone
+T000379,C001222,Discount inquiry,2025-01-21T00:00:00,closed,5,phone
+T000380,C000576,Wrong item received,2024-04-12T00:00:00,resolved,5,email
+T000381,C000288,Product damaged,2024-01-19T00:00:00,resolved,5,email
+T000382,C000942,Discount inquiry,2024-04-14T00:00:00,resolved,4,chat
+T000383,C000510,Refund request,2025-12-05T00:00:00,resolved,0,phone
+T000384,C000864,Login problem,2025-01-08T00:00:00,resolved,5,social
+T000385,C000454,Product damaged,2025-01-01T00:00:00,resolved,4,chat
+T000386,C000428,Wrong item received,2024-03-05T00:00:00,resolved,2,chat
+T000387,C001046,Product damaged,2024-11-05T00:00:00,resolved,2,email
+T000388,C000448,Where is my order?,2025-05-03T00:00:00,resolved,3,email
+T000389,C001360,Login problem,2025-12-10T00:00:00,resolved,5,social
+T000390,C000736,Where is my order?,2025-02-28T00:00:00,open,0,email
+T000391,C000378,Wrong item received,2024-04-16T00:00:00,closed,0,social
+T000392,C000436,Refund request,2025-04-09T00:00:00,resolved,4,email
+T000393,C000170,Where is my order?,2024-01-06T00:00:00,resolved,1,phone
+T000394,C000847,Where is my order?,2024-06-09T00:00:00,escalated,0,phone
+T000395,C000326,Product damaged,2025-11-24T00:00:00,resolved,5,email
+T000396,C000427,Login problem,2025-06-20T00:00:00,resolved,2,social
+T000397,C000825,Refund request,2024-02-24T00:00:00,closed,5,email
+T000398,C000554,Product damaged,2024-09-12T00:00:00,resolved,5,chat
+T000399,C000964,Where is my order?,2024-03-26T00:00:00,escalated,3,email
+T000400,C000066,Product damaged,2024-11-06T00:00:00,resolved,2,phone
+T000401,C000143,Discount inquiry,2024-04-25T00:00:00,closed,4,social
+T000402,C000119,Login problem,2024-06-03T00:00:00,resolved,3,chat
+T000403,C001012,Discount inquiry,2025-05-11T00:00:00,resolved,5,chat
+T000404,C000525,Product damaged,2025-05-29T00:00:00,resolved,5,chat
+T000405,C000016,Refund request,2024-10-06T00:00:00,resolved,4,chat
+T000406,C000116,Discount inquiry,2025-01-31T00:00:00,escalated,3,social
+T000407,C000224,Product damaged,2025-05-18T00:00:00,escalated,2,phone
+T000408,C001021,Where is my order?,2025-05-25T00:00:00,open,5,email
+T000409,C000783,Product damaged,2024-02-26T00:00:00,closed,5,email
+T000410,C001162,Wrong item received,2025-05-26T00:00:00,open,5,social
+T000411,C000086,Refund request,2025-07-24T00:00:00,resolved,3,social
+T000412,C000667,Product damaged,2024-02-17T00:00:00,resolved,5,chat
+T000413,C000571,Discount inquiry,2024-05-20T00:00:00,closed,5,phone
+T000414,C000828,Wrong item received,2025-05-20T00:00:00,resolved,4,chat
+T000415,C000089,Product damaged,2024-03-07T00:00:00,open,5,social
+T000416,C000362,Discount inquiry,2025-02-24T00:00:00,resolved,4,social
+T000417,C000088,Refund request,2024-10-27T00:00:00,resolved,4,email
+T000418,C000603,Where is my order?,2024-06-02T00:00:00,resolved,5,email
+T000419,C000899,Where is my order?,2025-10-31T00:00:00,resolved,4,chat
+T000420,C000450,Product damaged,2025-03-12T00:00:00,resolved,5,phone
+T000421,C001220,Login problem,2025-10-28T00:00:00,resolved,3,email
+T000422,C000640,Where is my order?,2024-09-14T00:00:00,escalated,3,chat
+T000423,C000077,Login problem,2024-01-30T00:00:00,resolved,5,social
+T000424,C000712,Wrong item received,2024-04-23T00:00:00,open,2,email
+T000425,C000919,Discount inquiry,2025-04-29T00:00:00,resolved,4,chat
+T000426,C000742,Login problem,2025-04-12T00:00:00,resolved,4,social
+T000427,C000987,Login problem,2024-02-16T00:00:00,resolved,5,email
+T000428,C001237,Refund request,2024-06-12T00:00:00,resolved,5,email
+T000429,C000530,Where is my order?,2024-07-29T00:00:00,closed,4,phone
+T000430,C000226,Refund request,2025-01-06T00:00:00,resolved,5,chat
+T000431,C001274,Discount inquiry,2025-05-11T00:00:00,resolved,4,social
+T000432,C000574,Where is my order?,2025-12-05T00:00:00,escalated,3,email
+T000433,C000349,Where is my order?,2025-12-04T00:00:00,resolved,4,chat
+T000434,C000586,Login problem,2025-12-05T00:00:00,resolved,3,email
+T000435,C000185,Wrong item received,2024-06-29T00:00:00,open,5,social
+T000436,C000264,Discount inquiry,2024-03-03T00:00:00,resolved,5,email
+T000437,C001145,Where is my order?,2025-07-06T00:00:00,resolved,4,email
+T000438,C000143,Wrong item received,2025-02-17T00:00:00,resolved,5,social
+T000439,C001471,Login problem,2024-09-03T00:00:00,resolved,1,chat
+T000440,C001267,Discount inquiry,2024-12-26T00:00:00,resolved,5,social
+T000441,C000775,Login problem,2024-03-19T00:00:00,open,5,social
+T000442,C000711,Login problem,2025-07-08T00:00:00,closed,3,social
+T000443,C000111,Product damaged,2024-05-15T00:00:00,resolved,2,social
+T000444,C000385,Where is my order?,2024-05-27T00:00:00,resolved,5,chat
+T000445,C000736,Discount inquiry,2024-02-17T00:00:00,closed,1,social
+T000446,C001258,Where is my order?,2024-10-01T00:00:00,resolved,4,social
+T000447,C000418,Discount inquiry,2025-10-27T00:00:00,resolved,5,phone
+T000448,C001302,Where is my order?,2024-10-21T00:00:00,open,0,email
+T000449,C000895,Product damaged,2025-02-02T00:00:00,resolved,4,phone
+T000450,C001457,Refund request,2025-07-31T00:00:00,closed,3,chat
+T000451,C000881,Refund request,2024-03-04T00:00:00,open,5,social
+T000452,C000002,Discount inquiry,2025-06-30T00:00:00,resolved,0,social
+T000453,C000078,Product damaged,2025-01-28T00:00:00,resolved,2,phone
+T000454,C000963,Discount inquiry,2025-01-16T00:00:00,open,5,social
+T000455,C001250,Wrong item received,2024-02-22T00:00:00,escalated,5,phone
+T000456,C000118,Login problem,2024-09-26T00:00:00,resolved,4,email
+T000457,C000327,Login problem,2025-04-11T00:00:00,resolved,5,phone
+T000458,C000008,Where is my order?,2025-12-03T00:00:00,resolved,4,email
+T000459,C000242,Discount inquiry,2025-09-30T00:00:00,closed,5,social
+T000460,C000672,Login problem,2024-11-01T00:00:00,resolved,4,email
+T000461,C001109,Refund request,2024-10-16T00:00:00,resolved,5,phone
+T000462,C001045,Discount inquiry,2024-06-17T00:00:00,resolved,5,phone
+T000463,C000705,Refund request,2024-11-18T00:00:00,resolved,5,phone
+T000464,C001098,Where is my order?,2025-01-04T00:00:00,resolved,5,email
+T000465,C000239,Product damaged,2024-07-12T00:00:00,resolved,4,email
+T000466,C000896,Discount inquiry,2025-07-20T00:00:00,resolved,3,chat
+T000467,C000027,Where is my order?,2025-01-05T00:00:00,resolved,2,email
+T000468,C001086,Product damaged,2025-10-12T00:00:00,resolved,5,email
+T000469,C000592,Refund request,2024-04-14T00:00:00,resolved,3,email
+T000470,C001008,Wrong item received,2024-09-21T00:00:00,closed,0,chat
+T000471,C000138,Login problem,2024-12-05T00:00:00,resolved,1,phone
+T000472,C000442,Login problem,2024-06-06T00:00:00,resolved,4,social
+T000473,C001150,Discount inquiry,2025-08-08T00:00:00,resolved,5,social
+T000474,C001252,Where is my order?,2024-07-26T00:00:00,resolved,5,chat
+T000475,C000364,Discount inquiry,2024-07-27T00:00:00,resolved,0,chat
+T000476,C000845,Login problem,2024-07-22T00:00:00,open,4,phone
+T000477,C000617,Refund request,2024-05-06T00:00:00,resolved,4,chat
+T000478,C001260,Refund request,2024-03-29T00:00:00,resolved,4,email
+T000479,C001162,Login problem,2024-08-15T00:00:00,resolved,5,phone
+T000480,C000882,Refund request,2024-10-31T00:00:00,closed,5,phone
+T000481,C000172,Product damaged,2025-11-04T00:00:00,closed,0,chat
+T000482,C000763,Discount inquiry,2025-03-06T00:00:00,open,5,chat
+T000483,C000222,Login problem,2024-10-27T00:00:00,open,3,email
+T000484,C001093,Discount inquiry,2025-04-03T00:00:00,resolved,4,social
+T000485,C000467,Wrong item received,2024-09-02T00:00:00,open,5,email
+T000486,C000575,Refund request,2024-06-08T00:00:00,resolved,5,phone
+T000487,C000212,Discount inquiry,2025-11-08T00:00:00,resolved,3,chat
+T000488,C000055,Wrong item received,2025-09-17T00:00:00,open,5,email
+T000489,C000529,Where is my order?,2024-01-06T00:00:00,open,5,social
+T000490,C000777,Discount inquiry,2025-03-15T00:00:00,resolved,5,social
+T000491,C001335,Login problem,2024-06-05T00:00:00,resolved,5,chat
+T000492,C000976,Discount inquiry,2025-06-02T00:00:00,resolved,4,social
+T000493,C001031,Product damaged,2024-01-30T00:00:00,resolved,0,phone
+T000494,C001085,Discount inquiry,2024-02-29T00:00:00,open,0,phone
+T000495,C000412,Where is my order?,2024-07-13T00:00:00,resolved,5,phone
+T000496,C000603,Login problem,2025-04-20T00:00:00,resolved,3,chat
+T000497,C000203,Wrong item received,2025-06-20T00:00:00,closed,5,email
+T000498,C001153,Wrong item received,2025-06-03T00:00:00,resolved,3,social
+T000499,C000385,Login problem,2025-02-17T00:00:00,resolved,0,phone
+T000500,C001035,Wrong item received,2025-10-26T00:00:00,resolved,4,social
+T000501,C000023,Login problem,2024-01-15T00:00:00,open,2,email
+T000502,C000326,Discount inquiry,2025-05-13T00:00:00,resolved,3,phone
+T000503,C000756,Discount inquiry,2024-06-24T00:00:00,resolved,5,email
+T000504,C000864,Where is my order?,2025-07-13T00:00:00,resolved,4,phone
+T000505,C001292,Where is my order?,2024-10-19T00:00:00,resolved,4,social
+T000506,C001238,Where is my order?,2025-03-29T00:00:00,resolved,5,email
+T000507,C001087,Product damaged,2024-08-05T00:00:00,resolved,5,chat
+T000508,C001485,Product damaged,2024-09-21T00:00:00,closed,0,email
+T000509,C000556,Refund request,2025-06-30T00:00:00,resolved,4,chat
+T000510,C001104,Wrong item received,2025-01-21T00:00:00,resolved,3,phone
+T000511,C000792,Refund request,2024-03-02T00:00:00,resolved,5,email
+T000512,C000864,Login problem,2025-12-21T00:00:00,open,4,email
+T000513,C000655,Discount inquiry,2025-10-17T00:00:00,escalated,4,chat
+T000514,C000455,Where is my order?,2025-10-17T00:00:00,resolved,3,email
+T000515,C001439,Login problem,2024-08-04T00:00:00,resolved,1,chat
+T000516,C001445,Login problem,2024-09-03T00:00:00,resolved,4,social
+T000517,C000047,Where is my order?,2024-10-21T00:00:00,resolved,0,social
+T000518,C001106,Where is my order?,2025-10-13T00:00:00,resolved,3,phone
+T000519,C001463,Product damaged,2024-03-20T00:00:00,open,0,email
+T000520,C000978,Product damaged,2025-11-15T00:00:00,resolved,5,social
+T000521,C001216,Product damaged,2025-09-08T00:00:00,closed,5,phone
+T000522,C000227,Discount inquiry,2025-05-23T00:00:00,resolved,5,email
+T000523,C000720,Discount inquiry,2025-10-26T00:00:00,resolved,4,email
+T000524,C001081,Where is my order?,2024-11-12T00:00:00,closed,4,chat
+T000525,C001464,Product damaged,2025-02-14T00:00:00,escalated,3,chat
+T000526,C000905,Product damaged,2025-04-04T00:00:00,resolved,5,email
+T000527,C001228,Wrong item received,2025-09-21T00:00:00,resolved,3,social
+T000528,C000702,Refund request,2025-10-08T00:00:00,resolved,5,chat
+T000529,C000306,Product damaged,2024-09-26T00:00:00,resolved,4,social
+T000530,C000357,Refund request,2025-09-16T00:00:00,resolved,5,social
+T000531,C000331,Wrong item received,2024-05-18T00:00:00,resolved,4,email
+T000532,C000887,Where is my order?,2025-11-13T00:00:00,resolved,0,chat
+T000533,C000213,Discount inquiry,2024-08-21T00:00:00,resolved,3,phone
+T000534,C001140,Wrong item received,2025-02-20T00:00:00,resolved,5,phone
+T000535,C001261,Refund request,2024-05-18T00:00:00,escalated,3,social
+T000536,C000282,Product damaged,2024-06-07T00:00:00,resolved,5,social
+T000537,C000382,Login problem,2025-07-30T00:00:00,escalated,0,email
+T000538,C000464,Login problem,2025-01-04T00:00:00,resolved,5,email
+T000539,C001145,Refund request,2024-11-15T00:00:00,resolved,1,chat
+T000540,C001187,Login problem,2024-06-13T00:00:00,resolved,5,chat
+T000541,C000008,Login problem,2025-10-25T00:00:00,resolved,3,phone
+T000542,C000876,Product damaged,2025-02-26T00:00:00,escalated,4,email
+T000543,C001199,Where is my order?,2025-03-20T00:00:00,resolved,3,email
+T000544,C000013,Discount inquiry,2024-02-18T00:00:00,resolved,5,chat
+T000545,C000632,Product damaged,2024-12-13T00:00:00,closed,5,email
+T000546,C000196,Discount inquiry,2025-04-30T00:00:00,escalated,2,phone
+T000547,C001340,Wrong item received,2025-05-17T00:00:00,resolved,3,phone
+T000548,C000008,Product damaged,2025-10-24T00:00:00,resolved,3,chat
+T000549,C001362,Discount inquiry,2025-11-21T00:00:00,resolved,1,social
+T000550,C001405,Where is my order?,2024-07-21T00:00:00,resolved,0,phone
+T000551,C000223,Login problem,2025-02-25T00:00:00,resolved,3,social
+T000552,C001166,Where is my order?,2024-04-18T00:00:00,open,5,social
+T000553,C000134,Login problem,2024-04-30T00:00:00,resolved,3,chat
+T000554,C000001,Refund request,2025-10-16T00:00:00,resolved,0,social
+T000555,C000552,Refund request,2024-06-29T00:00:00,closed,0,chat
+T000556,C000502,Discount inquiry,2024-11-13T00:00:00,resolved,3,social
+T000557,C000693,Login problem,2024-05-23T00:00:00,resolved,1,email
+T000558,C000655,Product damaged,2024-07-16T00:00:00,resolved,4,chat
+T000559,C000162,Login problem,2024-03-24T00:00:00,resolved,4,chat
+T000560,C000393,Discount inquiry,2025-07-16T00:00:00,open,5,social
+T000561,C000648,Wrong item received,2025-07-31T00:00:00,resolved,5,email
+T000562,C001378,Product damaged,2024-12-18T00:00:00,resolved,3,phone
+T000563,C000467,Where is my order?,2024-02-20T00:00:00,resolved,1,phone
+T000564,C000041,Refund request,2025-11-05T00:00:00,resolved,0,social
+T000565,C000937,Product damaged,2024-10-12T00:00:00,resolved,5,phone
+T000566,C001469,Discount inquiry,2024-05-28T00:00:00,open,5,social
+T000567,C001075,Login problem,2025-03-14T00:00:00,resolved,3,email
+T000568,C000604,Login problem,2025-04-28T00:00:00,resolved,4,social
+T000569,C001473,Discount inquiry,2024-10-07T00:00:00,resolved,3,phone
+T000570,C001354,Where is my order?,2024-10-29T00:00:00,resolved,5,social
+T000571,C001285,Where is my order?,2025-11-05T00:00:00,resolved,4,social
+T000572,C001144,Product damaged,2024-10-25T00:00:00,closed,4,phone
+T000573,C001185,Refund request,2025-08-06T00:00:00,resolved,4,phone
+T000574,C000248,Discount inquiry,2024-05-11T00:00:00,resolved,5,chat
+T000575,C001237,Where is my order?,2025-04-26T00:00:00,closed,2,phone
+T000576,C000582,Discount inquiry,2025-06-12T00:00:00,resolved,5,chat
+T000577,C000961,Discount inquiry,2025-07-31T00:00:00,resolved,5,chat
+T000578,C000468,Wrong item received,2024-09-27T00:00:00,closed,2,chat
+T000579,C000239,Refund request,2025-10-28T00:00:00,closed,5,phone
+T000580,C000543,Where is my order?,2024-10-08T00:00:00,open,4,email
+T000581,C001052,Login problem,2024-01-21T00:00:00,escalated,5,phone
+T000582,C001210,Discount inquiry,2024-12-02T00:00:00,resolved,5,social
+T000583,C001105,Product damaged,2025-11-02T00:00:00,escalated,4,social
+T000584,C000428,Wrong item received,2025-12-08T00:00:00,escalated,5,phone
+T000585,C000150,Where is my order?,2025-10-14T00:00:00,open,5,chat
+T000586,C001305,Where is my order?,2024-06-04T00:00:00,closed,4,chat
+T000587,C000524,Login problem,2024-09-25T00:00:00,closed,4,phone
+T000588,C000951,Login problem,2025-10-12T00:00:00,resolved,5,email
+T000589,C000909,Discount inquiry,2024-01-26T00:00:00,resolved,4,email
+T000590,C001307,Refund request,2025-02-15T00:00:00,resolved,5,social
+T000591,C000828,Product damaged,2024-07-02T00:00:00,open,2,phone
+T000592,C000266,Product damaged,2025-03-13T00:00:00,resolved,5,social
+T000593,C001241,Where is my order?,2025-06-21T00:00:00,resolved,4,social
+T000594,C001051,Wrong item received,2025-09-28T00:00:00,escalated,5,social
+T000595,C001013,Product damaged,2025-11-10T00:00:00,resolved,0,phone
+T000596,C001270,Discount inquiry,2025-08-26T00:00:00,resolved,2,social
+T000597,C001158,Discount inquiry,2024-04-21T00:00:00,resolved,5,email
+T000598,C001390,Discount inquiry,2025-08-23T00:00:00,resolved,0,chat
+T000599,C000926,Refund request,2025-08-05T00:00:00,resolved,5,phone
+T000600,C001238,Where is my order?,2024-01-19T00:00:00,resolved,1,email
+T000601,C000646,Wrong item received,2025-09-09T00:00:00,resolved,5,chat
+T000602,C000914,Wrong item received,2025-07-10T00:00:00,closed,0,chat
+T000603,C001316,Wrong item received,2024-12-05T00:00:00,resolved,0,email
+T000604,C001326,Discount inquiry,2025-04-01T00:00:00,closed,5,phone
+T000605,C001313,Login problem,2024-11-01T00:00:00,resolved,5,email
+T000606,C001262,Wrong item received,2025-03-09T00:00:00,resolved,4,chat
+T000607,C001291,Refund request,2024-02-21T00:00:00,resolved,5,email
+T000608,C000088,Login problem,2024-06-24T00:00:00,resolved,5,chat
+T000609,C001068,Login problem,2025-11-17T00:00:00,resolved,5,email
+T000610,C001303,Product damaged,2024-05-08T00:00:00,resolved,2,email
+T000611,C001330,Refund request,2025-03-07T00:00:00,resolved,3,chat
+T000612,C000441,Login problem,2025-05-22T00:00:00,closed,5,social
+T000613,C001297,Wrong item received,2025-08-12T00:00:00,resolved,2,social
+T000614,C000587,Login problem,2025-11-22T00:00:00,open,5,social
+T000615,C000649,Where is my order?,2024-07-18T00:00:00,resolved,2,phone
+T000616,C001368,Refund request,2024-09-23T00:00:00,resolved,5,email
+T000617,C000910,Login problem,2024-11-28T00:00:00,resolved,3,chat
+T000618,C001333,Product damaged,2024-11-02T00:00:00,resolved,5,email
+T000619,C001215,Login problem,2025-08-01T00:00:00,resolved,5,social
+T000620,C000360,Product damaged,2025-10-10T00:00:00,resolved,4,email
+T000621,C001176,Login problem,2024-05-24T00:00:00,resolved,3,chat
+T000622,C000922,Wrong item received,2024-08-22T00:00:00,resolved,4,email
+T000623,C001325,Where is my order?,2025-03-31T00:00:00,resolved,5,phone
+T000624,C000715,Wrong item received,2024-03-31T00:00:00,closed,3,phone
+T000625,C000183,Discount inquiry,2025-10-30T00:00:00,resolved,5,email
+T000626,C000976,Discount inquiry,2024-12-29T00:00:00,resolved,5,chat
+T000627,C000848,Where is my order?,2025-03-15T00:00:00,resolved,2,social
+T000628,C001405,Where is my order?,2025-01-20T00:00:00,closed,3,email
+T000629,C001467,Refund request,2024-10-03T00:00:00,resolved,5,email
+T000630,C000002,Login problem,2024-07-08T00:00:00,resolved,5,social
+T000631,C001422,Login problem,2024-11-07T00:00:00,resolved,2,social
+T000632,C000742,Refund request,2025-04-13T00:00:00,open,4,social
+T000633,C000982,Where is my order?,2024-11-04T00:00:00,open,5,social
+T000634,C001064,Discount inquiry,2024-11-28T00:00:00,resolved,3,phone
+T000635,C000494,Where is my order?,2024-09-06T00:00:00,resolved,5,social
+T000636,C001439,Where is my order?,2024-07-09T00:00:00,resolved,4,email
+T000637,C000856,Login problem,2024-04-10T00:00:00,closed,5,social
+T000638,C000450,Product damaged,2024-01-13T00:00:00,resolved,2,chat
+T000639,C000337,Discount inquiry,2025-07-10T00:00:00,resolved,4,email
+T000640,C001300,Refund request,2025-03-03T00:00:00,resolved,5,social
+T000641,C000228,Where is my order?,2024-12-26T00:00:00,resolved,2,email
+T000642,C000884,Where is my order?,2025-02-11T00:00:00,resolved,5,social
+T000643,C000941,Product damaged,2024-02-29T00:00:00,resolved,5,email
+T000644,C000942,Discount inquiry,2025-11-03T00:00:00,resolved,3,social
+T000645,C001246,Wrong item received,2025-03-17T00:00:00,resolved,4,chat
+T000646,C000844,Where is my order?,2025-03-29T00:00:00,resolved,4,email
+T000647,C001125,Product damaged,2025-04-17T00:00:00,resolved,2,phone
+T000648,C000306,Discount inquiry,2025-09-11T00:00:00,resolved,4,social
+T000649,C001108,Product damaged,2025-06-13T00:00:00,open,4,phone
+T000650,C000524,Login problem,2024-08-09T00:00:00,resolved,4,social
+T000651,C001101,Login problem,2025-12-04T00:00:00,closed,4,chat
+T000652,C001028,Wrong item received,2024-07-10T00:00:00,resolved,2,email
+T000653,C001167,Where is my order?,2025-03-26T00:00:00,escalated,5,chat
+T000654,C001209,Where is my order?,2024-12-29T00:00:00,resolved,0,phone
+T000655,C000787,Refund request,2025-04-08T00:00:00,open,5,chat
+T000656,C000782,Wrong item received,2025-04-01T00:00:00,resolved,5,email
+T000657,C001097,Discount inquiry,2024-06-12T00:00:00,resolved,5,social
+T000658,C000631,Wrong item received,2025-09-15T00:00:00,escalated,3,email
+T000659,C001312,Login problem,2024-09-02T00:00:00,resolved,3,email
+T000660,C001163,Wrong item received,2024-10-12T00:00:00,resolved,3,phone
+T000661,C001353,Product damaged,2024-04-18T00:00:00,closed,4,phone
+T000662,C000960,Where is my order?,2025-07-05T00:00:00,open,5,email
+T000663,C000746,Discount inquiry,2024-04-18T00:00:00,open,3,social
+T000664,C001188,Where is my order?,2024-01-24T00:00:00,resolved,4,email
+T000665,C000622,Wrong item received,2025-03-18T00:00:00,resolved,4,email
+T000666,C000710,Discount inquiry,2025-11-29T00:00:00,resolved,5,phone
+T000667,C001262,Refund request,2024-09-18T00:00:00,resolved,4,email
+T000668,C001440,Where is my order?,2025-10-02T00:00:00,resolved,3,social
+T000669,C001095,Where is my order?,2025-09-02T00:00:00,resolved,4,social
+T000670,C001388,Wrong item received,2024-02-21T00:00:00,resolved,1,email
+T000671,C000596,Where is my order?,2024-11-11T00:00:00,resolved,4,social
+T000672,C000196,Login problem,2024-04-15T00:00:00,open,3,chat
+T000673,C000334,Login problem,2024-01-03T00:00:00,escalated,4,email
+T000674,C000701,Wrong item received,2025-06-15T00:00:00,closed,4,chat
+T000675,C001389,Product damaged,2024-01-12T00:00:00,resolved,4,chat
+T000676,C001437,Refund request,2025-05-10T00:00:00,resolved,5,phone
+T000677,C000120,Where is my order?,2024-07-21T00:00:00,resolved,3,social
+T000678,C000189,Product damaged,2025-04-03T00:00:00,resolved,4,phone
+T000679,C000311,Product damaged,2025-12-03T00:00:00,resolved,4,social
+T000680,C000858,Wrong item received,2024-09-27T00:00:00,closed,4,chat
+T000681,C001036,Refund request,2024-08-04T00:00:00,closed,5,email
+T000682,C000169,Refund request,2024-01-11T00:00:00,escalated,2,phone
+T000683,C000434,Discount inquiry,2024-09-25T00:00:00,escalated,0,social
+T000684,C000995,Login problem,2025-12-15T00:00:00,resolved,5,chat
+T000685,C001390,Login problem,2024-06-18T00:00:00,resolved,5,chat
+T000686,C000759,Refund request,2024-09-27T00:00:00,resolved,5,phone
+T000687,C000187,Discount inquiry,2024-09-03T00:00:00,resolved,5,chat
+T000688,C001327,Login problem,2024-12-13T00:00:00,resolved,5,email
+T000689,C001376,Where is my order?,2025-01-14T00:00:00,resolved,4,chat
+T000690,C000754,Refund request,2024-09-11T00:00:00,closed,5,chat
+T000691,C000028,Refund request,2025-05-31T00:00:00,resolved,5,social
+T000692,C000654,Product damaged,2024-06-19T00:00:00,resolved,0,phone
+T000693,C000301,Refund request,2024-10-12T00:00:00,resolved,5,phone
+T000694,C001165,Wrong item received,2024-12-23T00:00:00,resolved,4,social
+T000695,C000667,Refund request,2025-03-23T00:00:00,resolved,4,phone
+T000696,C000765,Where is my order?,2024-01-20T00:00:00,resolved,5,chat
+T000697,C000667,Where is my order?,2025-06-19T00:00:00,closed,5,phone
+T000698,C001255,Where is my order?,2024-10-26T00:00:00,resolved,3,phone
+T000699,C001063,Refund request,2025-01-23T00:00:00,resolved,5,social
+T000700,C000368,Refund request,2025-08-13T00:00:00,escalated,3,email
+T000701,C000876,Wrong item received,2024-06-10T00:00:00,resolved,2,social
+T000702,C001482,Login problem,2024-08-10T00:00:00,resolved,5,chat
+T000703,C001102,Wrong item received,2024-05-16T00:00:00,resolved,5,phone
+T000704,C001447,Where is my order?,2025-11-11T00:00:00,closed,0,chat
+T000705,C000041,Where is my order?,2024-03-06T00:00:00,resolved,2,social
+T000706,C000050,Product damaged,2024-08-08T00:00:00,open,2,chat
+T000707,C000908,Product damaged,2025-05-03T00:00:00,open,2,social
+T000708,C000433,Where is my order?,2025-05-14T00:00:00,resolved,4,social
+T000709,C000016,Where is my order?,2025-06-21T00:00:00,escalated,3,chat
+T000710,C000508,Refund request,2025-06-02T00:00:00,resolved,4,email
+T000711,C000360,Wrong item received,2024-06-02T00:00:00,open,5,social
+T000712,C000676,Wrong item received,2025-04-08T00:00:00,open,2,social
+T000713,C000796,Product damaged,2024-10-03T00:00:00,resolved,5,chat
+T000714,C000785,Refund request,2024-06-07T00:00:00,resolved,4,phone
+T000715,C000574,Product damaged,2025-02-21T00:00:00,resolved,3,phone
+T000716,C001204,Wrong item received,2025-08-02T00:00:00,open,5,email
+T000717,C000916,Discount inquiry,2024-03-17T00:00:00,resolved,1,email
+T000718,C001492,Discount inquiry,2025-03-18T00:00:00,resolved,3,chat
+T000719,C000696,Where is my order?,2024-03-17T00:00:00,closed,3,phone
+T000720,C001062,Discount inquiry,2024-06-04T00:00:00,resolved,5,social
+T000721,C000030,Wrong item received,2024-11-09T00:00:00,resolved,4,social
+T000722,C000216,Refund request,2024-02-28T00:00:00,resolved,5,email
+T000723,C000737,Discount inquiry,2025-01-20T00:00:00,resolved,0,social
+T000724,C000360,Wrong item received,2024-11-19T00:00:00,resolved,4,chat
+T000725,C000150,Refund request,2024-05-23T00:00:00,resolved,4,email
+T000726,C001387,Discount inquiry,2025-07-15T00:00:00,open,4,social
+T000727,C000063,Where is my order?,2025-06-21T00:00:00,resolved,2,social
+T000728,C000203,Discount inquiry,2024-10-16T00:00:00,open,1,phone
+T000729,C001441,Where is my order?,2025-02-13T00:00:00,resolved,0,email
+T000730,C001039,Product damaged,2025-10-27T00:00:00,closed,3,chat
+T000731,C000534,Refund request,2024-10-05T00:00:00,open,4,email
+T000732,C000406,Login problem,2024-06-26T00:00:00,escalated,3,social
+T000733,C001015,Refund request,2025-03-02T00:00:00,escalated,3,phone
+T000734,C000148,Where is my order?,2025-08-24T00:00:00,resolved,4,chat
+T000735,C000477,Product damaged,2025-06-08T00:00:00,resolved,5,social
+T000736,C001167,Product damaged,2025-05-14T00:00:00,closed,5,chat
+T000737,C000361,Discount inquiry,2024-04-30T00:00:00,resolved,3,email
+T000738,C000134,Wrong item received,2025-06-22T00:00:00,resolved,4,email
+T000739,C001461,Refund request,2025-12-10T00:00:00,resolved,5,social
+T000740,C000730,Wrong item received,2025-09-25T00:00:00,resolved,5,phone
+T000741,C000117,Wrong item received,2024-05-14T00:00:00,resolved,5,social
+T000742,C001080,Login problem,2024-04-26T00:00:00,open,5,phone
+T000743,C001440,Refund request,2024-09-07T00:00:00,resolved,5,email
+T000744,C000162,Product damaged,2025-06-29T00:00:00,resolved,5,social
+T000745,C000447,Product damaged,2024-01-25T00:00:00,resolved,5,social
+T000746,C000342,Where is my order?,2025-02-09T00:00:00,resolved,4,email
+T000747,C001177,Refund request,2024-12-18T00:00:00,resolved,5,email
+T000748,C000941,Wrong item received,2025-09-08T00:00:00,escalated,3,email
+T000749,C000461,Wrong item received,2025-02-10T00:00:00,resolved,5,email
+T000750,C000153,Wrong item received,2024-08-08T00:00:00,resolved,5,email
+T000751,C001158,Discount inquiry,2025-10-30T00:00:00,escalated,5,chat
+T000752,C000010,Product damaged,2024-03-17T00:00:00,resolved,5,phone
+T000753,C000825,Login problem,2024-02-06T00:00:00,resolved,2,phone
+T000754,C000074,Wrong item received,2025-10-09T00:00:00,resolved,5,email
+T000755,C000888,Wrong item received,2024-07-28T00:00:00,resolved,2,phone
+T000756,C000493,Product damaged,2024-07-30T00:00:00,resolved,0,phone
+T000757,C000862,Product damaged,2024-05-15T00:00:00,closed,5,chat
+T000758,C000773,Login problem,2024-05-02T00:00:00,resolved,2,chat
+T000759,C001363,Wrong item received,2024-03-17T00:00:00,closed,5,phone
+T000760,C001346,Where is my order?,2024-05-08T00:00:00,resolved,4,email
+T000761,C001201,Product damaged,2024-06-02T00:00:00,closed,4,email
+T000762,C001306,Product damaged,2024-07-25T00:00:00,resolved,3,social
+T000763,C000691,Refund request,2024-09-01T00:00:00,resolved,5,social
+T000764,C000461,Discount inquiry,2025-11-07T00:00:00,closed,5,chat
+T000765,C000410,Discount inquiry,2024-08-14T00:00:00,resolved,5,email
+T000766,C001438,Where is my order?,2024-01-12T00:00:00,open,5,social
+T000767,C000290,Login problem,2025-11-29T00:00:00,resolved,5,chat
+T000768,C000881,Refund request,2025-06-15T00:00:00,resolved,5,chat
+T000769,C000011,Refund request,2024-01-19T00:00:00,resolved,3,chat
+T000770,C000738,Wrong item received,2025-06-07T00:00:00,resolved,3,chat
+T000771,C000795,Wrong item received,2024-10-21T00:00:00,resolved,5,email
+T000772,C001322,Where is my order?,2025-09-04T00:00:00,resolved,5,email
+T000773,C000768,Where is my order?,2024-12-22T00:00:00,resolved,4,email
+T000774,C000831,Discount inquiry,2024-01-17T00:00:00,resolved,4,chat
+T000775,C000066,Product damaged,2025-04-12T00:00:00,resolved,0,phone
+T000776,C000798,Login problem,2025-04-17T00:00:00,resolved,2,chat
+T000777,C000821,Login problem,2024-04-06T00:00:00,resolved,3,chat
+T000778,C000401,Wrong item received,2025-09-10T00:00:00,resolved,4,social
+T000779,C000337,Refund request,2024-01-11T00:00:00,escalated,5,social
+T000780,C000164,Refund request,2024-01-31T00:00:00,resolved,3,phone
+T000781,C000582,Login problem,2025-05-14T00:00:00,open,5,chat
+T000782,C000292,Where is my order?,2025-04-25T00:00:00,resolved,4,social
+T000783,C000605,Refund request,2024-12-11T00:00:00,resolved,5,chat
+T000784,C000727,Discount inquiry,2024-01-16T00:00:00,closed,5,email
+T000785,C000873,Product damaged,2025-08-19T00:00:00,resolved,5,chat
+T000786,C000869,Refund request,2024-09-17T00:00:00,open,3,chat
+T000787,C000416,Wrong item received,2025-02-26T00:00:00,resolved,0,email
+T000788,C001158,Refund request,2025-06-17T00:00:00,resolved,5,email
+T000789,C000540,Wrong item received,2025-03-16T00:00:00,resolved,5,phone
+T000790,C000856,Login problem,2024-01-07T00:00:00,resolved,4,social
+T000791,C000026,Refund request,2024-06-20T00:00:00,resolved,5,phone
+T000792,C001353,Where is my order?,2025-11-05T00:00:00,resolved,3,social
+T000793,C000862,Refund request,2024-07-09T00:00:00,resolved,1,chat
+T000794,C000612,Login problem,2024-03-11T00:00:00,resolved,3,email
+T000795,C000795,Login problem,2024-09-10T00:00:00,resolved,5,chat
+T000796,C001135,Discount inquiry,2024-06-17T00:00:00,resolved,5,phone
+T000797,C000432,Wrong item received,2025-09-17T00:00:00,resolved,4,email
+T000798,C000053,Refund request,2025-07-10T00:00:00,open,4,chat
+T000799,C000888,Refund request,2024-04-21T00:00:00,open,3,social
