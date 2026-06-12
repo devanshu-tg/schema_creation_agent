@@ -116,44 +116,44 @@ export default function DataSourceGrid({
                 onSelect(s.id);
               }}
               className={clsx(
-                'flex flex-col items-start gap-2 rounded-xl border bg-tg-card p-3 text-left transition-all',
+                'flex flex-col items-start gap-2 rounded-xl border bg-tgl-card p-3 text-left transition-all',
                 isSelected
-                  ? 'border-tg-purple shadow-card-hover ring-1 ring-tg-purple-100'
-                  : 'border-tg-line shadow-card hover:border-tg-purple hover:bg-tg-hover',
+                  ? 'border-tg-orange ring-1 ring-tg-orange/30'
+                  : 'border-tgl-border hover:border-tg-orange hover:bg-tgl-bubble',
                 !s.enabled &&
-                  'cursor-not-allowed opacity-50 hover:border-tg-line hover:bg-tg-card',
-                isUpload && isDragActive && 'border-tg-purple bg-tg-purple-100',
+                  'cursor-not-allowed opacity-50 hover:border-tgl-border hover:bg-tgl-card',
+                isUpload && isDragActive && 'border-tg-orange bg-tgl-chip',
               )}
             >
               <div
                 className={clsx(
                   'flex h-8 w-8 items-center justify-center rounded-lg',
-                  isSelected ? 'bg-tg-purple-100 text-tg-purple-500' : 'bg-tg-hover text-tg-mute',
+                  isSelected ? 'bg-tgl-chip text-tg-orange' : 'bg-tgl-bubble text-tgl-mute',
                 )}
               >
                 <Icon size={15} />
               </div>
               <div className="flex w-full items-center justify-between">
-                <span className="text-[12.5px] font-semibold text-tg-ink">{s.label}</span>
+                <span className="text-[12.5px] font-semibold text-tgl-ink">{s.label}</span>
                 {!s.enabled && (
-                  <span className="rounded-full bg-tg-hover px-1.5 py-0.5 text-[9px] text-tg-mute">
+                  <span className="rounded-full bg-tgl-bubble px-1.5 py-0.5 text-[9px] text-tgl-mute">
                     soon
                   </span>
                 )}
               </div>
-              <p className="text-[11px] leading-snug text-tg-mute">{s.description}</p>
+              <p className="text-[11px] leading-snug text-tgl-mute">{s.description}</p>
             </button>
           );
         })}
       </div>
 
       {uploadedName && (
-        <div className="rounded-lg border border-tg-purple-100 bg-tg-purple-100 px-3 py-2 text-[12px] text-tg-purple-700">
+        <div className="rounded-lg bg-tgl-activeBg px-3 py-2 text-[12px] text-tgl-activeInk">
           ✓ <span className="font-medium">{uploadedName}</span> uploaded
         </div>
       )}
 
-      <div className="text-[11px] text-tg-mute">
+      <div className="text-[11px] text-tgl-mute">
         For data sources we currently support file loading only.
       </div>
     </div>

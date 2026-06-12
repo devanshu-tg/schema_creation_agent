@@ -4,6 +4,33 @@
 
 @import '@xyflow/react/dist/style.css';
 
+/* Override React Flow's bundled dark-mode CSS variables.
+   @xyflow/react ships with dark colors as defaults (#141414, #1e1e1e, etc.);
+   we redeclare them at :root so the canvas + minimap + controls render light. */
+:root {
+  --xy-background-color-default: #FFFFFF;
+  --xy-background-pattern-color-default: #E5E7EB;
+  --xy-node-background-color-default: #FFFFFF;
+  --xy-node-border-default: 1px solid #E5E7EB;
+  --xy-node-boxshadow-selected-default: 0 0 0 0.5px #F47B20;
+  --xy-handle-background-color-default: #F47B20;
+  --xy-handle-border-color-default: #FFFFFF;
+  --xy-edge-stroke-default: #9CA3AF;
+  --xy-edge-stroke-selected-default: #F47B20;
+  --xy-edge-label-background-color-default: #FFFFFF;
+  --xy-edge-label-color-default: #4B5563;
+  --xy-controls-button-background-color-default: #FFFFFF;
+  --xy-controls-button-background-color-hover-default: #F5F6F8;
+  --xy-controls-button-color-default: #1F2937;
+  --xy-controls-button-border-color-default: #E5E7EB;
+  --xy-minimap-background-color-default: #FFFFFF;
+  --xy-minimap-mask-background-color-default: rgba(245, 246, 248, 0.6);
+  --xy-minimap-node-background-color-default: #9CA3AF;
+  --xy-attribution-background-color-default: rgba(255, 255, 255, 0.5);
+  --xy-selection-background-color-default: rgba(244, 123, 32, 0.08);
+  --xy-selection-border-default: 1px dashed #F47B20;
+}
+
 html,
 body,
 #__next {
@@ -12,27 +39,27 @@ body,
 
 body {
   @apply text-tg-ink antialiased;
-  background: #17181C;
-  color-scheme: dark;
+  background: #FFFFFF;
+  color-scheme: light;
 }
 
-/* Style native scrollbars for dark mode */
+/* Native scrollbars for light theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #17181C;
+  background: #F5F6F8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #34373E;
+  background: #D1D5DB;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4B4F58;
+  background: #9CA3AF;
 }
 
-/* React Flow customizations — Savanna dark canvas look */
+/* React Flow customizations — Savanna light canvas look */
 .react-flow__node-vertex {
   background: transparent;
   border: none;
@@ -44,26 +71,26 @@ body {
   opacity: 0 !important;
 }
 
-/* Dark controls */
+/* Light controls */
 .react-flow__controls-button {
-  background: #22242A !important;
-  border-bottom: 1px solid #34373E !important;
-  color: #E8EAED !important;
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  color: #1F2937 !important;
 }
 .react-flow__controls-button:hover {
-  background: #2E3138 !important;
+  background: #F5F6F8 !important;
 }
 .react-flow__controls-button svg {
-  fill: #E8EAED;
+  fill: #1F2937;
 }
 
-/* Edge label backgrounds — give them a subtle dark pill so they're readable */
+/* Edge label backgrounds — subtle white pill on light canvas */
 .react-flow__edge-textbg {
-  fill: #17181C;
-  fill-opacity: 0.7;
+  fill: #FFFFFF;
+  fill-opacity: 0.85;
 }
 .react-flow__edge-text {
-  fill: #CFD2D7;
+  fill: #4B5563;
 }
 
 /* Typing indicator animation */

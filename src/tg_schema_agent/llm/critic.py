@@ -22,7 +22,7 @@ from tg_schema_agent.patterns import load_patterns
 
 log = logging.getLogger(__name__)
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-pro-preview")
 
 
 class CriticReview(BaseModel):
@@ -141,6 +141,11 @@ def critique(
     client = genai.Client(api_key=api_key)
     model_name = model or DEFAULT_MODEL
 
+    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    try:
+        _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
+    except ValueError:
+        _thinking_budget = _thinking_default
     try:
         resp = client.models.generate_content(
             model=model_name,
@@ -149,6 +154,7 @@ def critique(
                 system_instruction=_SYSTEM_INSTRUCTION,
                 response_mime_type="application/json",
                 temperature=0.3,
+                thinking_config=genai_types.ThinkingConfig(thinking_budget=_thinking_budget),
             ),
         )
         raw = (resp.text or "").strip()

@@ -21,7 +21,7 @@ from tg_schema_agent.models import BusinessContext, Schema
 
 log = logging.getLogger(__name__)
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-pro-preview")
 
 
 class StarterQuery(BaseModel):
@@ -70,6 +70,28 @@ Constraints:
 - Reuse the user's business_questions verbatim when naming queries when
   possible (snake_case the question).
 - Each query has ONE clear job — don't overload.
+
+CRITICAL — edge directions:
+- Each edge in the schema has `from` and `to` vertex types. The edge name
+  ONLY traverses from `from` → `to`. Going the other way requires the
+  REVERSE edge (named in pattern Vertex_VERB_OtherVertex; you'll see both
+  edges in the schema list when reverse-paired).
+- Example: if the schema has edge `Account_MADE_Transaction` with
+  from=Account, to=Transaction, you write:
+    `FROM acc:a -(Account_MADE_Transaction:e)- Transaction:t`
+  going from Account; you CANNOT use this edge starting from Transaction.
+  Look for the paired `Transaction_INITIATED_BY_Account` (the reverse) for
+  Transaction→Account traversal.
+- When picking an edge for a FROM clause, verify the `from` field matches
+  your source vertex type — otherwise you'll get a TYP-111 type check error
+  and the query is rejected as a draft.
+
+CRITICAL — query parameters:
+- If you parameterize a query, prefer scalar types (STRING, INT, FLOAT,
+  DATETIME) over VERTEX<T> — VERTEX parameters can be hard to pass from
+  the chat. For "find for a specific X" queries, take the X's primary_id
+  as a STRING/INT and look it up inside the query with
+  `Start = {X.* WHERE x.primary_id == param}`.
 
 Return ONLY a JSON object with this exact shape:
 
@@ -179,9 +201,15 @@ def _generate_with_gemini(
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     client = genai.Client(api_key=api_key)
 
+    model_name = model or DEFAULT_MODEL
+    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    try:
+        _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
+    except ValueError:
+        _thinking_budget = _thinking_default
     try:
         resp = client.models.generate_content(
-            model=model or DEFAULT_MODEL,
+            model=model_name,
             contents=[
                 genai_types.Content(
                     role="user",
@@ -192,6 +220,7 @@ def _generate_with_gemini(
                 system_instruction=_SYSTEM_INSTRUCTION,
                 response_mime_type="application/json",
                 temperature=0.2,
+                thinking_config=genai_types.ThinkingConfig(thinking_budget=_thinking_budget),
             ),
         )
     except Exception as exc:  # noqa: BLE001
@@ -239,22 +268,28 @@ async def _dry_run_query(
     Returns (ok, error_text_or_none). On parse / semantic errors, returns
     the GSQL error so the caller can re-prompt Gemini with the failure.
     """
-    # CREATE QUERY ... → INTERPRET QUERY ...
-    interp = query.gsql.strip()
-    if interp.upper().startswith("CREATE QUERY"):
-        interp = "INTERPRET QUERY" + interp[len("CREATE QUERY"):]
-
-    # Wrap in `USE GRAPH <name>; INTERPRET QUERY ... { ... }`
-    cmd = f"USE GRAPH {graph_name}\n{interp}"
-
+    # Validate via CREATE QUERY (parse + semantic check, no compilation)
+    # then DROP QUERY for cleanup. INTERPRET QUERY can't be used because
+    # GSQL rejects both names AND parameters on interpreted queries; our
+    # generated queries have both.
     from tg_schema_agent.deploy import _call, _is_success, _summarize_error
 
-    result = await _call(
-        session, "tigergraph__gsql", {"command": cmd}
+    create = await _call(
+        session,
+        "tigergraph__gsql",
+        {"command": f"USE GRAPH {graph_name}\n{query.gsql.strip()}"},
     )
-    if _is_success(result):
-        return True, None
-    return False, _summarize_error(result)
+    if not _is_success(create):
+        return False, _summarize_error(create)
+
+    # Cleanup — drop the draft so a later install_query_live can re-create
+    # it without "already exists" conflicts.
+    await _call(
+        session,
+        "tigergraph__gsql",
+        {"command": f"USE GRAPH {graph_name}\nDROP QUERY {query.name}"},
+    )
+    return True, None
 
 
 async def generate_starter_queries(

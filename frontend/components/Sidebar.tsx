@@ -45,7 +45,7 @@ export default function Sidebar() {
       {/* Bottom: user identity (informational, not clickable) */}
       <div className="border-t border-tg-border px-3 py-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-tg-purple to-purple-600 text-[10px] font-medium text-white">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-tg-orange text-[10px] font-medium text-white">
             DS
           </div>
           <div className="min-w-0 flex-1">

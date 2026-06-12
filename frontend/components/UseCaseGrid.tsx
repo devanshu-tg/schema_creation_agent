@@ -93,30 +93,30 @@ export default function UseCaseGrid({ selected, onSelect }: Props) {
             disabled={isDisabled}
             onClick={() => uc.enabled && onSelect(uc.id as UseCase)}
             className={clsx(
-              'flex flex-col items-start gap-2 rounded-xl border bg-tg-card p-4 text-left transition-all',
+              'flex flex-col items-start gap-2 rounded-xl border bg-tgl-card p-4 text-left transition-all',
               isSelected
-                ? 'border-tg-purple shadow-card-hover ring-1 ring-tg-purple-100'
-                : 'border-tg-line shadow-card hover:border-tg-purple hover:bg-tg-hover',
-              isDisabled && 'cursor-not-allowed opacity-50 hover:border-tg-line hover:bg-tg-card',
+                ? 'border-tg-orange ring-1 ring-tg-orange/30'
+                : 'border-tgl-border hover:border-tg-orange hover:bg-tgl-bubble',
+              isDisabled && 'cursor-not-allowed opacity-50 hover:border-tgl-border hover:bg-tgl-card',
             )}
           >
             <div
               className={clsx(
                 'flex h-8 w-8 items-center justify-center rounded-lg',
-                isSelected ? 'bg-tg-purple-100 text-tg-purple-500' : 'bg-tg-hover text-tg-mute',
+                isSelected ? 'bg-tgl-chip text-tg-orange' : 'bg-tgl-bubble text-tgl-mute',
               )}
             >
               <Icon size={16} />
             </div>
             <div className="flex w-full items-center justify-between">
-              <span className="text-[13.5px] font-semibold text-tg-ink">{uc.label}</span>
+              <span className="text-[13.5px] font-semibold text-tgl-ink">{uc.label}</span>
               {!uc.enabled && (
-                <span className="rounded-full bg-tg-hover px-2 py-0.5 text-[10px] text-tg-mute">
+                <span className="rounded-full bg-tgl-bubble px-2 py-0.5 text-[10px] text-tgl-mute">
                   soon
                 </span>
               )}
             </div>
-            <p className="text-[12px] leading-snug text-tg-mute">{uc.description}</p>
+            <p className="text-[12px] leading-snug text-tgl-mute">{uc.description}</p>
           </button>
         );
       })}

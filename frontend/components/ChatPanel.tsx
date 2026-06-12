@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import {
   Check,
+  Paperclip,
   Send,
   Sparkles,
   Wrench,
@@ -58,7 +59,7 @@ export default function ChatPanel({
   }, [messages, steps, busy]);
 
   const submit = () => {
-    if (!input.trim() || busy || !uploadedName) return;
+    if (!input.trim() || busy || !hasWorkspace) return;
     void onSend(input.trim());
     setInput('');
   };
@@ -89,24 +90,23 @@ export default function ChatPanel({
     <div
       {...getRootProps()}
       className={clsx(
-        'flex h-full w-[560px] flex-col border-r border-tg-border bg-tg-panel',
-        isDragActive && 'ring-2 ring-tg-purple ring-inset',
+        'flex h-full w-[560px] flex-col border-r border-tgl-border bg-tgl-panel',
+        isDragActive && 'ring-2 ring-tg-orange ring-inset',
       )}
     >
       <input {...getInputProps()} />
 
-      {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-tg-border px-5 py-3">
-        <div>
-          <h1 className="text-[15px] font-semibold text-tg-ink">Schema Assistant</h1>
-          <div className="mt-0.5 flex items-center gap-1.5 text-[11.5px] text-tg-mute">
-            <Sparkles size={11} className="text-tg-purple-500" />
-            <span>Gemini · use case: {useCase.toLowerCase()}</span>
+      {/* Top bar — Savanna AI + AGENT ACTIVE pill */}
+      <div className="flex items-center justify-between border-b border-tgl-border px-5 py-3">
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-tgl-bubble">
+            <Sparkles size={14} className="text-tg-orange" />
           </div>
+          <h1 className="text-[15px] font-semibold text-tgl-ink">Savanna AI</h1>
         </div>
-        <div className="flex items-center gap-1.5 text-[11.5px] text-tg-mute">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-          <span>fraud-detection</span>
+        <div className="flex items-center gap-1.5 rounded-full bg-tgl-activeBg px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-activeInk">
+          <span className="h-1.5 w-1.5 rounded-full bg-tgl-activeDot" />
+          <span>Agent Active</span>
         </div>
       </div>
 
@@ -128,31 +128,24 @@ export default function ChatPanel({
             ))}
             {/* Agent's live work log for the current turn */}
             {steps.length > 0 && <AgentStepsBlock steps={steps} busy={busy} />}
-            {busy && messages.length === 0 && steps.length === 0 && (
-              <div className="flex justify-start tg-fade-in">
-                <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tg-purple-100">
-                  <Sparkles size={13} className="animate-pulse text-tg-purple-500" />
-                </div>
-                <div className="rounded-2xl border border-tg-line bg-tg-card px-3.5 py-2 text-[12.5px] text-tg-mute">
-                  Surveying your data…
-                </div>
-              </div>
-            )}
+            {/* Persistent "Thinking..." bubble — shows whenever the agent
+                is mid-turn so the user knows it's working, like Claude Code */}
+            {busy && <ThinkingBubble hasSteps={steps.length > 0} />}
             <div ref={bottomRef} />
           </div>
         )}
       </div>
 
       {/* Bottom input */}
-      <div className="border-t border-tg-border px-5 py-3">
+      <div className="border-t border-tgl-border bg-tgl-panel px-5 py-3">
         {chips.length > 0 && uploadedName && !busy && (
-          <div className="mb-2 flex flex-wrap gap-2">
+          <div className="mb-2.5 flex flex-wrap gap-2">
             {chips.map((c, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => onChipClick(c)}
-                className="rounded-full border border-tg-line bg-tg-card px-3 py-1 text-[11.5px] text-tg-ink transition-all hover:scale-[1.02] hover:border-tg-purple hover:bg-tg-hover hover:text-tg-purple-700"
+                className="rounded-xl bg-tgl-chip px-3.5 py-2 text-[12.5px] font-medium text-tgl-chipInk transition-colors hover:bg-tgl-chipHover"
               >
                 {c}
               </button>
@@ -160,33 +153,73 @@ export default function ChatPanel({
           </div>
         )}
 
-        <div className="flex items-center gap-2 rounded-xl border border-tg-line bg-tg-card px-3 py-2 shadow-card focus-within:border-tg-purple focus-within:ring-1 focus-within:ring-tg-purple-100">
+        <div className="flex items-center gap-2 rounded-xl border border-tgl-border bg-tgl-card px-3 py-2 focus-within:border-tg-orange focus-within:ring-1 focus-within:ring-tg-orange/30">
+          {/* Upload-in-chat button — opens the file picker mid-conversation */}
+          <button
+            type="button"
+            onClick={() => open()}
+            disabled={busy || !hasWorkspace}
+            title="Upload a CSV"
+            className="rounded-md p-1.5 text-tgl-mute transition-colors hover:bg-tgl-bubble hover:text-tg-orange disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Paperclip size={14} />
+          </button>
           <input
             type="text"
             placeholder={
-              !uploadedName
-                ? 'Upload a CSV to start…'
-                : busy
-                  ? 'Agent is working…'
-                  : 'Reply to the agent…'
+              busy
+                ? 'Agent is working…'
+                : !uploadedName
+                  ? 'Ask Savanna anything about TigerGraph…'
+                  : 'Reply to Savanna…'
             }
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            disabled={busy || !uploadedName}
-            className="flex-1 bg-transparent text-[13px] text-tg-ink outline-none placeholder:text-tg-subtle disabled:cursor-not-allowed"
+            disabled={busy || !hasWorkspace}
+            className="flex-1 bg-transparent text-[13px] text-tgl-ink outline-none placeholder:text-tgl-subtle disabled:cursor-not-allowed"
             onKeyDown={(e) => {
               if (e.key === 'Enter') submit();
             }}
           />
           <button
             type="button"
-            className="rounded-md bg-tg-purple p-1.5 text-white transition-colors hover:bg-tg-purple-600 disabled:bg-tg-line disabled:text-tg-subtle"
-            disabled={!input.trim() || busy || !uploadedName}
+            className="rounded-md bg-tg-orange p-1.5 text-white transition-colors hover:opacity-90 disabled:bg-tgl-line disabled:text-tgl-subtle"
+            disabled={!input.trim() || busy || !hasWorkspace}
             onClick={submit}
           >
             <Send size={13} />
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// -------------------- Thinking indicator --------------------
+// Shows whenever the agent is mid-turn, like Claude Code's "Thinking..." dot.
+// When tools are running it sits under the AgentStepsBlock so the user always
+// knows there's progress happening.
+
+function ThinkingBubble({ hasSteps }: { hasSteps: boolean }) {
+  return (
+    <div className="flex tg-fade-in">
+      {!hasSteps && (
+        <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tgl-bubble">
+          <Sparkles size={13} className="animate-pulse text-tg-orange" />
+        </div>
+      )}
+      <div
+        className={clsx(
+          'flex items-center gap-2 rounded-2xl bg-tgl-bubble px-4 py-2.5 text-[12.5px] text-tgl-mute',
+          hasSteps && 'ml-9',
+        )}
+      >
+        <span className="font-medium text-tgl-ink">Thinking</span>
+        <span className="flex gap-0.5">
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.3s]" />
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.15s]" />
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange" />
+        </span>
       </div>
     </div>
   );
@@ -202,15 +235,15 @@ function AgentStepsBlock({ steps, busy }: { steps: AgentStep[]; busy: boolean })
 
   return (
     <div className="flex tg-fade-in">
-      <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tg-purple-100">
+      <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tgl-bubble">
         <Sparkles
           size={13}
-          className={clsx('text-tg-purple-500', busy && 'animate-pulse')}
+          className={clsx('text-tg-orange', busy && 'animate-pulse')}
         />
       </div>
-      <div className="flex-1 min-w-0 rounded-2xl border border-tg-line bg-tg-card px-3.5 py-2.5">
-        <div className="mb-2 flex items-center gap-2 text-[10.5px] uppercase tracking-wide text-tg-mute">
-          <Wrench size={11} className="text-tg-purple-500" />
+      <div className="flex-1 min-w-0 rounded-2xl bg-tgl-bubble px-4 py-3">
+        <div className="mb-2 flex items-center gap-2 text-[10.5px] uppercase tracking-wide text-tgl-mute">
+          <Wrench size={11} className="text-tg-orange" />
           <span className="font-semibold">Agent at work</span>
           <span>·</span>
           <span>
@@ -223,7 +256,7 @@ function AgentStepsBlock({ steps, busy }: { steps: AgentStep[]; busy: boolean })
             s.kind === 'thinking' ? (
               <div
                 key={i}
-                className="border-l-2 border-tg-purple/40 pl-2 text-[11.5px] italic text-tg-mute"
+                className="border-l-2 border-tg-orange/40 pl-2 text-[11.5px] italic text-tgl-mute"
               >
                 {s.text}
               </div>
@@ -243,10 +276,10 @@ function ToolCallLine({
   step: Extract<AgentStep, { kind: 'tool_call' }>;
 }) {
   const icon = step.status === 'running'
-    ? <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-tg-purple-500 border-t-transparent" />
+    ? <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-tg-orange border-t-transparent" />
     : step.status === 'ok'
-      ? <Check size={11} className="text-green-400" />
-      : <X size={11} className="text-red-400" />;
+      ? <Check size={11} className="text-tgl-activeInk" />
+      : <X size={11} className="text-red-500" />;
 
   return (
     <div className="flex items-start gap-2 text-[11.5px]">
@@ -254,10 +287,10 @@ function ToolCallLine({
         {icon}
       </span>
       <div className="min-w-0 flex-1">
-        <span className="font-medium text-tg-ink">{step.name}</span>
-        <span className="text-tg-mute">{summarizeArgs(step.name, step.args)}</span>
+        <span className="font-medium text-tgl-ink">{step.name}</span>
+        <span className="text-tgl-mute">{summarizeArgs(step.name, step.args)}</span>
         {step.summary && (
-          <div className="mt-0.5 truncate text-[11px] text-tg-mute" title={step.summary}>
+          <div className="mt-0.5 truncate text-[11px] text-tgl-mute" title={step.summary}>
             → {step.summary}
           </div>
         )}
@@ -311,23 +344,24 @@ function WelcomeScreen({
 
   return (
     <div className={clsx('flex h-full flex-col', isDragActive && 'opacity-90')}>
-      <div className="mb-5 mt-3">
-        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-tg-line bg-tg-card px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wide text-tg-purple-700">
-          <Sparkles size={10} className="text-tg-purple-500" />
-          Autograph · powered by Gemini
+      {/* Conversational welcome — matches TG Cloud "Savanna AI" intro */}
+      <div className="mb-5 flex tg-fade-in">
+        <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tgl-bubble">
+          <Sparkles size={13} className="text-tg-orange" />
         </div>
-        <h2 className="text-[22px] font-semibold leading-tight text-tg-ink">
-          What decision are you trying to make?
-        </h2>
-        <p className="mt-1.5 text-[13px] leading-relaxed text-tg-mute">
-          Tell me your goal and connect data. I&apos;ll investigate it,
-          recommend a graph shape, and explain why.
-        </p>
+        <div className="max-w-[80%] rounded-2xl bg-tgl-bubble px-4 py-2.5 text-[13px] leading-relaxed text-tgl-ink">
+          <div>Hi! I&apos;m Savanna AI.</div>
+          <div className="mt-1">
+            I can help you design a graph schema based on the business problem
+            you&apos;re trying to solve.
+          </div>
+          <div className="mt-1">What would you like to accomplish today?</div>
+        </div>
       </div>
 
       {/* Data source picker */}
       <div className="mb-5">
-        <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tg-subtle">
+        <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-subtle">
           Where&apos;s your data?
         </div>
         <DataSourceGrid
@@ -343,11 +377,11 @@ function WelcomeScreen({
 
       {/* Use case picker — soft pattern hint */}
       <div className="mb-2">
-        <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tg-subtle">
+        <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-subtle">
           Or pick a starting point
         </div>
         <UseCaseGrid selected={useCase} onSelect={onUseCaseChange} />
-        <p className="mt-2 text-[11px] text-tg-mute">
+        <p className="mt-2 text-[11px] text-tgl-mute">
           The agent will still ask about your specific decision — this just
           biases which industry patterns it considers first.
         </p>
@@ -368,27 +402,27 @@ function MessageBubble({ message }: { message: ChatMessage }) {
       className={clsx('flex tg-fade-in', isUser ? 'justify-end' : 'justify-start')}
     >
       {!isUser && (
-        <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tg-purple-100">
-          <Sparkles size={13} className="text-tg-purple-500" />
+        <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tgl-bubble">
+          <Sparkles size={13} className="text-tg-orange" />
         </div>
       )}
       <div
         className={clsx(
-          'max-w-[80%] rounded-2xl px-3.5 py-2 text-[12.5px] leading-relaxed',
+          'max-w-[80%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed',
           isUser
-            ? 'bg-tg-purple text-white'
-            : 'border border-tg-line bg-tg-card text-tg-ink',
+            ? 'border border-tgl-border bg-tgl-card text-tgl-ink'
+            : 'bg-tgl-bubble text-tgl-ink',
         )}
       >
         {!isUser && isSchema && (
-          <div className="mb-1.5 inline-flex items-center gap-1 rounded-full bg-tg-purple-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-tg-purple-700">
+          <div className="mb-1.5 inline-flex items-center gap-1 rounded-full bg-tgl-chip px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-tgl-chipInk">
             <Sparkles size={9} />
             {message.type === 'update_schema' ? 'Schema updated' : 'Schema proposed'}
           </div>
         )}
         <div className="whitespace-pre-wrap">{message.content}</div>
         {isSchema && message.schema_json && (
-          <div className="mt-2 border-t border-tg-line pt-2 text-[11px] text-tg-mute">
+          <div className="mt-2 border-t border-tgl-line pt-2 text-[11px] text-tgl-mute">
             {message.schema_json.vertices?.length ?? 0} vertices ·{' '}
             {message.schema_json.edges?.length ?? 0} edges — see the canvas →
           </div>

@@ -281,6 +281,118 @@ async def generate_starter_queries_live(
     )
 
 
+async def write_and_install_query_live(
+    ctx: ToolContext,
+    query_name: str = "",
+    gsql: str = "",
+    description: str = "",
+    **_kwargs: Any,
+) -> dict[str, Any]:
+    """Write a custom GSQL query and install it on the live graph in one step.
+
+    Use this when the user describes a SPECIFIC analysis they want
+    (e.g. "fraud volume by city + state", "accounts with >5 declined
+    transactions in 24h"), and that query is NOT in the starter list.
+    DO NOT generate starter queries in response — write the specific
+    GSQL the user asked for.
+
+    Args:
+      query_name: snake_case identifier (becomes the REST endpoint).
+      gsql: FULL GSQL — must start with `CREATE QUERY <name>(...) FOR
+            GRAPH <graph> {` and end with `}`. Reference only the
+            vertex/edge types and attributes that exist in the schema.
+            Watch edge directions — use the from→to edge as declared.
+      description: One-line description (stored alongside).
+
+    After this returns ok, `run_query_live(query_name=...)` can execute it.
+    """
+    if not query_name or not query_name.strip():
+        return _err("write_and_install_query_live requires `query_name`.")
+    if not gsql or not gsql.strip():
+        return _err(
+            "write_and_install_query_live requires `gsql` — the full "
+            "`CREATE QUERY <name>(...) FOR GRAPH <graph> { ... }` text."
+        )
+    from tg_schema_agent.deploy import (
+        _call, _is_success, _load_env, _open_session, _summarize_error,
+    )
+
+    graph_name = _resolve_graph()
+    env = _load_env(None)
+    query_text = gsql.strip()
+    async with _open_session(env) as session:
+        # CREATE QUERY via gsql (with drop-and-retry on conflict)
+        create = await _call(
+            session,
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\n{query_text}"},
+        )
+        if not _is_success(create):
+            err = _summarize_error(create)
+            if "already exists" in err.lower() or "duplicate" in err.lower():
+                drop = await _call(
+                    session,
+                    "tigergraph__gsql",
+                    {"command": f"USE GRAPH {graph_name}\nDROP QUERY {query_name}"},
+                )
+                if not _is_success(drop):
+                    return _err(
+                        f"CREATE failed and drop-existing also failed: "
+                        f"create={err}; drop={_summarize_error(drop)}"
+                    )
+                create = await _call(
+                    session,
+                    "tigergraph__gsql",
+                    {"command": f"USE GRAPH {graph_name}\n{query_text}"},
+                )
+                if not _is_success(create):
+                    return _err(
+                        f"CREATE re-try after drop failed: {_summarize_error(create)}"
+                    )
+            else:
+                return _err(f"CREATE QUERY failed: {err}")
+
+        # INSTALL QUERY (compiles + exposes /restpp/query/<graph>/<name>)
+        install = await _call(
+            session,
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\nINSTALL QUERY {query_name}"},
+        )
+        if not _is_success(install):
+            return _err(
+                f"INSTALL QUERY failed (query defined but not compiled): "
+                f"{_summarize_error(install)}"
+            )
+
+    # Persist into starter_queries.json so run_query_live + UI listings
+    # see this query alongside the starter set.
+    try:
+        sq_path = ctx.workspace_dir / "starter_queries.json"
+        if sq_path.exists():
+            sq = json.loads(sq_path.read_text(encoding="utf-8"))
+        else:
+            sq = {"graph_name": graph_name, "queries": []}
+        sq["queries"] = [q for q in sq.get("queries", []) if q.get("name") != query_name]
+        sq["queries"].append({
+            "name": query_name,
+            "description": description or f"Custom query: {query_name}",
+            "business_question": description or "",
+            "gsql": query_text,
+            "expected_output_description": "",
+            "validated": True,
+            "validation_error": None,
+        })
+        sq_path.write_text(json.dumps(sq, indent=2), encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        pass
+
+    return _ok(
+        f"Wrote and installed custom query '{query_name}' in '{graph_name}'. "
+        f"Use run_query_live to execute it.",
+        {"graph_name": graph_name, "query_name": query_name},
+    )
+
+
 async def install_query_live(
     ctx: ToolContext,
     query_name: str = "",
@@ -308,29 +420,57 @@ async def install_query_live(
 
     graph_name = _resolve_graph()
     env = _load_env(None)
+    query_text = target["gsql"]
     async with _open_session(env) as session:
-        # Define the query first via gsql (USE GRAPH X; CREATE QUERY ...)
+        # IMPORTANT: We use tigergraph__gsql for BOTH steps because
+        # tigergraph__install_query (despite the name) does not reliably
+        # define the query in the catalog — it sometimes silently no-ops
+        # and the next INSTALL QUERY then fails with "query cannot be found".
+        # The gsql tool with the full CREATE QUERY text works reliably.
         create_payload = await _call(
             session,
             "tigergraph__gsql",
-            {"command": f"USE GRAPH {graph_name}\n{target['gsql']}"},
+            {"command": f"USE GRAPH {graph_name}\n{query_text}"},
         )
         if not _is_success(create_payload):
-            return _err(
-                f"Defining query failed: {_summarize_error(create_payload)}"
-            )
-        # Install it
+            err = _summarize_error(create_payload)
+            if "already exists" in err.lower() or "duplicate" in err.lower():
+                drop_payload = await _call(
+                    session,
+                    "tigergraph__gsql",
+                    {"command": f"USE GRAPH {graph_name}\nDROP QUERY {query_name}"},
+                )
+                if not _is_success(drop_payload):
+                    return _err(
+                        f"CREATE QUERY failed and drop-existing also failed: "
+                        f"create={err}; drop={_summarize_error(drop_payload)}"
+                    )
+                create_payload = await _call(
+                    session,
+                    "tigergraph__gsql",
+                    {"command": f"USE GRAPH {graph_name}\n{query_text}"},
+                )
+                if not _is_success(create_payload):
+                    return _err(
+                        f"CREATE QUERY re-try after drop failed: {_summarize_error(create_payload)}"
+                    )
+            else:
+                return _err(f"CREATE QUERY failed: {err}")
+
+        # Now compile the query. INSTALL QUERY on Savanna can take 30-120s.
+        # tigergraph-mcp's gsql tool waits synchronously for completion.
         install_payload = await _call(
             session,
-            "tigergraph__install_query",
-            {"graph_name": graph_name, "query_name": query_name},
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\nINSTALL QUERY {query_name}"},
         )
         if not _is_success(install_payload):
             return _err(
-                f"Install failed: {_summarize_error(install_payload)}"
+                f"INSTALL QUERY failed (query is defined but not compiled): "
+                f"{_summarize_error(install_payload)}"
             )
     return _ok(
-        f"Installed query '{query_name}' in graph '{graph_name}'.",
+        f"Installed query '{query_name}' in graph '{graph_name}' (CREATE + INSTALL).",
         {"graph_name": graph_name, "query_name": query_name},
     )
 
@@ -356,7 +496,7 @@ async def run_query_live(
             {
                 "graph_name": graph_name,
                 "query_name": query_name,
-                "parameters": params or {},
+                "params": params or {},
             },
         )
     parsed = _parse_mcp_payload(payload)
@@ -372,6 +512,224 @@ async def run_query_live(
     return _ok(
         f"Ran '{query_name}' on '{graph_name}'.",
         {"graph_name": graph_name, "query_name": query_name, "results": data, "results_preview": blob},
+    )
+
+
+# ---------- raw GSQL + introspection (Claude-Code-style power tools) ----------
+
+
+async def run_gsql_live(
+    ctx: ToolContext,
+    command: str = "",
+    **_kwargs: Any,
+) -> dict[str, Any]:
+    """Execute arbitrary GSQL against the live TigerGraph instance.
+
+    This is the agent's raw shell — like `bash` for Claude Code. Use it
+    for anything the curated tools don't cover: SHOW SCHEMA, SHOW QUERY,
+    DROP VERTEX, GRANT, ALTER, CREATE TYPE, USE GRAPH X, etc. The
+    command is automatically scoped to the configured graph if it
+    doesn't start with USE GRAPH.
+
+    For SAFE data inspection use run_interpreted_query_live (anonymous,
+    no install). For pre-installed queries, use run_query_live.
+    Returns the raw GSQL output (truncated to 4 KB for the chat)."""
+    if not command or not command.strip():
+        return _err("run_gsql_live requires a non-empty `command` string.")
+    from tg_schema_agent.deploy import _call, _is_success, _load_env, _open_session, _parse_mcp_payload, _summarize_error
+
+    graph_name = _resolve_graph()
+    cmd = command.strip()
+    # If the command doesn't pin a graph already, prepend USE GRAPH to
+    # keep operations scoped to mcp_demo per the security guard.
+    if not cmd.upper().startswith("USE GRAPH"):
+        cmd = f"USE GRAPH {graph_name}\n{cmd}"
+
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = await _call(session, "tigergraph__gsql", {"command": cmd})
+    parsed = _parse_mcp_payload(payload)
+    if not _is_success(payload):
+        return _err(f"GSQL failed: {_summarize_error(payload)}")
+    result = ""
+    if isinstance(parsed, dict):
+        data = parsed.get("data") or {}
+        if isinstance(data, dict):
+            result = str(data.get("result") or "")
+        elif isinstance(data, str):
+            result = data
+    blob = result[:4000] + (" …(truncated)" if len(result) > 4000 else "")
+    return _ok(
+        f"GSQL executed ({len(result)} chars).",
+        {"graph_name": graph_name, "command": command[:200], "result": result, "preview": blob},
+    )
+
+
+async def run_interpreted_query_live(
+    ctx: ToolContext,
+    gsql_body: str = "",
+    **_kwargs: Any,
+) -> dict[str, Any]:
+    """Run an ANONYMOUS interpreted GSQL query — no install, no params.
+
+    Use this for ad-hoc data exploration: "show me 5 fraud transactions",
+    "count vertices by city", etc. The body should be the query CONTENTS
+    only (statements between { and }), e.g.:
+
+        Start = {Transaction.*};
+        Fraud = SELECT t FROM Start:t WHERE t.is_fraud == 1 LIMIT 5;
+        PRINT Fraud;
+
+    Faster than write_and_install_query_live for one-off questions
+    (no compilation step). For repeat use, prefer the installed path."""
+    if not gsql_body or not gsql_body.strip():
+        return _err("run_interpreted_query_live requires `gsql_body` (the query content).")
+    from tg_schema_agent.deploy import _call, _is_success, _load_env, _open_session, _parse_mcp_payload, _summarize_error
+
+    graph_name = _resolve_graph()
+    # Anonymous interpreted query — no name, no params
+    wrapped = f"INTERPRET QUERY () FOR GRAPH {graph_name} {{\n{gsql_body.strip()}\n}}"
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = await _call(
+            session,
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\n{wrapped}"},
+        )
+    parsed = _parse_mcp_payload(payload)
+    if not _is_success(payload):
+        return _err(f"Interpreted query failed: {_summarize_error(payload)}")
+    data = (parsed or {}).get("data") if isinstance(parsed, dict) else None
+    result_str = ""
+    if isinstance(data, dict):
+        result_str = str(data.get("result") or "")
+    blob = result_str[:4000] + (" …(truncated)" if len(result_str) > 4000 else "")
+    return _ok(
+        f"Interpreted query executed.",
+        {"graph_name": graph_name, "result": result_str, "preview": blob},
+    )
+
+
+async def get_schema_details_live(ctx: ToolContext, **_kwargs: Any) -> dict[str, Any]:
+    """Full schema dump: every vertex type with its attributes + dtypes,
+    every edge type with from/to and attributes. Use BEFORE writing custom
+    queries so you reference real attributes and respect edge directions."""
+    from tg_schema_agent.deploy import _call, _load_env, _open_session, _parse_mcp_payload
+
+    graph_name = _resolve_graph()
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = _parse_mcp_payload(
+            await _call(session, "tigergraph__get_graph_schema", {"graph_name": graph_name})
+        )
+    sch = ((payload or {}).get("data") or {}).get("schema") or {}
+    vts = sch.get("VertexTypes") or []
+    ets = sch.get("EdgeTypes") or []
+    # Compact per-type summary
+    vertices = []
+    for v in vts:
+        attrs = [{"name": a.get("AttributeName"), "type": (a.get("AttributeType") or {}).get("Name")}
+                 for a in (v.get("Attributes") or [])]
+        vertices.append({
+            "name": v.get("Name"),
+            "primary_id": (v.get("PrimaryId") or {}).get("AttributeName"),
+            "attributes": attrs,
+        })
+    edges = []
+    for e in ets:
+        attrs = [{"name": a.get("AttributeName"), "type": (a.get("AttributeType") or {}).get("Name")}
+                 for a in (e.get("Attributes") or [])]
+        edges.append({
+            "name": e.get("Name"),
+            "from": e.get("FromVertexTypeName"),
+            "to": e.get("ToVertexTypeName"),
+            "is_directed": e.get("IsDirected"),
+            "reverse_edge": e.get("Config", {}).get("REVERSE_EDGE") if isinstance(e.get("Config"), dict) else None,
+            "attributes": attrs,
+        })
+    return _ok(
+        f"Schema for '{graph_name}': {len(vertices)} vertex types, {len(edges)} edge types.",
+        {"graph_name": graph_name, "vertices": vertices, "edges": edges},
+    )
+
+
+async def list_installed_queries_live(ctx: ToolContext, **_kwargs: Any) -> dict[str, Any]:
+    """List installed query names + their parameter signatures. Use to
+    discover what's already installed before asking to run one."""
+    from tg_schema_agent.deploy import _call, _load_env, _open_session, _parse_mcp_payload
+
+    graph_name = _resolve_graph()
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = _parse_mcp_payload(
+            await _call(session, "tigergraph__show_graph_details",
+                        {"graph_name": graph_name, "detail_type": "query"})
+        )
+    listing = ((payload or {}).get("data") or {}).get("listing", "") or ""
+    import re
+    names = re.findall(r"CREATE\s+QUERY\s+(\w+)\s*\(([^)]*)\)", listing, re.IGNORECASE)
+    queries = [{"name": n, "params_signature": p.strip()} for n, p in names]
+    return _ok(
+        f"Found {len(queries)} installed query(ies) in '{graph_name}'.",
+        {"graph_name": graph_name, "queries": queries},
+    )
+
+
+async def drop_query_live(
+    ctx: ToolContext,
+    query_name: str = "",
+    **_kwargs: Any,
+) -> dict[str, Any]:
+    """Uninstall a query from the live graph. Use when the user asks to
+    remove a query, or as a cleanup step before re-installing under the
+    same name with different GSQL."""
+    if not query_name or not query_name.strip():
+        return _err("drop_query_live requires `query_name`.")
+    from tg_schema_agent.deploy import _call, _is_success, _load_env, _open_session, _summarize_error
+
+    graph_name = _resolve_graph()
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = await _call(
+            session,
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\nDROP QUERY {query_name}"},
+        )
+    if not _is_success(payload):
+        return _err(f"DROP QUERY failed: {_summarize_error(payload)}")
+    return _ok(f"Dropped query '{query_name}' from '{graph_name}'.")
+
+
+async def get_vertex_sample_live(
+    ctx: ToolContext,
+    vertex_type: str = "",
+    limit: int = 5,
+    **_kwargs: Any,
+) -> dict[str, Any]:
+    """Get a sample of N actual vertex rows by type. Use to inspect real
+    data when the user asks 'what does the data look like' / 'show me
+    some accounts' / etc. Default limit is 5 (max 50)."""
+    if not vertex_type or not vertex_type.strip():
+        return _err("get_vertex_sample_live requires `vertex_type`.")
+    n = max(1, min(int(limit or 5), 50))
+    from tg_schema_agent.deploy import _call, _is_success, _load_env, _open_session, _parse_mcp_payload, _summarize_error
+
+    graph_name = _resolve_graph()
+    env = _load_env(None)
+    async with _open_session(env) as session:
+        payload = await _call(
+            session,
+            "tigergraph__gsql",
+            {"command": f"USE GRAPH {graph_name}\nSELECT * FROM {vertex_type} LIMIT {n}"},
+        )
+    if not _is_success(payload):
+        return _err(f"Sample fetch failed: {_summarize_error(payload)}")
+    parsed = _parse_mcp_payload(payload) or {}
+    result = ((parsed.get("data") or {}).get("result") or "")
+    blob = result[:4000] + (" …(truncated)" if len(result) > 4000 else "")
+    return _ok(
+        f"Sampled up to {n} '{vertex_type}' vertex(ies) from '{graph_name}'.",
+        {"graph_name": graph_name, "vertex_type": vertex_type, "limit": n, "result": result, "preview": blob},
     )
 
 

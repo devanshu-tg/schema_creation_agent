@@ -529,13 +529,10 @@ def chat_turn(
 
     d = assert_workspace(workspace_id)
 
-    # Reload profiles + sample data each turn (cheap; ensures freshness)
+    # Profiles are nice-to-have, not required. The agent can answer
+    # general TigerGraph questions, deploy, query the live graph, etc.
+    # even without an uploaded CSV.
     profiles = profile_directory(d)
-    if not profiles:
-        raise HTTPException(
-            status_code=400,
-            detail="Upload a CSV first so the agent has data to reason about.",
-        )
 
     history_raw = load_chat_history(workspace_id)
     history = [agent_mod.ChatMessage(**m) for m in history_raw]
@@ -645,12 +642,9 @@ async def chat_turn_stream(
 
     d = assert_workspace(workspace_id)
 
+    # Profiles are optional — agent can answer general TigerGraph
+    # questions and operate the live graph without an upload.
     profiles = profile_directory(d)
-    if not profiles:
-        raise HTTPException(
-            status_code=400,
-            detail="Upload a CSV first so the agent has data to reason about.",
-        )
 
     history_raw = load_chat_history(workspace_id)
     history = [agent_mod.ChatMessage(**m) for m in history_raw]

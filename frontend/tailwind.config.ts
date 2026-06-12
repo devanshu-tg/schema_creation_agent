@@ -8,31 +8,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Dark Savanna palette
+        // Light Savanna palette — matches TG Cloud chrome
         tg: {
           orange: '#F47B20',
           purple: {
-            DEFAULT: '#6C4EE3',
-            50: 'rgba(108,78,227,0.10)',
-            100: 'rgba(108,78,227,0.20)',
-            500: '#6C4EE3',
-            600: '#7C61E7',
-            700: '#9684EE',
+            // Kept as accent colors (used in highlights / focus rings)
+            DEFAULT: '#F47B20',
+            50: 'rgba(244,123,32,0.08)',
+            100: 'rgba(244,123,32,0.15)',
+            500: '#F47B20',
+            600: '#E66A0E',
+            700: '#C2410C',
           },
-          // dark surfaces (all panels identical — only cards elevate)
-          bg:      '#17181C',
-          panel:   '#17181C',  // identical to bg — sidebar / chat panel / canvas all match
-          card:    '#22242A',  // subtle elevation for buttons / cards / inputs
-          hover:   '#2E3138',
+          // light surfaces
+          bg:      '#FFFFFF',  // app background
+          panel:   '#FFFFFF',  // sidebar / chat panel / canvas all white
+          card:    '#FFFFFF',  // cards / inputs on white
+          hover:   '#F5F6F8',  // subtle hover wash
           // borders
-          border:  '#272A30',  // slightly visible divider between panels
-          line:    '#34373E',  // card border (a touch lighter)
+          border:  '#E5E7EB',  // panel dividers
+          line:    '#EEF0F2',  // card border (a touch lighter)
           // text
-          ink:     '#E8EAED',
-          mute:    '#9CA3AF',
-          subtle:  '#6B7280',
+          ink:     '#1F2937',  // primary text
+          mute:    '#6B7280',  // secondary text
+          subtle:  '#9CA3AF',  // tertiary / placeholder
           // legacy alias (some components still use sidebar)
-          sidebar: '#1F2026',
+          sidebar: '#FAFAFB',
+        },
+        // Light Savanna palette — used by chat panel to match TG Cloud chrome.
+        tgl: {
+          panel:    '#FFFFFF',
+          bubble:   '#F1F2F4',   // agent bubble background
+          card:     '#FFFFFF',   // user bubble background
+          border:   '#E5E7EB',
+          line:     '#EEF0F2',
+          ink:      '#1F2937',   // primary text on white
+          mute:     '#6B7280',
+          subtle:   '#9CA3AF',
+          chip:     '#FCE8D0',   // peach pill background
+          chipInk:  '#C2410C',   // peach pill text (dark orange)
+          chipHover:'#FBD9B3',
+          activeBg: '#DCFCE7',   // "AGENT ACTIVE" pill bg
+          activeInk:'#15803D',   // green text
+          activeDot:'#22C55E',
         },
       },
       fontFamily: {

@@ -1036,10 +1036,17 @@ def record_assumption(
 from tg_schema_agent.llm.live_tools import (
     deploy_schema_live,
     drop_graph_data_live,
+    drop_query_live,
     generate_starter_queries_live,
     get_graph_state_live,
+    get_schema_details_live,
+    get_vertex_sample_live,
     install_query_live,
+    list_installed_queries_live,
+    write_and_install_query_live,
     load_data_live,
+    run_gsql_live,
+    run_interpreted_query_live,
     run_query_live,
     wipe_graph_live,
 )
@@ -1071,10 +1078,18 @@ TOOL_DISPATCH = {
     "load_data_live": load_data_live,
     "get_graph_state_live": get_graph_state_live,
     "generate_starter_queries_live": generate_starter_queries_live,
+    "write_and_install_query_live": write_and_install_query_live,
     "install_query_live": install_query_live,
     "run_query_live": run_query_live,
     "drop_graph_data_live": drop_graph_data_live,
     "wipe_graph_live": wipe_graph_live,
+    # Claude-Code-style power tools — raw GSQL shell + introspection
+    "run_gsql_live": run_gsql_live,
+    "run_interpreted_query_live": run_interpreted_query_live,
+    "get_schema_details_live": get_schema_details_live,
+    "list_installed_queries_live": list_installed_queries_live,
+    "drop_query_live": drop_query_live,
+    "get_vertex_sample_live": get_vertex_sample_live,
 }
 
 
@@ -1652,6 +1667,130 @@ def build_function_declarations() -> list[Any]:
                     ),
                 },
                 required=["query_name"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="write_and_install_query_live",
+            description=(
+                "Write a CUSTOM GSQL query and install it on the live "
+                "graph in one step. Use this WHENEVER the user describes "
+                "a specific analysis they want (e.g. 'fraud volume by "
+                "city and state', 'accounts with >5 declined txns', "
+                "'top 10 merchants by amount'). DO NOT call "
+                "generate_starter_queries_live in response — write the "
+                "specific GSQL the user asked for. The gsql arg must be "
+                "the full `CREATE QUERY <name>(...) FOR GRAPH <graph> "
+                "{ ... }` text. After this returns ok, call "
+                "run_query_live(query_name=...) to execute it."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "query_name": genai_types.Schema(
+                        type="STRING",
+                        description="snake_case identifier; becomes the REST endpoint.",
+                    ),
+                    "gsql": genai_types.Schema(
+                        type="STRING",
+                        description="Full CREATE QUERY ... FOR GRAPH ... { ... } text.",
+                    ),
+                    "description": genai_types.Schema(
+                        type="STRING",
+                        description="One-line description of what this query does.",
+                    ),
+                },
+                required=["query_name", "gsql"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="run_gsql_live",
+            description=(
+                "Raw GSQL shell — execute ANY GSQL command on the live graph. "
+                "Use for things the curated tools don't cover: SHOW SCHEMA, "
+                "SHOW QUERY *, DROP VERTEX, GRANT, ALTER TYPE, CREATE INDEX, "
+                "schema migrations, USE GRAPH, etc. Auto-scoped to mcp_demo. "
+                "For data exploration prefer run_interpreted_query_live (cleaner). "
+                "For installed queries use run_query_live."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "command": genai_types.Schema(
+                        type="STRING",
+                        description="Raw GSQL — single or multi-line.",
+                    ),
+                },
+                required=["command"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="run_interpreted_query_live",
+            description=(
+                "Run an anonymous interpreted GSQL query for ad-hoc data "
+                "exploration — no install needed. Use when the user asks "
+                "'show me X', 'count Y', 'what does Z look like' etc. The "
+                "gsql_body is the query CONTENTS only (statements between "
+                "the { and }). Faster than install for one-off questions."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "gsql_body": genai_types.Schema(
+                        type="STRING",
+                        description="Query statements (no CREATE/INTERPRET wrapper).",
+                    ),
+                },
+                required=["gsql_body"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="get_schema_details_live",
+            description=(
+                "Full schema dump with every vertex attribute, every edge's "
+                "from/to + attributes + reverse edge name. ALWAYS call this "
+                "BEFORE writing custom GSQL — it tells you the real attribute "
+                "names and edge directions so your query won't TYP-111."
+            ),
+            parameters=genai_types.Schema(type="OBJECT", properties={}, required=[]),
+        ),
+        genai_types.FunctionDeclaration(
+            name="list_installed_queries_live",
+            description=(
+                "List query names + parameter signatures already installed "
+                "on the graph. Use to discover what's available before "
+                "asking the user which one to run."
+            ),
+            parameters=genai_types.Schema(type="OBJECT", properties={}, required=[]),
+        ),
+        genai_types.FunctionDeclaration(
+            name="drop_query_live",
+            description=(
+                "Uninstall a query from the graph. Use when the user asks "
+                "to remove it, or to clean up before re-installing under "
+                "the same name."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "query_name": genai_types.Schema(type="STRING"),
+                },
+                required=["query_name"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="get_vertex_sample_live",
+            description=(
+                "Get N actual vertex rows by type for inspection. Use when "
+                "the user asks 'what does the data look like' / 'show me "
+                "some Accounts' / 'sample customers'. Default 5, max 50."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "vertex_type": genai_types.Schema(type="STRING"),
+                    "limit": genai_types.Schema(type="INTEGER"),
+                },
+                required=["vertex_type"],
             ),
         ),
         genai_types.FunctionDeclaration(

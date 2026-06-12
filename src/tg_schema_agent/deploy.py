@@ -412,30 +412,53 @@ def _parse_mcp_payload(payload: Any) -> Any:
         return payload
 
 
+_GSQL_FAILURE_MARKERS = (
+    '"success": false',
+    "**failed",
+    "(code: gsql-",
+    "input validation error",
+    "is a required property",
+    "semantic check fails",
+    "internal server error",
+    # GSQL embeds these in result strings even when the MCP envelope says success
+    "query installation failed",
+    "the query .* doesn't exist",
+    "cannot be found!",
+    "installation failed",
+    # CREATE QUERY accepts semantically-invalid queries as drafts. We don't
+    # want those reported as successful — INSTALL QUERY would later reject
+    # them anyway. These markers appear in the CREATE response.
+    "type check error",
+    "saved as draft",
+    "draft query with type/semantic error",
+)
+
+
 def _is_success(payload: Any) -> bool:
     parsed = _parse_mcp_payload(payload)
     if isinstance(parsed, dict):
-        if "success" in parsed:
-            return bool(parsed["success"])
-        if "error" in parsed:
+        # The MCP envelope's success flag tells us whether the tool call
+        # itself succeeded — but for tigergraph__gsql, a syntactically valid
+        # command that the server REJECTS (semantic check, install failure)
+        # still gets success=true with the error tucked into data.result.
+        # So we ALSO scan the result body for known failure markers.
+        envelope_ok = bool(parsed.get("success", True))
+        if "error" in parsed and parsed["error"]:
             return False
+        # Drill into data.result (gsql tool) or data (everything else)
+        data = parsed.get("data")
+        body_str = ""
+        if isinstance(data, dict):
+            body_str = str(data.get("result") or data)
+        elif isinstance(data, str):
+            body_str = data
+        low = body_str.lower()
+        if any(m in low for m in _GSQL_FAILURE_MARKERS):
+            return False
+        return envelope_ok
     if isinstance(payload, str):
         low = payload.lower()
-        # Tolerated failure signals that arrive as plain strings (the MCP
-        # server sometimes returns a raw error message instead of structured
-        # JSON, especially for input-validation rejections).
-        if any(
-            marker in low
-            for marker in (
-                '"success": false',
-                "**failed",
-                "(code: gsql-",
-                "input validation error",
-                "is a required property",
-                "semantic check fails",
-                "internal server error",
-            )
-        ):
+        if any(m in low for m in _GSQL_FAILURE_MARKERS):
             return False
     return True
 

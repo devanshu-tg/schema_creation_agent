@@ -339,7 +339,7 @@ function AssumptionRow({ assumption }: { assumption: Assumption }) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-start gap-1.5 text-left text-[11.5px] leading-snug text-tg-ink hover:text-white"
+        className="flex w-full items-start gap-1.5 text-left text-[11.5px] leading-snug text-tg-ink hover:text-tg-purple-700"
       >
         <span
           className={clsx(

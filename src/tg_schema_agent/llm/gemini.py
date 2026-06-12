@@ -37,7 +37,7 @@ from tg_schema_agent.patterns import load_patterns
 
 log = logging.getLogger(__name__)
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-pro-preview")
 
 
 # ---------- prompt building ----------
@@ -544,6 +544,11 @@ def _call_gemini(
     genai_types: Any,
     temperature: float = 0.2,
 ) -> tuple[dict[str, Any], int]:
+    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    try:
+        _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
+    except ValueError:
+        _thinking_budget = _thinking_default
     resp = client.models.generate_content(
         model=model_name,
         contents=user_payload,
@@ -551,6 +556,7 @@ def _call_gemini(
             system_instruction=system_instruction,
             response_mime_type="application/json",
             temperature=temperature,
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=_thinking_budget),
         ),
     )
     raw_text = resp.text or ""

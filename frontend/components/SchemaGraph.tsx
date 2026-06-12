@@ -233,7 +233,7 @@ function VertexNode({ data, selected }: { data: VertexData; selected?: boolean }
       />
       <div
         className="pointer-events-none mt-1.5 max-w-[120px] truncate text-center text-[11px] font-medium"
-        style={{ color: '#E8EAED' }}
+        style={{ color: '#1F2937' }}
         title={data.label}
       >
         {data.label}
@@ -298,7 +298,7 @@ function Inner({ schema }: Props) {
   const handlePaneClick = useCallback(() => setSelected(null), []);
 
   return (
-    <div className="relative h-full w-full" style={{ background: '#17181C' }}>
+    <div className="relative h-full w-full" style={{ background: '#FFFFFF' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -314,7 +314,7 @@ function Inner({ schema }: Props) {
         minZoom={0.2}
         maxZoom={2}
       >
-        <Background variant={BackgroundVariant.Dots} gap={28} size={1} color="#272A30" />
+        <Background variant={BackgroundVariant.Dots} gap={28} size={1} color="#E5E7EB" />
       </ReactFlow>
       {selected && (
         <RationaleCard selected={selected} onClose={() => setSelected(null)} />
