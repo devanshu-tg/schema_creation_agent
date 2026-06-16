@@ -27,9 +27,10 @@ COPY pyproject.toml uv.lock ./
 # --frozen ensures we install exactly what's in uv.lock.
 RUN uv sync --extra web --extra llm --extra tigergraph --frozen --no-dev
 
-# Copy the source code + the pattern YAMLs (loaded at startup).
+# Copy the source code + the pattern YAMLs + rules config (loaded at startup).
 COPY src/ ./src/
 COPY patterns/ ./patterns/
+COPY rules/ ./rules/
 
 # Cloud Run sets PORT (default 8080). Honor it; default to 8001 for local.
 ENV PORT=8080
