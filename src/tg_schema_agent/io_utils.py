@@ -42,15 +42,27 @@ def detect_delimiter(path: Path, sample_bytes: int = 16384) -> str:
         return ","
 
 
-def load_csv(path: Path, delimiter: str | None = None) -> pd.DataFrame:
+def load_csv(
+    path: Path,
+    delimiter: str | None = None,
+    max_rows: int | None = None,
+) -> pd.DataFrame:
     """Load a CSV with auto-detected delimiter.
 
     Handles two quirks observed in the user's real fraud CSV:
     - Pipe-delimited despite a .csv extension
     - Trailing empty columns in the header (e.g. ``...trans_num,,``)
+
+    ``max_rows``: if set, only read that many rows from disk. Use this on
+    memory-constrained hosts (e.g. Render free tier, 512 MB) so a 28 MB
+    CSV with 1M rows doesn't blow the heap. Statistical profiling on a
+    50K-row sample produces the same schema as profiling all rows.
     """
     delim = delimiter or detect_delimiter(path)
-    df = pd.read_csv(path, sep=delim, dtype=str, keep_default_na=False, na_values=[""])
+    df = pd.read_csv(
+        path, sep=delim, dtype=str, keep_default_na=False, na_values=[""],
+        nrows=max_rows,
+    )
 
     # Drop trailing empty/unnamed columns from a trailing delimiter in the header.
     drop_cols = [c for c in df.columns if c == "" or str(c).startswith("Unnamed:")]

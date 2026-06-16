@@ -198,7 +198,8 @@ def _profile_summary(profile: TableProfile) -> dict[str, Any]:
 
 def _read_sample_rows(csv_path: Path, n: int = 3) -> list[dict[str, str]]:
     try:
-        df = load_csv(csv_path)
+        # Only read what we need — saves memory on huge CSVs.
+        df = load_csv(csv_path, max_rows=n)
         return [
             {col: str(val) for col, val in row.items()}
             for _, row in df.head(n).iterrows()

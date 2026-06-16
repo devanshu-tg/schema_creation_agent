@@ -190,7 +190,15 @@ def _detect_wide_denormalized(columns: list[ColumnProfile]) -> bool:
 
 
 def profile_csv(path: Path, name: str | None = None) -> TableProfile:
-    df = load_csv(path)
+    # Cap rows read to keep memory bounded on tiny hosts (Render free
+    # tier = 512 MB). 50K rows is overkill for stat profiling but cheap
+    # in memory (~30 MB for a 30-column CSV). Override via env if needed.
+    import os as _os
+    try:
+        _cap = int(_os.environ.get("MAX_PROFILE_ROWS", "50000"))
+    except ValueError:
+        _cap = 50000
+    df = load_csv(path, max_rows=_cap if _cap > 0 else None)
     delim = detect_delimiter(path)
     table_name = name or path.stem
     row_count = len(df)

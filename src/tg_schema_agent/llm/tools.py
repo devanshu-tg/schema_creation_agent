@@ -261,8 +261,11 @@ def analyze_column_distribution(
         return _err(f"Could not locate CSV for table '{table}'.")
 
     try:
+        import os
         import pandas as pd  # type: ignore
-        df = io_utils.load_csv(csv_path)
+        # Cap rows so 28 MB / 1M-row CSVs don't OOM tiny hosts.
+        cap = int(os.environ.get("MAX_PROFILE_ROWS", "50000")) or None
+        df = io_utils.load_csv(csv_path, max_rows=cap)
     except Exception as exc:
         return _err(f"Failed to read CSV: {exc}")
 
@@ -373,7 +376,8 @@ def get_sample_rows(ctx: ToolContext, table: str, n: int = 3) -> dict[str, Any]:
     if not csv_path:
         return _err(f"Could not locate CSV for table '{table}'.")
     try:
-        df = io_utils.load_csv(csv_path)
+        # We only need the first N rows — read just those from disk.
+        df = io_utils.load_csv(csv_path, max_rows=n)
         rows = [{c: str(v) for c, v in r.items()} for _, r in df.head(n).iterrows()]
     except Exception as exc:
         return _err(f"Failed to read CSV: {exc}")
