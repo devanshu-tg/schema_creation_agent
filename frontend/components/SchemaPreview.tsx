@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, Eye, Rocket, Sparkles } from 'lucide-react';
+import { ChevronDown, Eye, Globe, LayoutGrid, Plus, Redo, Rocket, Sparkles, Undo } from 'lucide-react';
 import { useState } from 'react';
 import type { CriticReview, Schema, SchemaScore, ValidationResult } from '@/lib/types';
 import OutcomesPanel from './OutcomesPanel';
@@ -38,17 +38,34 @@ export default function SchemaPreview({
 
   return (
     <div className="relative flex h-full flex-1 flex-col bg-tg-panel">
-      {/* Top toolbar — minimal, just the workspace label */}
-      <div className="flex items-center justify-between border-b border-tg-border bg-tg-panel px-4 py-2.5">
-        <div className="flex items-center gap-2 text-[12.5px] text-tg-mute">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-          <span className="font-medium text-tg-ink">{workspaceLabel}</span>
+      {/* Canvas action bar — undo/redo + Create Edge / Create Vertex + view controls */}
+      <div className="flex items-center justify-end gap-2 border-b border-tg-border bg-tg-panel px-4 py-2">
+        <div className="flex items-center gap-1 rounded-md border border-tg-border bg-tg-card px-1 py-0.5">
+          <button type="button" className="rounded p-1 text-tg-mute hover:bg-tg-hover hover:text-tg-ink" title="Undo">
+            <Undo size={13} />
+          </button>
+          <button type="button" className="rounded p-1 text-tg-mute hover:bg-tg-hover hover:text-tg-ink" title="Redo">
+            <Redo size={13} />
+          </button>
         </div>
-        <div className="text-[11px] text-tg-subtle">
-          {schema
-            ? `${schema.vertices.length} vertices · ${schema.edges.length} edges`
-            : 'No schema yet'}
-        </div>
+        <button
+          type="button"
+          className="flex items-center gap-1 rounded-md border border-tg-border bg-tg-card px-2.5 py-1.5 text-[11.5px] font-medium text-tg-ink hover:bg-tg-hover"
+        >
+          <Plus size={12} /> Create Edge
+        </button>
+        <button
+          type="button"
+          className="flex items-center gap-1 rounded-md border border-tg-border bg-tg-card px-2.5 py-1.5 text-[11.5px] font-medium text-tg-ink hover:bg-tg-hover"
+        >
+          <Plus size={12} /> Create Vertex
+        </button>
+        <button type="button" className="rounded-md border border-tg-border bg-tg-card p-1.5 text-tg-mute hover:bg-tg-hover" title="Global">
+          <Globe size={13} />
+        </button>
+        <button type="button" className="rounded-md border border-tg-border bg-tg-card p-1.5 text-tg-mute hover:bg-tg-hover" title="View">
+          <LayoutGrid size={13} />
+        </button>
       </div>
 
       {/* Canvas area */}
@@ -175,6 +192,40 @@ export default function SchemaPreview({
                 )}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Bottom status bar — READY TO MAP + counts + version (matches TG Cloud) */}
+        {schema && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-tg-border bg-tg-panel/90 px-4 py-2 text-[11px] text-tg-mute backdrop-blur">
+            <div className="flex items-center gap-1.5">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-tg-orange" />
+              <span className="font-semibold text-tg-ink">READY TO MAP</span>
+              <span className="ml-3">
+                {schema.vertices.length} Vertices / {schema.edges.length} Edges
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span>Last updated just now</span>
+              <span className="text-tg-subtle">v1.4.0-propose</span>
+            </div>
+          </div>
+        )}
+
+        {/* Relationships summary legend — pointer-events-auto inside */}
+        {schema && schema.edges.length > 0 && (
+          <div className="pointer-events-auto absolute bottom-12 right-5 max-w-[220px] rounded-lg border border-tg-border bg-tg-card p-3 shadow-card">
+            <div className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-tg-mute">
+              Relationships Summary
+            </div>
+            <ul className="space-y-1">
+              {schema.edges.slice(0, 5).map((e, i) => (
+                <li key={i} className="flex items-center justify-between text-[11px] text-tg-ink">
+                  <span className="truncate">{e.name}</span>
+                  <span className="ml-2 inline-block h-px w-10 bg-tg-orange/60" />
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

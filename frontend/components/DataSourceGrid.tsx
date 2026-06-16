@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import {
-  CloudUpload,
   Database,
   FileSpreadsheet,
   HardDrive,
@@ -23,13 +22,6 @@ interface DataSourceDef {
 
 const SOURCES: DataSourceDef[] = [
   {
-    id: 'upload',
-    label: 'Upload file',
-    description: 'Local CSV, Parquet, or Excel',
-    icon: CloudUpload,
-    enabled: true,
-  },
-  {
     id: 'snowflake',
     label: 'Connect Snowflake',
     description: 'Warehouse table or view',
@@ -44,25 +36,25 @@ const SOURCES: DataSourceDef[] = [
     enabled: false,
   },
   {
-    id: 'cloud',
-    label: 'Cloud Storage',
-    description: 'S3, GCS, Azure Blob',
-    icon: HardDrive,
-    enabled: false,
-  },
-  {
     id: 'api',
-    label: 'API / Stream',
+    label: 'Connect API',
     description: 'REST, Kafka, Pulsar, …',
     icon: Radio,
     enabled: false,
   },
   {
-    id: 'sample',
-    label: 'Sample Dataset',
-    description: 'Explore with built-in data',
-    icon: FileSpreadsheet,
+    id: 'cloud',
+    label: 'Connect Cloud Storage',
+    description: 'S3, GCS, Azure Blob',
+    icon: HardDrive,
     enabled: false,
+  },
+  {
+    id: 'upload',
+    label: 'Upload CSV',
+    description: 'Local CSV, Parquet, or Excel',
+    icon: FileSpreadsheet,
+    enabled: true,
   },
 ];
 
@@ -98,64 +90,46 @@ export default function DataSourceGrid({
   });
 
   return (
-    <div {...getRootProps()} className="space-y-3">
+    <div {...getRootProps()} className="space-y-2">
       <input {...getInputProps()} />
-      <div className="grid grid-cols-3 gap-3">
-        {SOURCES.map((s) => {
-          const Icon = s.icon;
-          const isSelected = selected === s.id;
-          const isUpload = s.id === 'upload';
-          return (
-            <button
-              key={s.id}
-              type="button"
-              disabled={!s.enabled}
-              onClick={() => {
-                if (!s.enabled) return;
-                if (isUpload) open();
-                onSelect(s.id);
-              }}
-              className={clsx(
-                'flex flex-col items-start gap-2 rounded-xl border bg-tgl-card p-3 text-left transition-all',
-                isSelected
-                  ? 'border-tg-orange ring-1 ring-tg-orange/30'
-                  : 'border-tgl-border hover:border-tg-orange hover:bg-tgl-bubble',
-                !s.enabled &&
-                  'cursor-not-allowed opacity-50 hover:border-tgl-border hover:bg-tgl-card',
-                isUpload && isDragActive && 'border-tg-orange bg-tgl-chip',
-              )}
-            >
-              <div
-                className={clsx(
-                  'flex h-8 w-8 items-center justify-center rounded-lg',
-                  isSelected ? 'bg-tgl-chip text-tg-orange' : 'bg-tgl-bubble text-tgl-mute',
-                )}
-              >
-                <Icon size={15} />
-              </div>
-              <div className="flex w-full items-center justify-between">
-                <span className="text-[12.5px] font-semibold text-tgl-ink">{s.label}</span>
-                {!s.enabled && (
-                  <span className="rounded-full bg-tgl-bubble px-1.5 py-0.5 text-[9px] text-tgl-mute">
-                    soon
-                  </span>
-                )}
-              </div>
-              <p className="text-[11px] leading-snug text-tgl-mute">{s.description}</p>
-            </button>
-          );
-        })}
-      </div>
+      {SOURCES.map((s) => {
+        const Icon = s.icon;
+        const isUpload = s.id === 'upload';
+        return (
+          <button
+            key={s.id}
+            type="button"
+            disabled={!s.enabled}
+            onClick={() => {
+              if (!s.enabled) return;
+              if (isUpload) open();
+              onSelect(s.id);
+            }}
+            title={!s.enabled ? `${s.label} — coming soon` : s.description}
+            className={clsx(
+              'flex w-full items-center gap-2.5 rounded-lg border bg-tgl-card px-3 py-2.5 text-left text-[12.5px] font-medium text-tgl-ink transition-colors',
+              s.enabled
+                ? 'border-tgl-border hover:border-tg-orange hover:bg-tgl-bubble'
+                : 'cursor-not-allowed border-tgl-border opacity-60',
+              isUpload && isDragActive && 'border-tg-orange bg-tgl-chip',
+            )}
+          >
+            <Icon size={15} className="text-tgl-mute" />
+            <span className="flex-1">{s.label}</span>
+            {!s.enabled && (
+              <span className="rounded-full bg-tgl-bubble px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-tgl-mute">
+                soon
+              </span>
+            )}
+          </button>
+        );
+      })}
 
       {uploadedName && (
         <div className="rounded-lg bg-tgl-activeBg px-3 py-2 text-[12px] text-tgl-activeInk">
           ✓ <span className="font-medium">{uploadedName}</span> uploaded
         </div>
       )}
-
-      <div className="text-[11px] text-tgl-mute">
-        For data sources we currently support file loading only.
-      </div>
     </div>
   );
 }

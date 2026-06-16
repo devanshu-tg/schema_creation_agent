@@ -86,26 +86,35 @@ export default function ChatPanel({
   const lastAgent = [...messages].reverse().find((m) => m.role === 'agent');
   const chips = lastAgent?.suggested_replies ?? [];
 
+  // Pill goes orange while the agent is actively working, green otherwise.
+  const pillClass = busy
+    ? 'bg-tgl-chip text-tgl-chipInk'
+    : 'bg-tgl-activeBg text-tgl-activeInk';
+  const pillDotClass = busy ? 'bg-tg-orange' : 'bg-tgl-activeDot';
+
   return (
     <div
       {...getRootProps()}
       className={clsx(
-        'flex h-full w-[560px] flex-col border-r border-tgl-border bg-tgl-panel',
+        'flex h-full w-[360px] shrink-0 flex-col border-r border-tgl-border bg-tgl-panel',
         isDragActive && 'ring-2 ring-tg-orange ring-inset',
       )}
     >
       <input {...getInputProps()} />
 
-      {/* Top bar — Savanna AI + AGENT ACTIVE pill */}
-      <div className="flex items-center justify-between border-b border-tgl-border px-5 py-3">
+      {/* Top bar — Savanna AI + Agent Active pill */}
+      <div className="flex items-center justify-between border-b border-tgl-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-tgl-bubble">
-            <Sparkles size={14} className="text-tg-orange" />
-          </div>
-          <h1 className="text-[15px] font-semibold text-tgl-ink">Savanna AI</h1>
+          <Sparkles size={15} className="text-tg-orange" />
+          <h1 className="text-[14px] font-semibold text-tgl-ink">Savanna AI</h1>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full bg-tgl-activeBg px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-activeInk">
-          <span className="h-1.5 w-1.5 rounded-full bg-tgl-activeDot" />
+        <div
+          className={clsx(
+            'flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide',
+            pillClass,
+          )}
+        >
+          <span className={clsx('h-1.5 w-1.5 rounded-full', pillDotClass)} />
           <span>Agent Active</span>
         </div>
       </div>
@@ -138,41 +147,52 @@ export default function ChatPanel({
 
       {/* Bottom input */}
       <div className="border-t border-tgl-border bg-tgl-panel px-5 py-3">
-        {chips.length > 0 && uploadedName && !busy && (
-          <div className="mb-2.5 flex flex-wrap gap-2">
-            {chips.map((c, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => onChipClick(c)}
-                className="rounded-xl bg-tgl-chip px-3.5 py-2 text-[12.5px] font-medium text-tgl-chipInk transition-colors hover:bg-tgl-chipHover"
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-        )}
+        {chips.length > 0 && !busy && (() => {
+          const isConfirm =
+            lastAgent?.type === 'question' &&
+            isDestructiveQuestion(lastAgent.content);
+          return (
+            <div className="mb-2.5 flex flex-wrap gap-2">
+              {chips.map((c, i) => {
+                // Destructive Yes/No: red affirmative + neutral cancel.
+                const isAffirm = isConfirm && isAffirmativeChip(c);
+                const isCancel = isConfirm && !isAffirm;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => onChipClick(c)}
+                    className={clsx(
+                      'rounded-xl px-3.5 py-2 text-[12.5px] font-medium transition-colors',
+                      isAffirm
+                        ? 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200'
+                        : isCancel
+                          ? 'bg-tgl-card text-tgl-ink border border-tgl-border hover:bg-tgl-bubble'
+                          : 'bg-tgl-chip text-tgl-chipInk hover:bg-tgl-chipHover',
+                    )}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })()}
 
-        <div className="flex items-center gap-2 rounded-xl border border-tgl-border bg-tgl-card px-3 py-2 focus-within:border-tg-orange focus-within:ring-1 focus-within:ring-tg-orange/30">
-          {/* Upload-in-chat button — opens the file picker mid-conversation */}
+        <div className="flex items-center gap-2 rounded-lg border border-tgl-border bg-tgl-card px-3 py-2 focus-within:border-tg-orange/60">
+          {/* Upload-in-chat — paperclip opens file picker mid-conversation */}
           <button
             type="button"
             onClick={() => open()}
             disabled={busy || !hasWorkspace}
             title="Upload a CSV"
-            className="rounded-md p-1.5 text-tgl-mute transition-colors hover:bg-tgl-bubble hover:text-tg-orange disabled:cursor-not-allowed disabled:opacity-50"
+            className="text-tgl-mute transition-colors hover:text-tg-orange disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Paperclip size={14} />
           </button>
           <input
             type="text"
-            placeholder={
-              busy
-                ? 'Agent is working…'
-                : !uploadedName
-                  ? 'Ask Savanna anything about TigerGraph…'
-                  : 'Reply to Savanna…'
-            }
+            placeholder={busy ? 'Agent is working…' : 'Ask Savanna…'}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={busy || !hasWorkspace}
@@ -183,16 +203,37 @@ export default function ChatPanel({
           />
           <button
             type="button"
-            className="rounded-md bg-tg-orange p-1.5 text-white transition-colors hover:opacity-90 disabled:bg-tgl-line disabled:text-tgl-subtle"
+            className="text-tg-orange transition-colors hover:opacity-80 disabled:text-tgl-subtle"
             disabled={!input.trim() || busy || !hasWorkspace}
             onClick={submit}
+            title="Send"
           >
-            <Send size={13} />
+            <Send size={14} />
           </button>
         </div>
+        <p className="mt-1.5 text-center text-[10.5px] text-tgl-subtle">
+          Savanna can help generate schema, GSQL, and more.
+        </p>
       </div>
     </div>
   );
+}
+
+// -------------------- Question / confirmation helpers --------------------
+
+/** Best-effort detection: does this question ask permission for a
+ *  destructive operation? Used to escalate the visual treatment to a
+ *  red confirmation card + red "Yes" chip. */
+function isDestructiveQuestion(text: string): boolean {
+  const t = (text || '').toLowerCase();
+  return /\b(drop|delete|wipe|clear|remove|destroy|overwrite|reset)\b/.test(t);
+}
+
+/** A chip is the "affirmative" answer (the destructive Yes) when its
+ *  text starts with yes / confirm / delete / drop / wipe / etc. */
+function isAffirmativeChip(text: string): boolean {
+  const t = (text || '').trim().toLowerCase();
+  return /^(yes|confirm|delete|drop|wipe|clear|remove|destroy|proceed|do it|go ahead)/.test(t);
 }
 
 // -------------------- Thinking indicator --------------------
@@ -344,26 +385,13 @@ function WelcomeScreen({
 
   return (
     <div className={clsx('flex h-full flex-col', isDragActive && 'opacity-90')}>
-      {/* Conversational welcome — matches TG Cloud "Savanna AI" intro */}
-      <div className="mb-5 flex tg-fade-in">
-        <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tgl-bubble">
-          <Sparkles size={13} className="text-tg-orange" />
-        </div>
-        <div className="max-w-[80%] rounded-2xl bg-tgl-bubble px-4 py-2.5 text-[13px] leading-relaxed text-tgl-ink">
-          <div>Hi! I&apos;m Savanna AI.</div>
-          <div className="mt-1">
-            I can help you design a graph schema based on the business problem
-            you&apos;re trying to solve.
-          </div>
-          <div className="mt-1">What would you like to accomplish today?</div>
-        </div>
-      </div>
+      {/* Intro line — matches TG Cloud Savanna AI welcome */}
+      <p className="mb-3 text-[12.5px] leading-relaxed text-tgl-mute">
+        Choose a use case and Savanna AI will suggest a graph schema for your data.
+      </p>
 
-      {/* Data source picker */}
-      <div className="mb-5">
-        <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-subtle">
-          Where&apos;s your data?
-        </div>
+      {/* Data source picker (vertical list) */}
+      <div className="mb-4">
         <DataSourceGrid
           selected={pickedSource}
           onSelect={setPickedSource}
@@ -378,13 +406,9 @@ function WelcomeScreen({
       {/* Use case picker — soft pattern hint */}
       <div className="mb-2">
         <div className="mb-2 text-[10.5px] font-semibold uppercase tracking-wide text-tgl-subtle">
-          Or pick a starting point
+          Build your graph schema
         </div>
         <UseCaseGrid selected={useCase} onSelect={onUseCaseChange} />
-        <p className="mt-2 text-[11px] text-tgl-mute">
-          The agent will still ask about your specific decision — this just
-          biases which industry patterns it considers first.
-        </p>
       </div>
     </div>
   );
@@ -396,6 +420,8 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === 'user';
   const isSchema =
     message.type === 'propose_schema' || message.type === 'update_schema';
+  const isQuestion = !isUser && message.type === 'question';
+  const isDestructive = isQuestion && isDestructiveQuestion(message.content);
 
   return (
     <div
@@ -411,13 +437,28 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           'max-w-[80%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed',
           isUser
             ? 'border border-tgl-border bg-tgl-card text-tgl-ink'
-            : 'bg-tgl-bubble text-tgl-ink',
+            : isQuestion
+              ? clsx(
+                  'border-2 bg-tgl-card text-tgl-ink shadow-sm',
+                  isDestructive ? 'border-red-300' : 'border-tg-orange/40',
+                )
+              : 'bg-tgl-bubble text-tgl-ink',
         )}
       >
         {!isUser && isSchema && (
           <div className="mb-1.5 inline-flex items-center gap-1 rounded-full bg-tgl-chip px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-tgl-chipInk">
             <Sparkles size={9} />
             {message.type === 'update_schema' ? 'Schema updated' : 'Schema proposed'}
+          </div>
+        )}
+        {isQuestion && (
+          <div
+            className={clsx(
+              'mb-1.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
+              isDestructive ? 'bg-red-50 text-red-700' : 'bg-tgl-chip text-tgl-chipInk',
+            )}
+          >
+            {isDestructive ? 'Confirm — destructive' : 'Savanna asks'}
           </div>
         )}
         <div className="whitespace-pre-wrap">{message.content}</div>

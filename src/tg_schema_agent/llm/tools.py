@@ -229,6 +229,137 @@ def find_columns_matching(ctx: ToolContext, pattern: str) -> dict[str, Any]:
     return _ok(f"{len(hits)} column(s) match /{pattern}/", {"matches": hits})
 
 
+def analyze_column_distribution(
+    ctx: ToolContext,
+    table: str,
+    column: str,
+    top_k: int = 10,
+) -> dict[str, Any]:
+    """Deep statistical analysis of a column — reads the FULL CSV (not just
+    the profile) to surface actual data shape:
+      - Top-K most frequent values + count + percentage
+      - For numeric: min, max, mean, median, p95
+      - For datetime: time range, span in days
+      - For string: distinct count, avg length, longest value
+      - Random sample of 5 values (not just the head — catches edge cases)
+
+    Call this BEFORE proposing a column as a vertex primary_id or as a
+    shared-identifier (Device/IP/Email/Phone). The frequency distribution
+    tells you whether it's actually a useful entity or just noise.
+    """
+    prof = ctx.find_profile(table)
+    if not prof:
+        return _err(f"Unknown table '{table}'. Call list_tables first.")
+    col = prof.column(column) or next(
+        (c for c in prof.columns if c.name.lower() == column.lower()), None
+    )
+    if col is None:
+        return _err(f"Unknown column '{column}' in '{table}'.")
+
+    csv_path = next((p for p in ctx.csv_paths if p.stem == prof.name), None)
+    if not csv_path:
+        return _err(f"Could not locate CSV for table '{table}'.")
+
+    try:
+        import pandas as pd  # type: ignore
+        df = io_utils.load_csv(csv_path)
+    except Exception as exc:
+        return _err(f"Failed to read CSV: {exc}")
+
+    if column not in df.columns:
+        # Case-insensitive resolve
+        for c in df.columns:
+            if c.lower() == column.lower():
+                column = c
+                break
+    if column not in df.columns:
+        return _err(f"Column '{column}' not in CSV.")
+
+    series = df[column]
+    n_total = len(series)
+    n_null = int(series.isna().sum())
+    n_non_null = n_total - n_null
+    null_pct = round(100.0 * n_null / max(1, n_total), 2)
+
+    # Top-K values + percentages
+    k = max(1, min(int(top_k or 10), 50))
+    vc = series.dropna().astype(str).value_counts().head(k)
+    top_values = [
+        {"value": str(v), "count": int(c), "pct": round(100.0 * int(c) / max(1, n_non_null), 2)}
+        for v, c in vc.items()
+    ]
+
+    stats: dict[str, Any] = {
+        "row_count": n_total,
+        "null_count": n_null,
+        "null_pct": null_pct,
+        "distinct_count": int(series.nunique(dropna=True)),
+        "top_values": top_values,
+    }
+
+    # Numeric stats
+    try:
+        numeric_series = pd.to_numeric(series, errors="coerce").dropna()
+        if len(numeric_series) >= max(2, n_non_null * 0.5):
+            stats["numeric"] = {
+                "min": float(numeric_series.min()),
+                "max": float(numeric_series.max()),
+                "mean": round(float(numeric_series.mean()), 4),
+                "median": round(float(numeric_series.median()), 4),
+                "p95": round(float(numeric_series.quantile(0.95)), 4),
+            }
+    except Exception:  # noqa: BLE001
+        pass
+
+    # Datetime stats — only attempt if the profiler tagged it datetime
+    # OR the column name strongly suggests it. Otherwise pandas happily
+    # parses bare numbers like "1000" as year 1000 (false positive on
+    # numeric columns).
+    dt_name_hint = any(k in col.name.lower() for k in
+                       ("date", "time", "_at", "_on", "ts", "timestamp"))
+    if col.dtype.value == "DATETIME" or dt_name_hint:
+        try:
+            dt_series = pd.to_datetime(series, errors="coerce").dropna()
+            if len(dt_series) >= max(2, n_non_null * 0.5):
+                span_days = (dt_series.max() - dt_series.min()).days
+                # Sanity check: real timestamps shouldn't span millennia
+                if 0 <= span_days <= 100 * 365:
+                    stats["datetime"] = {
+                        "earliest": str(dt_series.min()),
+                        "latest": str(dt_series.max()),
+                        "span_days": int(span_days),
+                    }
+        except Exception:  # noqa: BLE001
+            pass
+
+    # String stats
+    if col.dtype.value in ("STRING", "CATEGORICAL", "ID_LIKE"):
+        try:
+            lengths = series.dropna().astype(str).str.len()
+            if len(lengths) > 0:
+                stats["string"] = {
+                    "avg_length": round(float(lengths.mean()), 1),
+                    "max_length": int(lengths.max()),
+                    "min_length": int(lengths.min()),
+                }
+        except Exception:  # noqa: BLE001
+            pass
+
+    # Random sample (5 rows) — not just head
+    try:
+        sample = series.dropna().sample(min(5, n_non_null), random_state=42).astype(str).tolist()
+        stats["random_sample"] = sample
+    except Exception:  # noqa: BLE001
+        pass
+
+    top_summary = ", ".join(f"{tv['value']}({tv['pct']}%)" for tv in top_values[:3])
+    return _ok(
+        f"{table}.{column}: {stats['distinct_count']} distinct, {null_pct}% null, "
+        f"top: {top_summary}",
+        stats,
+    )
+
+
 def get_sample_rows(ctx: ToolContext, table: str, n: int = 3) -> dict[str, Any]:
     prof = ctx.find_profile(table)
     if not prof:
@@ -1057,6 +1188,7 @@ TOOL_DISPATCH = {
     "inspect_column": inspect_column,
     "find_columns_matching": find_columns_matching,
     "get_sample_rows": get_sample_rows,
+    "analyze_column_distribution": analyze_column_distribution,
     "run_deterministic_rules": run_deterministic_rules,
     "match_pattern_library": match_pattern_library,
     "match_all_patterns": match_all_patterns,
@@ -1217,6 +1349,34 @@ def build_function_declarations() -> list[Any]:
                     "n": genai_types.Schema(type="INTEGER"),
                 },
                 required=["table"],
+            ),
+        ),
+        genai_types.FunctionDeclaration(
+            name="analyze_column_distribution",
+            description=(
+                "DEEP analysis of one column — reads the FULL CSV (every "
+                "row, not just the cached profile) and returns top-K most "
+                "frequent values + percentages, numeric stats (min/max/"
+                "mean/median/p95), datetime span, string length stats, "
+                "and a random sample of 5 values. Call this BEFORE "
+                "promoting a column to a vertex primary_id or a shared "
+                "identifier so you base the decision on actual data shape, "
+                "not just the dtype. Especially valuable for verifying "
+                "ID-like columns (do they actually have low collision?), "
+                "categorical columns (what are the real values?), and "
+                "timestamps (what's the time range?)."
+            ),
+            parameters=genai_types.Schema(
+                type="OBJECT",
+                properties={
+                    "table": genai_types.Schema(type="STRING"),
+                    "column": genai_types.Schema(type="STRING"),
+                    "top_k": genai_types.Schema(
+                        type="INTEGER",
+                        description="How many top values to return (default 10, max 50).",
+                    ),
+                },
+                required=["table", "column"],
             ),
         ),
         genai_types.FunctionDeclaration(

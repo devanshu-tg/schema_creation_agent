@@ -15,6 +15,7 @@ import DeployModal, { type DeployModalMode } from '@/components/DeployModal';
 import SchemaPreview from '@/components/SchemaPreview';
 import Sidebar from '@/components/Sidebar';
 import StarterQueriesPanel from '@/components/StarterQueriesPanel';
+import TopBar from '@/components/TopBar';
 
 export default function Page() {
   const [workspaceId, setWorkspaceId] = useState<string | null>(null);
@@ -146,36 +147,39 @@ export default function Page() {
   return (
     <div className="flex h-screen overflow-hidden bg-tg-bg">
       <Sidebar />
-      <main className="flex flex-1 overflow-hidden">
-        <ChatPanel
-          uploadedName={uploadedName}
-          onFilesPicked={handleFilesPicked}
-          messages={messages}
-          steps={steps}
-          onSend={sendChat}
-          busy={busy}
-          useCase={useCase}
-          onUseCaseChange={setUseCase}
-          hasWorkspace={!!workspaceId}
-        />
-        <SchemaPreview
-          schema={schema}
-          validation={validation}
-          score={score}
-          critic={critic}
-          confidence={confidence}
-          workspaceLabel="fraud-detection"
-          onGenerate={() => sendChat('just design it')}
-          busy={busy}
-          hasData={!!uploadedName}
-          onPreviewDeploy={
-            schema && uploadedName ? () => setDeployModal('preview') : undefined
-          }
-          onDeployNow={
-            schema && uploadedName ? () => setDeployModal('review') : undefined
-          }
-        />
-      </main>
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <TopBar pageTitle="Design Schema" />
+        <main className="flex flex-1 overflow-hidden">
+          <ChatPanel
+            uploadedName={uploadedName}
+            onFilesPicked={handleFilesPicked}
+            messages={messages}
+            steps={steps}
+            onSend={sendChat}
+            busy={busy}
+            useCase={useCase}
+            onUseCaseChange={setUseCase}
+            hasWorkspace={!!workspaceId}
+          />
+          <SchemaPreview
+            schema={schema}
+            validation={validation}
+            score={score}
+            critic={critic}
+            confidence={confidence}
+            workspaceLabel="fraud-detection"
+            onGenerate={() => sendChat('just design it')}
+            busy={busy}
+            hasData={!!uploadedName}
+            onPreviewDeploy={
+              schema && uploadedName ? () => setDeployModal('preview') : undefined
+            }
+            onDeployNow={
+              schema && uploadedName ? () => setDeployModal('review') : undefined
+            }
+          />
+        </main>
+      </div>
 
       {error && (
         <div className="fixed bottom-5 left-1/2 -translate-x-1/2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-[12.5px] text-red-700 shadow-card">
