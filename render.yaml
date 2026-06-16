@@ -1,0 +1,29 @@
+# Render Infrastructure-as-Code — Render auto-detects this file at the
+# repo root and configures the service when you create it from GitHub.
+#
+# This deploys the FastAPI backend. The Next.js frontend goes to Vercel.
+
+services:
+  - type: web
+    name: autograph-backend
+    runtime: docker
+    plan: free                  # 512 MB RAM, spins down after 15 min idle
+    region: oregon              # change if you prefer fra1, sin1, etc.
+    branch: main
+    healthCheckPath: /api/health
+    autoDeploy: true            # rebuild on every push to main
+    envVars:
+      - key: TG_GRAPHNAME
+        value: mcp_demo
+      - key: TG_TGCLOUD
+        value: "true"
+      - key: GEMINI_MODEL
+        value: gemini-3.1-pro-preview
+      # Secrets — set actual values in Render dashboard (Environment tab).
+      # `sync: false` means Render won't try to read them from this file.
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TG_HOST
+        sync: false
+      - key: TG_SECRET
+        sync: false

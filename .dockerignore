@@ -1,0 +1,37 @@
+# Keep the Docker build context small + don't bake secrets into the image.
+
+# Frontend — deploys separately to Vercel
+frontend/
+
+# Python local environments + caches
+.venv/
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local-only state (workspaces, generated artifacts)
+build/
+
+# Sample CSVs — too big and not used by the backend at runtime
+samples/
+
+# Secrets + env files — secrets come from Cloud Run Secret Manager
+.env
+.env.*
+*.pem
+
+# Git + IDE
+.git/
+.github/
+.vscode/
+.idea/
+.claude/
+
+# Docs that don't need to be in the image
+*.md
+docs/
+
+# Tests
+tests/
