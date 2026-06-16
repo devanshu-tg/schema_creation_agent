@@ -1,8 +1,8 @@
+@import '@xyflow/react/dist/style.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import '@xyflow/react/dist/style.css';
 
 /* Override React Flow's bundled dark-mode CSS variables.
    @xyflow/react ships with dark colors as defaults (#141414, #1e1e1e, etc.);
