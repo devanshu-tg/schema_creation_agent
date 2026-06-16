@@ -208,7 +208,10 @@ export default function Page() {
             setTimeout(() => setDeployModal('review'), 50);
           }}
           onDeployCompleted={async (graphName, counts) => {
-            const total = Object.values(counts).reduce((a, b) => a + (b ?? 0), 0);
+            const total: number = Object.values(counts).reduce<number>(
+              (a, b) => (a ?? 0) + (b ?? 0),
+              0,
+            );
             const parts = Object.entries(counts).map(([v, c]) => `${v}=${c ?? 0}`).join(', ');
             const msg =
               total > 0

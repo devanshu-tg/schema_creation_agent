@@ -4,7 +4,10 @@ export type UseCase =
   | 'FRAUD'
   | 'ENTITY_RESOLUTION'
   | 'CUSTOMER_360'
-  | 'RECOMMENDATION';
+  | 'RECOMMENDATION'
+  | 'SUPPLY_CHAIN'
+  | 'CYBERSECURITY'
+  | 'KNOWLEDGE_GRAPH';
 
 export type DataKind =
   | 'INT'
