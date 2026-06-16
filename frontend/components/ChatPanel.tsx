@@ -86,11 +86,10 @@ export default function ChatPanel({
   const lastAgent = [...messages].reverse().find((m) => m.role === 'agent');
   const chips = lastAgent?.suggested_replies ?? [];
 
-  // Pill goes orange while the agent is actively working, green otherwise.
-  const pillClass = busy
-    ? 'bg-tgl-chip text-tgl-chipInk'
-    : 'bg-tgl-activeBg text-tgl-activeInk';
-  const pillDotClass = busy ? 'bg-tg-orange' : 'bg-tgl-activeDot';
+  // Pill stays green ("Agent Active") and just animates the dot when busy —
+  // an orange/peach swap looked alarming to users (read as "warning / error").
+  const pillClass = 'bg-tgl-activeBg text-tgl-activeInk';
+  const pillDotClass = clsx('bg-tgl-activeDot', busy && 'animate-pulse');
 
   return (
     <div
