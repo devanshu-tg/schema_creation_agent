@@ -35,6 +35,7 @@ web = [
 ]
 llm = [
     "google-genai>=0.7",
+    "openai>=1.50",  # OpenRouter-compatible client for non-Gemini providers
 ]
 
 [project.scripts]

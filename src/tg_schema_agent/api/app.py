@@ -638,7 +638,13 @@ async def chat_turn_stream(
     - `event: final`        — final structured payload (terminates the stream)
     - `event: error`        — fatal error (terminates the stream)
     """
-    from tg_schema_agent.llm import chat_agent as agent_mod
+    # Select provider via LLM_PROVIDER env var. Default: gemini (local dev).
+    # Set LLM_PROVIDER=openrouter to use Claude / GPT / others via OpenRouter.
+    _provider = (os.environ.get("LLM_PROVIDER") or "gemini").strip().lower()
+    if _provider == "openrouter":
+        from tg_schema_agent.llm import openrouter_agent as agent_mod
+    else:
+        from tg_schema_agent.llm import chat_agent as agent_mod
 
     d = assert_workspace(workspace_id)
 
@@ -647,20 +653,27 @@ async def chat_turn_stream(
     profiles = profile_directory(d)
 
     history_raw = load_chat_history(workspace_id)
-    history = [agent_mod.ChatMessage(**m) for m in history_raw]
+    # ChatMessage lives on chat_agent; openrouter_agent re-exports it.
+    from tg_schema_agent.llm.chat_agent import ChatMessage as _ChatMessage
+    history = [_ChatMessage(**m) for m in history_raw]
     user_msg = req.message.strip()
 
     # Persist the user message but DON'T add it to the in-memory history we
-    # pass to the agent — `_history_to_contents` injects `user_message` as
-    # the final turn, so doing both would duplicate the user's reply and
-    # confuse Gemini (which then returns finish_reason=STOP with 0 parts).
+    # pass to the agent — the agent's history-to-messages converter injects
+    # `user_message` as the final turn, so doing both would duplicate the
+    # user's reply.
     if user_msg:
         append_chat_message(workspace_id, "user", user_msg, type="answer")
 
     if not agent_mod.is_available():
+        key_hint = (
+            "OPENROUTER_API_KEY"
+            if _provider == "openrouter"
+            else "GEMINI_API_KEY"
+        )
         raise HTTPException(
             status_code=503,
-            detail="Conversational agent requires GEMINI_API_KEY.",
+            detail=f"Conversational agent requires {key_hint}.",
         )
 
     def sse(event: str, payload: Any) -> str:

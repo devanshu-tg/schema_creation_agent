@@ -148,8 +148,22 @@ def _business_context_for_prompt(bc: BusinessContext | None) -> dict[str, Any]:
     }
 
 
+def _active_provider() -> str:
+    """LLM_PROVIDER selects which backend handles starter-query generation."""
+    return (os.environ.get("LLM_PROVIDER") or "gemini").strip().lower()
+
+
 def is_available() -> bool:
-    """Check whether the Gemini SDK + API key are wired up."""
+    """True if the configured provider has both SDK + API key wired up."""
+    if _active_provider() == "openrouter":
+        if not os.environ.get("OPENROUTER_API_KEY"):
+            return False
+        try:
+            import openai  # noqa: F401
+            return True
+        except ImportError:
+            return False
+    # Default: Gemini
     if not (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")):
         return False
     try:
@@ -258,6 +272,107 @@ def _generate_with_gemini(
         return None
 
 
+def _generate_with_openrouter(
+    schema: Schema,
+    graph_name: str,
+    business_context: BusinessContext | None,
+    model: str | None = None,
+    retry_with_error: str | None = None,
+    prior_attempt: str | None = None,
+) -> StarterQuerySet | None:
+    """Same as _generate_with_gemini but calls OpenRouter via OpenAI SDK."""
+    from openai import OpenAI
+
+    target_questions = [q.text for q in schema.target_questions]
+    payload = {
+        "schema": _schema_summary_for_prompt(schema, graph_name),
+        "business_context": _business_context_for_prompt(business_context),
+        "target_questions": target_questions,
+    }
+    user_text_parts = [
+        "Here is the schema and business context. Produce 5-8 starter "
+        "GSQL queries that answer the business questions and demonstrate "
+        "the graph's value.",
+        "",
+        json.dumps(payload, indent=2),
+    ]
+    if retry_with_error and prior_attempt:
+        user_text_parts.extend([
+            "",
+            "Your previous attempt failed validation. Here is the error:",
+            "",
+            retry_with_error,
+            "",
+            "And your previous attempt was:",
+            "",
+            prior_attempt,
+            "",
+            "Fix the syntax / attribute references and try again. Return JSON only.",
+        ])
+
+    client = OpenAI(
+        api_key=os.environ["OPENROUTER_API_KEY"],
+        base_url=os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+        default_headers={
+            "HTTP-Referer": os.environ.get(
+                "OPENROUTER_REFERER", "https://github.com/devanshu-tg/schema_creation_agent"
+            ),
+            "X-Title": os.environ.get("OPENROUTER_APP_TITLE", "Autograph"),
+        },
+    )
+    model_name = (
+        model
+        or os.environ.get("OPENROUTER_MODEL")
+        or "anthropic/claude-sonnet-4.6"
+    )
+    try:
+        resp = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": _SYSTEM_INSTRUCTION},
+                {"role": "user", "content": "\n".join(user_text_parts)},
+            ],
+            temperature=0.2,
+            response_format={"type": "json_object"},
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.warning("OpenRouter call failed in starter queries: %s", exc)
+        return None
+
+    choice = (resp.choices or [None])[0]
+    if choice is None or not choice.message or not choice.message.content:
+        return None
+    text = choice.message.content.strip()
+    if text.startswith("```"):
+        text = text.strip("`")
+        if text.lower().startswith("json"):
+            text = text[4:].lstrip()
+        if text.endswith("```"):
+            text = text[:-3]
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError as exc:
+        log.warning("Could not parse OpenRouter queries JSON: %s", exc)
+        return None
+    try:
+        return StarterQuerySet.model_validate(parsed)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Invalid StarterQuerySet shape: %s", exc)
+        return None
+
+
+def _generate(
+    schema: Schema,
+    graph_name: str,
+    business_context: BusinessContext | None,
+    **kwargs: Any,
+) -> StarterQuerySet | None:
+    """Dispatch to the configured provider's generator."""
+    if _active_provider() == "openrouter":
+        return _generate_with_openrouter(schema, graph_name, business_context, **kwargs)
+    return _generate_with_gemini(schema, graph_name, business_context, **kwargs)
+
+
 async def _dry_run_query(
     session: Any,
     graph_name: str,
@@ -307,10 +422,10 @@ async def generate_starter_queries(
     `validation_error` populated so the UI can show why.
     """
     if not is_available():
-        log.info("Gemini not available — returning empty starter query set.")
+        log.info("LLM provider not available — returning empty starter query set.")
         return StarterQuerySet()
 
-    qs = _generate_with_gemini(schema, graph_name, business_context)
+    qs = _generate(schema, graph_name, business_context)
     if qs is None:
         return StarterQuerySet()
 
@@ -329,7 +444,7 @@ async def generate_starter_queries(
         prior_attempt = json.dumps(
             {"queries": [q.model_dump() for q in qs.queries]}, indent=2
         )
-        retried = _generate_with_gemini(
+        retried = _generate(
             schema,
             graph_name,
             business_context,
