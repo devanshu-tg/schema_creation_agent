@@ -32,12 +32,18 @@ COPY src/ ./src/
 COPY patterns/ ./patterns/
 COPY rules/ ./rules/
 
-# Cloud Run sets PORT (default 8080). Honor it; default to 8001 for local.
-ENV PORT=8080
+# Port:
+#   - Render sets $PORT explicitly (typically 10000) — we honor it.
+#   - Hugging Face Spaces sets $PORT to whatever app_port in README.md says
+#     (7860 by default for Docker Spaces).
+#   - Cloud Run sets $PORT to 8080 by default.
+# Default to 7860 so a no-env-var run works on HF; the CMD honors $PORT
+# whenever it's set so Render/Cloud Run override transparently.
+ENV PORT=7860
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-EXPOSE 8080
+EXPOSE 7860
 
 # Single worker is fine — the chat-agent loop is async and Cloud Run
 # scales horizontally by spinning up more instances when concurrency > 80.
