@@ -1,12 +1,12 @@
 ---
 title: Autograph Backend
 emoji: 🐯
-colorFrom: orange
-colorTo: red
+colorFrom: red
+colorTo: yellow
 sdk: docker
 app_port: 7860
 pinned: false
-short_description: TigerGraph schema-design agent (FastAPI + MCP + Claude Sonnet)
+short_description: TigerGraph schema-design agent
 ---
 
 # Autograph — TigerGraph Schema Creation Agent
