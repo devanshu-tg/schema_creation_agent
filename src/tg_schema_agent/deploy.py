@@ -464,9 +464,58 @@ def _is_success(payload: Any) -> bool:
 
 
 def _summarize_error(payload: Any) -> str:
+    """Extract the actionable error text from a failed MCP response.
+
+    Crucially, for the gsql tool, MCP returns `success: true` even when
+    GSQL itself rejected the command — the real error is buried in
+    `data.result` (e.g. "Type Check Error TYP-111: ..." or "Saved as
+    draft query with type/semantic error"). The envelope-level `summary`
+    is the misleading "GSQL command executed successfully".
+
+    Priority order:
+      1. `data.result` if it contains any of our known failure markers
+         (these are the GSQL-specific errors)
+      2. `error` if present
+      3. `data.result` regardless (might have useful context)
+      4. `summary` (last resort — often misleading for gsql)
+    """
     parsed = _parse_mcp_payload(payload)
     if isinstance(parsed, dict):
-        for key in ("error", "summary", "message", "data"):
+        # 1. Prefer the real GSQL error in data.result
+        data = parsed.get("data")
+        result = None
+        if isinstance(data, dict):
+            result = data.get("result")
+        elif isinstance(data, str):
+            result = data
+        if isinstance(result, str) and result.strip():
+            low = result.lower()
+            # If the result contains a recognizable failure marker, that's
+            # the actionable error — surface it.
+            if any(m in low for m in _GSQL_FAILURE_MARKERS):
+                # Trim to the most relevant section (drop "Using graph X" prefix)
+                trimmed = result
+                if "\n" in trimmed:
+                    # Skip leading "Using graph 'X'\n" type lines
+                    lines = [
+                        l for l in trimmed.splitlines()
+                        if not l.strip().startswith("Using graph")
+                        and l.strip()
+                    ]
+                    trimmed = "\n".join(lines)
+                return trimmed[:500]
+
+        # 2. Explicit error field
+        err = parsed.get("error")
+        if err:
+            return str(err)[:300]
+
+        # 3. data.result raw (no markers found, but still might explain)
+        if isinstance(result, str) and result.strip():
+            return result[:300]
+
+        # 4. Last resort — summary / message
+        for key in ("summary", "message"):
             v = parsed.get(key)
             if v:
                 return str(v)[:300]
