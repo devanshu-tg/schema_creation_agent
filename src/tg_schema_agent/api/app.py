@@ -482,8 +482,13 @@ def chat_history(workspace_id: str) -> list[api_schemas.ChatMessageOut]:
 
 @app.delete("/api/workspaces/{workspace_id}/chat", tags=["chat"])
 def chat_clear(workspace_id: str) -> dict[str, str]:
-    assert_workspace(workspace_id)
+    d = assert_workspace(workspace_id)
     clear_chat_history(workspace_id)
+    # Also wipe cross-turn session memory so a fresh chat doesn't inherit
+    # stale findings / a stale decision from the previous conversation.
+    from tg_schema_agent.llm.session_memory import SessionMemory
+
+    SessionMemory.clear(d)
     return {"status": "cleared", "workspace_id": workspace_id}
 
 

@@ -690,6 +690,14 @@ concepts, answering "how do I…" questions.
 
 == HOW TO BEHAVE ==
 
+- CHECK SESSION MEMORY FIRST. If a "SESSION MEMORY" block appears below,
+  it lists what you have ALREADY established this session — the decision,
+  business context, tables seen, pattern, current schema, and the exact
+  questions you already asked. READ IT before doing anything. NEVER re-ask
+  a question that's already in that list. NEVER re-run discovery you've
+  already done. Continue from where you left off — you are mid-session,
+  not starting over. The user gets frustrated when you ask the same thing
+  twice, so treat that block as your memory of the conversation.
 - Be conversational. Read what the user is actually asking. Don't force them
   through a script. If they ask "what's GSQL?" — explain it. If they ask
   "show me my data" — query it. If they ask "design me a schema" — go into
@@ -1110,6 +1118,24 @@ async def run_agentic_turn(
         not ctx.working_schema.vertices and not ctx.working_schema.edges
     )
 
+    # --- Cross-turn session memory (see llm/session_memory.py). Mirrors the
+    # openrouter_agent wiring: load prior progress, capture this turn's tool
+    # activity, and flush at every exit so the next turn isn't amnesiac. ---
+    from tg_schema_agent.llm.session_memory import SessionMemory
+
+    mem = SessionMemory.load(workspace_dir)
+    turn_events: list[dict[str, Any]] = []
+
+    def _flush_session_memory(last_question: str | None = None) -> None:
+        for ev in turn_events:
+            mem.record_tool_event(
+                ev["name"], ev["ok"], ev["summary"], ev.get("args")
+            )
+        mem.set_schema_summary(ctx.working_schema)
+        if last_question:
+            mem.note_question(last_question)
+        mem.save(workspace_dir)
+
     contents = _history_to_contents(chat_history, user_message)
     if not contents:
         # Kickoff: open-ended seed so Gemini asks the user about goals first
@@ -1170,8 +1196,15 @@ async def run_agentic_turn(
     except ValueError:
         _thinking_budget = _thinking_default
 
+    # Inject the SESSION MEMORY block (if any) into the system instruction so
+    # the model sees what's already established and doesn't re-ask.
+    _sys_instruction = _AGENTIC_SYSTEM_INSTRUCTION
+    _mem_block = mem.render_for_prompt()
+    if _mem_block:
+        _sys_instruction = _AGENTIC_SYSTEM_INSTRUCTION + "\n\n" + _mem_block
+
     _gen_config = genai_types.GenerateContentConfig(
-        system_instruction=_AGENTIC_SYSTEM_INSTRUCTION,
+        system_instruction=_sys_instruction,
         tools=tools,
         temperature=0.3,
         thinking_config=genai_types.ThinkingConfig(thinking_budget=_thinking_budget),
@@ -1264,6 +1297,14 @@ async def run_agentic_turn(
                 "summary": result.get("summary", ""),
             }
 
+            # Capture for session memory so the next turn knows we did this.
+            turn_events.append({
+                "name": fc.name,
+                "ok": bool(result.get("ok", False)),
+                "summary": result.get("summary", ""),
+                "args": args,
+            })
+
             # If the tool mutated the schema, push the latest snapshot
             if fc.name in MUTATING_TOOLS:
                 yield "schema_update", {
@@ -1307,6 +1348,7 @@ async def run_agentic_turn(
         # — the user almost certainly got what they asked for (the live tool
         # already ran), just without a clean closing message.
         ctx.persist_schema()
+        _flush_session_memory()
         last_summary = ""
         if accumulated_text_parts:
             last_summary = accumulated_text_parts[-1][:240]
@@ -1332,9 +1374,18 @@ async def run_agentic_turn(
     # Build the final payload based on which terminating call was made
     if terminating_kind == "ask_user":
         question_data = (terminating_payload or {}).get("data") or {}
+        _question_text = question_data.get(
+            "question",
+            terminating_payload.get("summary", "") if terminating_payload else "",
+        )
+        # Persist BEFORE returning — previously this branch dropped business
+        # context / assumptions recorded earlier in the turn, causing the
+        # agent to re-ask the same clarifying questions next turn.
+        ctx.persist_schema()
+        _flush_session_memory(last_question=_question_text)
         yield "final", {
             "type": "question",
-            "message": question_data.get("question", terminating_payload.get("summary", "") if terminating_payload else ""),
+            "message": _question_text,
             "suggested_replies": question_data.get("suggested_replies", []),
             "schema": ctx.working_schema.model_dump(mode="json") if (ctx.working_schema.vertices or ctx.working_schema.edges) else None,
             "validation": None,
@@ -1345,6 +1396,7 @@ async def run_agentic_turn(
     if terminating_kind == "reply_to_user":
         reply_data = (terminating_payload or {}).get("data") or {}
         ctx.persist_schema()
+        _flush_session_memory()
         yield "final", {
             "type": "answer",
             "message": reply_data.get("message", terminating_payload.get("summary", "") if terminating_payload else ""),
@@ -1360,6 +1412,8 @@ async def run_agentic_turn(
     # agent is in Stage 1 (still understanding the goal). Emit a `final`
     # event with type="answer" so the chat panel shows the agent's text.
     if not terminating_kind and accumulated_text_parts and not ctx.working_schema.vertices:
+        ctx.persist_schema()
+        _flush_session_memory()
         yield "final", {
             "type": "answer",
             "message": " ".join(accumulated_text_parts).strip(),
@@ -1392,6 +1446,7 @@ async def run_agentic_turn(
             "Build a Customer 360",
             "Just explore",
         ]
+        _flush_session_memory(last_question=default_q)
         yield "final", {
             "type": "question",
             "message": default_q,
@@ -1411,6 +1466,7 @@ async def run_agentic_turn(
         ctx.working_schema, val, ctx.pattern, user_prompt=ctx.user_prompt
     )
     ctx.persist_schema()
+    _flush_session_memory()
 
     final_message = ""
     final_chips: list[str] = []

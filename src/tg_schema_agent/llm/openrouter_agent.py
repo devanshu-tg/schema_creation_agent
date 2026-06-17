@@ -219,8 +219,38 @@ async def run_agentic_turn(
         not ctx.working_schema.vertices and not ctx.working_schema.edges
     )
 
+    # --- Cross-turn session memory (fixes "asks the same question every
+    # turn"). We persist a compact record of what's already established and
+    # replay it as a SESSION MEMORY block so the agent has continuity across
+    # turns the way Claude Code does. See llm/session_memory.py. ---
+    from tg_schema_agent.llm.session_memory import SessionMemory
+
+    mem = SessionMemory.load(workspace_dir)
+    turn_events: list[dict[str, Any]] = []
+
+    def _flush_session_memory(last_question: str | None = None) -> None:
+        """Fold this turn's tool activity into memory and persist it.
+
+        Called from EVERY exit branch so the next turn inherits what we did.
+        """
+        for ev in turn_events:
+            mem.record_tool_event(
+                ev["name"], ev["ok"], ev["summary"], ev.get("args")
+            )
+        mem.set_schema_summary(ctx.working_schema)
+        if last_question:
+            mem.note_question(last_question)
+        mem.save(workspace_dir)
+
+    # Merge the SESSION MEMORY block into the single system message — some
+    # OpenRouter model adapters collapse or reject a second system message,
+    # so we keep it to one.
+    _system_content = _AGENTIC_SYSTEM_INSTRUCTION
+    _mem_block = mem.render_for_prompt()
+    if _mem_block:
+        _system_content = _AGENTIC_SYSTEM_INSTRUCTION + "\n\n" + _mem_block
     messages: list[dict[str, Any]] = [
-        {"role": "system", "content": _AGENTIC_SYSTEM_INSTRUCTION},
+        {"role": "system", "content": _system_content},
     ]
     history_msgs = _history_to_openai_messages(chat_history, user_message)
     if not history_msgs:
@@ -358,6 +388,14 @@ async def run_agentic_turn(
                 "summary": result.get("summary", ""),
             }
 
+            # Capture for session memory so the next turn knows we did this.
+            turn_events.append({
+                "name": fc_name,
+                "ok": bool(result.get("ok", False)),
+                "summary": result.get("summary", ""),
+                "args": args,
+            })
+
             if fc_name in MUTATING_TOOLS:
                 yield "schema_update", {
                     "schema": ctx.working_schema.model_dump(mode="json")
@@ -389,6 +427,7 @@ async def run_agentic_turn(
     else:
         # Hit max iters without a terminating call.
         ctx.persist_schema()
+        _flush_session_memory()
         last_summary = accumulated_text_parts[-1][:240] if accumulated_text_parts else ""
         yield "final", {
             "type": "answer",
@@ -411,12 +450,18 @@ async def run_agentic_turn(
     # Build the final payload — terminating-tool branches mirror chat_agent.
     if terminating_kind == "ask_user":
         question_data = (terminating_payload or {}).get("data") or {}
+        _question_text = question_data.get(
+            "question",
+            (terminating_payload or {}).get("summary", "") if terminating_payload else "",
+        )
+        # Persist BEFORE returning — previously the ask_user branch dropped
+        # any business context / assumptions recorded earlier this turn,
+        # which is exactly why the agent re-asked next turn.
+        ctx.persist_schema()
+        _flush_session_memory(last_question=_question_text)
         yield "final", {
             "type": "question",
-            "message": question_data.get(
-                "question",
-                (terminating_payload or {}).get("summary", "") if terminating_payload else "",
-            ),
+            "message": _question_text,
             "suggested_replies": question_data.get("suggested_replies", []),
             "schema": ctx.working_schema.model_dump(mode="json")
             if (ctx.working_schema.vertices or ctx.working_schema.edges)
@@ -429,6 +474,7 @@ async def run_agentic_turn(
     if terminating_kind == "reply_to_user":
         reply_data = (terminating_payload or {}).get("data") or {}
         ctx.persist_schema()
+        _flush_session_memory()
         yield "final", {
             "type": "answer",
             "message": reply_data.get(
@@ -446,6 +492,8 @@ async def run_agentic_turn(
 
     # Conversational reply (model produced only text, no terminating tool).
     if not terminating_kind and accumulated_text_parts and not ctx.working_schema.vertices:
+        ctx.persist_schema()
+        _flush_session_memory()
         yield "final", {
             "type": "answer",
             "message": " ".join(accumulated_text_parts).strip(),
@@ -473,6 +521,7 @@ async def run_agentic_turn(
             "Build a Customer 360",
             "Just explore",
         ]
+        _flush_session_memory(last_question=default_q)
         yield "final", {
             "type": "question",
             "message": default_q,
@@ -492,6 +541,7 @@ async def run_agentic_turn(
         ctx.working_schema, val, ctx.pattern, user_prompt=ctx.user_prompt
     )
     ctx.persist_schema()
+    _flush_session_memory()
 
     final_message = ""
     final_chips: list[str] = []
