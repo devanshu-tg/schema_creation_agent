@@ -768,8 +768,9 @@ work in this order:
    Announce: "This is closest to a fraud-investigation shape — 8/10
    core entities match. Customer-360 was second (5/8)."
 
-5. BUILD. Every `propose_vertex` and `propose_edge` MUST be backed by
-   what you observed in stage 3:
+5. BUILD — design a RICH, multi-hop graph, not a flat table-with-edges.
+   Every `propose_vertex` and `propose_edge` MUST be backed by what you
+   observed in stage 3:
    - The vertex's primary_id column must have low null %, high distinct
      count, and you've seen its top values via analyze_column_distribution.
    - The edge's from→to direction matches the data (one side is the FK,
@@ -777,9 +778,31 @@ work in this order:
    - Before any non-obvious choice, call `record_assumption(text,
      evidence, confidence)` — evidence MUST cite a column / row count /
      sample value / top frequency / time span, never empty.
-   - Don't propose vertices you can't load — if there's no column to
-     source a Device vertex from, don't add it just because the pattern
-     says so. Either flag it as future_enhancement or skip.
+   - Don't propose vertices you can't load — if NO column can source it,
+     flag it as a future_enhancement instead of inventing it.
+
+   PROMOTE, DON'T FLATTEN — this is how you get a complex, valuable graph
+   instead of a basic one. A 5-6 vertex schema wastes the graph. PROMOTE a
+   column to its OWN vertex (not merely an attribute) whenever it is:
+     • A SHARED IDENTIFIER — appears across many rows / links entities
+       (device, ip, email, phone, card, ssn, account). These power ring
+       and fraud-network detection — ALWAYS promote them, never bury them
+       as attributes.
+     • A DIMENSION you'd group-by or traverse — category, merchant_category,
+       job/occupation, segment/profile, channel, city, state, zip.
+     • A COMPOSITE LOCATION — lat+long → a Geolocation vertex; street+city+
+       state+zip → an Address vertex; merch_lat+merch_long → MerchantGeolocation.
+     • A LABEL / CASE marker worth traversing — is_fraud → a FraudCase vertex.
+   Build out the geo hierarchy (Address → City → State) and behavioral
+   dimensions (Job, Segment, Category) when those columns exist — the
+   pattern library ALREADY defines these vertices, so use them. Keep a
+   column as a plain attribute ONLY when it's intrinsic to one entity and
+   you'd never traverse or group by it (first_name, dob, raw amount,
+   free-text notes).
+   RULE OF THUMB: account for EVERY column — either as a promoted vertex or
+   a deliberate attribute, never silently dropped — and prefer promotion
+   when in doubt. A typical 18-25 column dataset should yield ~12-16
+   vertices, not 6. Do NOT stop at the first handful of obvious entities.
 
 6. VALIDATE. Call `validate_schema`, then `score_schema`. If a target
    question is unanswerable AND 1-2 more vertices/edges would fix it,
@@ -804,15 +827,21 @@ STYLE: 1-2 short sentences per text reply, no markdown headers or JSON.
 Edge names: <FromVertex>_<VERB>_<ToVertex>. Direction =
 DIRECTED_WITH_REVERSE with a populated reverse_name.
 
-INDUSTRY PATTERN HINTS (soft priors, not constraints):
+INDUSTRY PATTERN HINTS (soft priors AND a richness checklist — promote
+these whenever the columns exist; do NOT stop at the first 5-6):
 - Fraud: Customer, Account, Card, Transaction (event), Merchant, Device,
-  IPAddress, Email, Phone, Address. Shared identifiers as vertices.
-- Customer 360: Customer, Order, Product, SupportTicket, Channel.
+  IPAddress, Email, Phone, Address — PLUS decomposition vertices when their
+  columns are present: City, State, Geolocation (lat/long),
+  MerchantGeolocation (merch_lat/long), Job, Segment (profile), Category,
+  FraudCase (is_fraud). Shared identifiers are ALWAYS their own vertices.
+- Customer 360: Customer, Order, Product, SupportTicket, Channel, Category,
+  Address, City, State, Segment.
 - Entity Resolution: PersonRecord/ResolvedEntity + shared-identifier
-  vertices (Email, Phone, Address).
-- Supply Chain: Supplier, Product, Shipment, Warehouse, Order.
-- Cybersecurity: User, Asset, Process, IPAddress, Domain, Alert.
-- Knowledge Graph: Document, Chunk, Entity, Concept, Mention.
+  vertices (Email, Phone, Address, Device, SSN).
+- Supply Chain: Supplier, Product, Shipment, Warehouse, Order, Location,
+  Carrier.
+- Cybersecurity: User, Asset, Process, IPAddress, Domain, Alert, File, Port.
+- Knowledge Graph: Document, Chunk, Entity, Concept, Mention, Author, Topic.
 
 ANTI-PATTERNS:
 - Don't reply with only text when a tool call is the right move.
@@ -1002,7 +1031,12 @@ sees an error. ALWAYS terminate live-ops turns with reply_to_user.
 """
 
 
-MAX_AGENT_ITERS = 30
+# Raised from 30: a rich 12-16 vertex schema needs more build steps
+# (investigate every column + propose ~14 vertices + ~20 edges + validate +
+# score + finalize). 30 could cap a complex design mid-build, leaving a
+# half-finished schema. Each iteration may carry several tool calls, so this
+# is headroom, not a target.
+MAX_AGENT_ITERS = 45
 
 
 def _to_jsonable(value: Any) -> Any:
@@ -1172,13 +1206,15 @@ async def run_agentic_turn(
         "find_columns_matching": 0,
         "analyze_column_distribution": 0,
     }
-    # Caps lifted — 3.1-pro-preview has the context for thorough investigation,
-    # and deep data inspection produces materially better schemas.
+    # Caps sized for WIDE datasets — a 20-25 column CSV needs enough
+    # analyze_column_distribution calls to examine every column for vertex
+    # promotion. Too low a cap forces the agent to give up mid-investigation
+    # and fall back to a flat 6-vertex schema.
     _BUDGET_LIMITS = {
-        "inspect_column": 20,
-        "get_sample_rows": 10,
-        "find_columns_matching": 12,
-        "analyze_column_distribution": 16,
+        "inspect_column": 28,
+        "get_sample_rows": 12,
+        "find_columns_matching": 18,
+        "analyze_column_distribution": 30,
     }
 
     # Thinking budget is model-dependent:

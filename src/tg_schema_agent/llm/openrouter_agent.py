@@ -285,11 +285,15 @@ async def run_agentic_turn(
         "find_columns_matching": 0,
         "analyze_column_distribution": 0,
     }
+    # Caps sized for WIDE datasets — see chat_agent for rationale. A 20-25
+    # column CSV needs enough analyze_column_distribution calls to examine
+    # every column for vertex promotion, or the agent falls back to a flat
+    # 6-vertex schema.
     _BUDGET_LIMITS = {
-        "inspect_column": 20,
-        "get_sample_rows": 10,
-        "find_columns_matching": 12,
-        "analyze_column_distribution": 16,
+        "inspect_column": 28,
+        "get_sample_rows": 12,
+        "find_columns_matching": 18,
+        "analyze_column_distribution": 30,
     }
 
     for iteration in range(max_iters):
