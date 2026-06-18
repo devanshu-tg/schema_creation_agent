@@ -724,6 +724,41 @@ def propose_vertex(
     if not cols:
         cols = [primary_id]
 
+    # Validate the primary key maps to a REAL column in the source table.
+    # The data loader sources each vertex's primary id from cols[0]; if that
+    # is a synthetic/composite id the model invented (e.g. 'lat_long',
+    # 'is_fraud_flag'), there's no column to load from and the data load
+    # breaks. Reject early with guidance so the agent builds a loadable
+    # schema instead of one that deploys but can't be populated.
+    profile = ctx.find_profile(source_table)
+    if profile is not None:
+        real_cols = {c.name for c in profile.columns}
+        pk_src = cols[0]
+        if pk_src not in real_cols:
+            # Is there a real column among the attributes we could key on?
+            attr_real = [
+                str(a.get("source_column") or a.get("name") or "")
+                for a in (attributes or [])
+            ]
+            attr_real = [c for c in attr_real if c in real_cols]
+            sample = ", ".join(sorted(real_cols)[:25])
+            hint = (
+                f" You could key it on a real column like '{attr_real[0]}'."
+                if attr_real
+                else ""
+            )
+            return _err(
+                f"Vertex '{name}': primary_id '{primary_id}' (source '{pk_src}') is "
+                f"NOT a real column in '{source_table}', so its data can't be loaded. "
+                f"The primary_id MUST map to an existing column — pass source_columns "
+                f"with a real column name. Do NOT invent synthetic/concatenated ids "
+                f"like 'lat_long' or 'is_fraud_flag'. For a composite concept (e.g. "
+                f"lat+long) with no single id column, keep those values as ATTRIBUTES "
+                f"on the related entity instead of promoting a separate vertex; and "
+                f"don't promote low-cardinality flags (is_fraud) to vertices.{hint} "
+                f"Columns in '{source_table}': {sample}"
+            )
+
     attrs_out: list[Attribute] = []
     for a in attributes or []:
         try:

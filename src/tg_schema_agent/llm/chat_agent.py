@@ -790,15 +790,27 @@ work in this order:
        as attributes.
      • A DIMENSION you'd group-by or traverse — category, merchant_category,
        job/occupation, segment/profile, channel, city, state, zip.
-     • A COMPOSITE LOCATION — lat+long → a Geolocation vertex; street+city+
-       state+zip → an Address vertex; merch_lat+merch_long → MerchantGeolocation.
-     • A LABEL / CASE marker worth traversing — is_fraud → a FraudCase vertex.
    Build out the geo hierarchy (Address → City → State) and behavioral
    dimensions (Job, Segment, Category) when those columns exist — the
    pattern library ALREADY defines these vertices, so use them. Keep a
    column as a plain attribute ONLY when it's intrinsic to one entity and
    you'd never traverse or group by it (first_name, dob, raw amount,
    free-text notes).
+
+   PRIMARY_ID RULE — CRITICAL, or the data load WILL fail. Every vertex's
+   primary_id MUST be an EXISTING column in the data; pass `source_columns`
+   with that real column name. NEVER invent a synthetic or concatenated id
+   like `lat_long`, `merch_lat_long`, or `is_fraud_flag` — the loader has
+   no column to source it from and the entire load breaks.
+     - Composite location (lat+long, merch_lat+merch_long): there is usually
+       NO single id column, so DON'T promote a Geolocation vertex — keep
+       lat/long as ATTRIBUTES on the entity that has them (Transaction,
+       Merchant). Promote an Address only if a real column (street/zip) can
+       key it.
+     - Do NOT promote low-cardinality boolean/flag columns (is_fraud) to
+       vertices — keep them as attributes (e.g. is_fraud on Transaction).
+   If a concept has no real id column, it stays an attribute. A vertex you
+   can't load is worse than an attribute you can.
    RULE OF THUMB: account for EVERY column — either as a promoted vertex or
    a deliberate attribute, never silently dropped — and prefer promotion
    when in doubt. A typical 18-25 column dataset should yield ~12-16

@@ -656,6 +656,7 @@ def _build_loading_files_config(
     file_alias: str,
     separator: str,
     csv_header_columns: list[str],
+    skipped: dict[str, list[str]] | None = None,
 ) -> list[dict[str, Any]]:
     """Build the `files: [...]` payload for `tigergraph__create_loading_job`.
 
@@ -664,21 +665,52 @@ def _build_loading_files_config(
     therefore pass column INDICES (ints), not header names (strings),
     in every attribute_mapping. `csv_header_columns` is the parsed first
     line of the actual CSV — we use it to resolve source_column → index.
+
+    CRITICAL: a vertex whose primary-key column isn't a REAL CSV column
+    (e.g. a composite/synthetic id like `lat_long` or `is_fraud_flag` that
+    the designer invented) used to fall through as the literal string,
+    which made TigerGraph reject the ENTIRE loading job — one bad vertex
+    broke the whole load. We now resolve each primary key to a real column
+    (trying the declared source columns, the primary_id name, then any real
+    attribute column), and SKIP any vertex (and its edges) we still can't
+    source — so the valid majority loads instead of everything failing.
+    `skipped` is populated with the names we dropped so the caller can
+    surface them to the user.
     """
     col_idx: dict[str, int] = {name: i for i, name in enumerate(csv_header_columns)}
+    real_cols = set(csv_header_columns)
+    skipped = skipped if skipped is not None else {}
+    skipped.setdefault("vertices", [])
+    skipped.setdefault("edges", [])
 
-    def _resolve(col: str) -> int | str:
-        # Fall back to header name if the column isn't found (TG might
-        # accept it if the loader does read the inline data's header).
-        return col_idx.get(col, col)
+    def _resolve_pk_column(v: Any) -> str | None:
+        """First REAL csv column that can source this vertex's primary id.
 
+        Order: declared source columns → primary_id name → any real
+        attribute source column. The attribute fallback rescues composite
+        ids (`lat_long` → falls back to the real `lat` column) so the
+        vertex still loads instead of breaking the job.
+        """
+        candidates: list[str] = list(v.source.columns or [])
+        candidates.append(v.primary_id)
+        candidates.extend(a.source_column for a in v.attributes if a.source_column)
+        for c in candidates:
+            if c in real_cols:
+                return c
+        return None
+
+    pk_col_by_vertex: dict[str, str] = {}
     node_mappings: list[dict[str, Any]] = []
     for v in schema.vertices:
-        pk_src = v.source.columns[0] if v.source.columns else v.primary_id
-        attrs: dict[str, int | str] = {_safe_attr_name(v.primary_id): _resolve(pk_src)}
+        pk = _resolve_pk_column(v)
+        if pk is None:
+            skipped["vertices"].append(v.name)
+            continue
+        pk_col_by_vertex[v.name] = pk
+        attrs: dict[str, int] = {_safe_attr_name(v.primary_id): col_idx[pk]}
         for a in v.attributes:
-            if a.source_column:
-                attrs[_safe_attr_name(a.name)] = _resolve(a.source_column)
+            if a.source_column and a.source_column in real_cols:
+                attrs[_safe_attr_name(a.name)] = col_idx[a.source_column]
         node_mappings.append({
             "vertex_type": v.name,
             "attribute_mappings": attrs,
@@ -693,18 +725,24 @@ def _build_loading_files_config(
             continue
         if from_v.source.table != to_v.source.table:
             continue
-        from_src = from_v.source.columns[0] if from_v.source.columns else from_v.primary_id
-        to_src = to_v.source.columns[0] if to_v.source.columns else to_v.primary_id
+        # Reuse the SAME resolved column the vertex loaded with, so edge
+        # endpoints reference the exact primary-key values that exist.
+        from_src = pk_col_by_vertex.get(e.from_vertex)
+        to_src = pk_col_by_vertex.get(e.to_vertex)
+        if from_src is None or to_src is None:
+            # An endpoint vertex was skipped — its edge can't load either.
+            skipped["edges"].append(e.name)
+            continue
         em: dict[str, Any] = {
             "edge_type": e.name,
-            "source_column": _resolve(from_src),
-            "target_column": _resolve(to_src),
+            "source_column": col_idx[from_src],
+            "target_column": col_idx[to_src],
         }
         if e.attributes:
             em["attribute_mappings"] = {
-                _safe_attr_name(a.name): _resolve(a.source_column)
+                _safe_attr_name(a.name): col_idx[a.source_column]
                 for a in e.attributes
-                if a.source_column
+                if a.source_column and a.source_column in real_cols
             }
         edge_mappings.append(em)
 
@@ -781,12 +819,28 @@ async def _run_loading_job_phase(
         report["errors"].append({"phase": "read_csv_header", "error": str(exc)})
         return
 
+    skipped_load: dict[str, list[str]] = {}
     files_config = _build_loading_files_config(
         schema=schema,
         file_alias=file_alias,
         separator=delim,
         csv_header_columns=csv_header_columns,
+        skipped=skipped_load,
     )
+    # Surface anything we dropped from the load (primary key not sourceable
+    # from a real column) so it's visible rather than a silent gap.
+    if skipped_load.get("vertices") or skipped_load.get("edges"):
+        report.setdefault("warnings", []).append({
+            "phase": "build_loading_job",
+            "skipped_vertices": skipped_load.get("vertices", []),
+            "skipped_edges": skipped_load.get("edges", []),
+            "reason": "primary key not sourceable from a real CSV column",
+        })
+        emit(
+            "loading_job", job_name, "warning",
+            "Skipped (no real source column): vertices="
+            f"{skipped_load.get('vertices', [])}, edges={skipped_load.get('edges', [])}",
+        )
     create_payload = await _call(
         session,
         "tigergraph__create_loading_job",
