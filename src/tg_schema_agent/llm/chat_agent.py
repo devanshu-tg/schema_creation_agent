@@ -804,6 +804,16 @@ work in this order:
    when in doubt. A typical 18-25 column dataset should yield ~12-16
    vertices, not 6. Do NOT stop at the first handful of obvious entities.
 
+   EFFICIENCY — batch your tool calls. You have a limited iteration budget,
+   and a rich 15+ vertex schema won't fit if you emit ONE tool call per
+   turn. Issue MULTIPLE propose_vertex / propose_edge calls in a SINGLE
+   response. Workflow: (1) investigate the columns you're unsure about —
+   don't analyze every column one-by-one if the pattern match already
+   identified it; (2) propose ALL vertices in 2-4 batched responses;
+   (3) propose ALL edges in 1-2 batched responses; (4) validate, score,
+   finalize. Finishing the edges + finalize_schema matters as much as the
+   vertices — a schema with 18 vertices but no edges is useless.
+
 6. VALIDATE. Call `validate_schema`, then `score_schema`. If a target
    question is unanswerable AND 1-2 more vertices/edges would fix it,
    add them.
@@ -1031,12 +1041,13 @@ sees an error. ALWAYS terminate live-ops turns with reply_to_user.
 """
 
 
-# Raised from 30: a rich 12-16 vertex schema needs more build steps
-# (investigate every column + propose ~14 vertices + ~20 edges + validate +
-# score + finalize). 30 could cap a complex design mid-build, leaving a
-# half-finished schema. Each iteration may carry several tool calls, so this
-# is headroom, not a target.
-MAX_AGENT_ITERS = 45
+# Raised from 30: a rich 15-18 vertex schema needs many build steps
+# (investigate + propose ~16 vertices + ~20 edges + validate + score +
+# finalize). The prompt tells the agent to BATCH propose calls (several per
+# response), so this is generous headroom, not a target — but a granular,
+# one-call-per-turn design on a wide CSV genuinely needs it to avoid hitting
+# the cap mid-edge-build and leaving a vertices-only schema.
+MAX_AGENT_ITERS = 60
 
 
 def _to_jsonable(value: Any) -> Any:
