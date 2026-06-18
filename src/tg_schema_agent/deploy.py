@@ -771,7 +771,13 @@ def _build_loading_files_config(
         {
             "file_alias": file_alias,
             "separator": separator,
-            "header": "true",
+            # header="false": we map columns by INDEX (ints above), so the
+            # header names aren't needed at load time — and the inline-data
+            # path does NOT reliably skip a header row, which leaked the
+            # header in as a spurious vertex per type (e.g. a FraudCase with
+            # id "is_fraud"). The chunk builder therefore sends DATA ROWS
+            # ONLY (no header line), and we declare header="false".
+            "header": "false",
             "eol": "\\n",
             "node_mappings": node_mappings,
             "edge_mappings": edge_mappings,
@@ -946,7 +952,10 @@ async def _run_loading_job_phase(
 
         Loads are UPSERT-by-primary-id, so re-running a chunk is idempotent.
         """
-        chunk_text = header_line + "\n" + "\n".join(chunk)
+        # DATA ROWS ONLY — no header line. The loading config maps by column
+        # index and declares header="false", so a prepended header would be
+        # loaded as a spurious data row (the header-leak bug).
+        chunk_text = "\n".join(chunk)
         emit("run_load", csv_path.name, "running",
              f"Loading chunk {idx}/{n_chunks} ({len(chunk):,} rows)")
         last_err = ""
