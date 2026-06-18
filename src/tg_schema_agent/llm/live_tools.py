@@ -113,7 +113,7 @@ async def load_data_live(ctx: ToolContext, **_kwargs: Any) -> dict[str, Any]:
         return _err("No CSV in workspace. Upload data before loading.")
     if not ctx.working_schema.vertices:
         return _err("No schema designed yet. Propose vertices first.")
-    from tg_schema_agent.deploy import deploy
+    from tg_schema_agent.deploy import deploy, _summarize_error
 
     graph_name = _resolve_graph()
     progress: list[dict[str, Any]] = []
@@ -136,6 +136,31 @@ async def load_data_live(ctx: ToolContext, **_kwargs: Any) -> dict[str, Any]:
 
     counts = report.get("vertex_counts") or {}
     total = sum(c for c in counts.values() if isinstance(c, int))
+
+    # CRITICAL: deploy() records failures in report["errors"]. Previously we
+    # ignored that and reported a cheerful "Total rows: 0" even when the
+    # loading job failed — which hid the real error (e.g. reserved-keyword,
+    # schema-not-registered) and made the agent think it was a platform
+    # issue. Surface the actual failure instead.
+    errs = report.get("errors") or []
+    if errs:
+        first = errs[0]
+        detail = (
+            first.get("error")
+            or (_summarize_error(first.get("result")) if first.get("result") else "")
+            or str(first)
+        )
+        phase = first.get("phase", "load")
+        return _err(
+            f"Load failed during '{phase}': {str(detail)[:300]} "
+            f"(loaded {total:,} rows before the failure)."
+        )
+    if total == 0:
+        return _err(
+            "Load ran without a reported error but 0 rows landed. The schema "
+            "may still be committing, or the loading job matched no rows — "
+            "check the schema registered (get_graph_state_live) and retry the load."
+        )
     return _ok(
         f"Loaded {csv_path.name} into '{graph_name}'. Total rows: {total:,}. "
         f"Per-vertex: {counts}",

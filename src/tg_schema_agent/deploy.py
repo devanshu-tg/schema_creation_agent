@@ -84,6 +84,23 @@ def _safe_attr_name(name: str) -> str:
     return name
 
 
+def _safe_vertex_name(name: str) -> str:
+    """Rename a vertex TYPE that collides with a reserved keyword.
+
+    Subtle bug this fixes: a vertex type like `Job`, `State`, or `Category`
+    deploys fine in CREATE GRAPH, but the LOADING JOB DSL rejects it —
+    TigerGraph returns "The specified Identifier 'Job' is a reserved
+    keyword" because JOB is part of `CREATE LOADING JOB` / `RUN JOB`. So the
+    schema creates but the data load dies. We append a `Node` suffix and
+    apply the SAME rename everywhere the type is referenced (create payload,
+    edge endpoints, loading-job node mappings) so the references stay
+    consistent. (`JobNode`/`StateNode`/`CategoryNode` are not reserved.)
+    """
+    if name.lower() in _GSQL_RESERVED:
+        return f"{name}Node"
+    return name
+
+
 def _required_mcp() -> None:
     if not _HAS_MCP:
         raise RuntimeError(
@@ -119,7 +136,7 @@ def _load_env(env_file: Path | None) -> dict[str, str]:
 
 def _vertex_payload(v: Vertex) -> dict[str, Any]:
     return {
-        "name": v.name,
+        "name": _safe_vertex_name(v.name),
         "primary_id": _safe_attr_name(v.primary_id),
         "primary_id_type": _TG_TYPE[v.primary_id_dtype],
         "attributes": [
@@ -132,8 +149,10 @@ def _vertex_payload(v: Vertex) -> dict[str, Any]:
 def _edge_payload(e: Edge) -> dict[str, Any]:
     return {
         "name": e.name,
-        "from_vertex": e.from_vertex,
-        "to_vertex": e.to_vertex,
+        # Endpoints must use the SAME sanitized type name the vertex was
+        # created under, or the edge references a non-existent type.
+        "from_vertex": _safe_vertex_name(e.from_vertex),
+        "to_vertex": _safe_vertex_name(e.to_vertex),
         "directed": True,
         "attributes": [
             {"name": _safe_attr_name(a.name), "type": _TG_TYPE[a.dtype]}
@@ -712,7 +731,9 @@ def _build_loading_files_config(
             if a.source_column and a.source_column in real_cols:
                 attrs[_safe_attr_name(a.name)] = col_idx[a.source_column]
         node_mappings.append({
-            "vertex_type": v.name,
+            # Must match the sanitized type the schema was created under
+            # (e.g. Job -> JobNode), or the loading job targets a missing type.
+            "vertex_type": _safe_vertex_name(v.name),
             "attribute_mappings": attrs,
         })
 
@@ -807,17 +828,28 @@ async def _run_loading_job_phase(
     file_alias = f"f_{primary_profile.name.replace('-', '_').replace(' ', '_')[:40]}"
     delim = getattr(primary_profile, "detected_delimiter", ",") or ","
 
-    # Read CSV header so we can map source_columns → column indices (TG
-    # can't read headers at job-create time when no file_path is given).
-    try:
-        with csv_path.open("r", encoding="utf-8") as fh:
-            first_line = fh.readline().rstrip("\r\n")
-        csv_header_columns = [c.strip() for c in first_line.split(delim)]
-    except Exception as exc:  # noqa: BLE001
-        emit("loading_job", job_name, "failed",
-             f"Could not read CSV header: {exc}")
-        report["errors"].append({"phase": "read_csv_header", "error": str(exc)})
-        return
+    # Column-name → index map for the loading job. Use the PROFILER's parsed
+    # column names (clean, in file order) instead of re-splitting the raw
+    # header line. The raw header can carry artifacts — e.g. this dataset's
+    # header ends with a stray ",," so a naive split names the last column
+    # "trans_num,," — which won't match the schema's source_column
+    # "trans_num" (also from the profiler). That mismatch silently drops the
+    # attribute from the load, leaving fewer VALUES than the vertex has
+    # columns → "values() index number is N while vertex has N+1 columns".
+    # The profiler already split on the same delimiter, so positions align
+    # with what TigerGraph sees when it splits the inline data.
+    csv_header_columns = [c.name for c in primary_profile.columns]
+    if not csv_header_columns:
+        # Fallback: parse the raw header line if the profile has no columns.
+        try:
+            with csv_path.open("r", encoding="utf-8") as fh:
+                first_line = fh.readline().rstrip("\r\n")
+            csv_header_columns = [c.strip() for c in first_line.split(delim)]
+        except Exception as exc:  # noqa: BLE001
+            emit("loading_job", job_name, "failed",
+                 f"Could not read CSV header: {exc}")
+            report["errors"].append({"phase": "read_csv_header", "error": str(exc)})
+            return
 
     skipped_load: dict[str, list[str]] = {}
     files_config = _build_loading_files_config(
@@ -858,10 +890,16 @@ async def _run_loading_job_phase(
         return
     emit("loading_job", job_name, "ok", f"Loading job {job_name} created")
 
-    # 3. Stream the CSV into TigerGraph
+    # 3. Stream the CSV into TigerGraph IN CHUNKS.
+    #    TG Cloud's HTTP gateway has its own (~60s) timeout, independent of
+    #    the job `timeout` param, so a single inline POST of a large file
+    #    returns 504 Gateway Timeout before the load finishes. We split the
+    #    data into row-batches and run the job once per batch. Loads are
+    #    UPSERT-by-primary-id, so batching is cumulative and safe (a vertex
+    #    seen in two chunks is upserted, not duplicated). Override the batch
+    #    size with TG_LOAD_CHUNK_ROWS (default 5000).
     try:
-        csv_bytes = csv_path.read_bytes()
-        csv_text = csv_bytes.decode("utf-8", errors="replace")
+        csv_text = csv_path.read_bytes().decode("utf-8", errors="replace")
     except Exception as exc:  # noqa: BLE001
         emit("run_load", csv_path.name, "failed", f"Could not read CSV: {exc}")
         report["errors"].append({"phase": "read_csv", "error": str(exc)})
@@ -871,63 +909,104 @@ async def _run_loading_job_phase(
     file_tag = file_alias
     sep = delim
 
-    row_count = csv_text.count("\n")
+    # Header rides on every chunk (the loading config declares HEADER="true").
+    lines = csv_text.split("\n")
+    header_line = lines[0] if lines else ""
+    data_lines = [ln for ln in lines[1:] if ln.strip()]
+    total_rows = len(data_lines)
+
+    try:
+        chunk_rows = int(os.environ.get("TG_LOAD_CHUNK_ROWS", "5000")) or 5000
+    except ValueError:
+        chunk_rows = 5000
+    chunk_rows = max(500, chunk_rows)
+
+    chunks = [
+        data_lines[i:i + chunk_rows] for i in range(0, total_rows, chunk_rows)
+    ] or [[]]
+    n_chunks = len(chunks)
     emit("run_load", csv_path.name, "running",
-         f"Streaming {csv_path.name} (~{row_count:,} rows, sep={sep!r}) to TigerGraph")
-    run_payload = await _call(
-        session,
-        "tigergraph__run_loading_job_with_data",
-        {
-            **base_args,
-            "graph_name": graph_name,
-            "job_name": job_name,
-            "file_tag": file_tag,
-            "data": csv_text,
-            "separator": sep,
-            # TG timeout is in MILLISECONDS. Default 16000 — too short for
-            # anything past a few thousand rows. 600_000 = 10 minutes.
-            "timeout": 600_000,
-            "size_limit": 0,
-        },
-    )
-    report["steps"].append({"call": "run_loading_job_with_data", "result": run_payload})
-    if not _is_success(run_payload):
-        emit("run_load", csv_path.name, "failed", _summarize_error(run_payload))
-        report["errors"].append({"phase": "run_load", "result": run_payload})
-        return
+         f"Streaming {csv_path.name} (~{total_rows:,} rows, sep={sep!r}) "
+         f"in {n_chunks} chunk(s) of up to {chunk_rows:,} rows")
 
-    # 4. Poll status until terminal — the inline-data MCP variant usually
-    #    runs synchronously, but the API supports async jobs too.
-    parsed = _parse_mcp_payload(run_payload)
-    job_id = ""
-    if isinstance(parsed, dict):
-        data_blob = parsed.get("data") or {}
-        if isinstance(data_blob, dict):
-            job_id = str(data_blob.get("job_id") or data_blob.get("jobId") or "")
+    def _is_transient(msg: str) -> bool:
+        """Network/gateway hiccups worth retrying — distinct from semantic
+        GSQL errors (reserved keyword, column mismatch) that won't self-fix."""
+        m = (msg or "").lower()
+        return any(s in m for s in (
+            "cannot connect", "connection reset", "connection aborted",
+            "getaddrinfo", "timed out", "timeout", "gateway", "502", "503",
+            "504", "ssl", "temporarily unavailable", "broken pipe", "eof",
+        ))
 
-    if job_id:
-        for _ in range(30):  # ~60s total
-            status_payload = await _call(
-                session,
-                "tigergraph__get_loading_job_status",
-                {**base_args, "graph_name": graph_name, "job_id": job_id},
-            )
-            sp = _parse_mcp_payload(status_payload)
-            if isinstance(sp, dict):
-                status = ((sp.get("data") or {}).get("status") or "").lower()
-                if status in {"finished", "succeeded", "done", "complete", "completed"}:
-                    break
-                if status in {"failed", "error"}:
-                    emit("run_load", csv_path.name, "failed",
-                         _summarize_error(status_payload))
-                    report["errors"].append({
-                        "phase": "loading_job_status", "result": status_payload,
-                    })
-                    return
-            await asyncio.sleep(2.0)
+    for idx, chunk in enumerate(chunks, start=1):
+        chunk_text = header_line + "\n" + "\n".join(chunk)
+        emit("run_load", csv_path.name, "running",
+             f"Loading chunk {idx}/{n_chunks} ({len(chunk):,} rows)")
+        # Per-chunk retry: rapid sequential large POSTs to TG Cloud
+        # occasionally drop the connection mid-stream. Loads are
+        # UPSERT-by-primary-id, so retrying a chunk is safe (idempotent).
+        run_payload: Any = None
+        last_err = ""
+        loaded = False
+        _MAX_TRIES = 8  # ride through extended DNS/connection flakiness
+        for attempt in range(1, _MAX_TRIES + 1):
+            # Exponential-ish backoff capped at 20s: 3,6,9,12,15,18,20s
+            backoff = min(3.0 * attempt, 20.0)
+            try:
+                run_payload = await _call(
+                    session,
+                    "tigergraph__run_loading_job_with_data",
+                    {
+                        **base_args,
+                        "graph_name": graph_name,
+                        "job_name": job_name,
+                        "file_tag": file_tag,
+                        "data": chunk_text,
+                        "separator": sep,
+                        "timeout": 600_000,
+                        "size_limit": 0,
+                    },
+                )
+            except Exception as exc:  # noqa: BLE001 — treat as transient
+                last_err = f"{type(exc).__name__}: {exc}"
+                if attempt < _MAX_TRIES:
+                    emit("run_load", csv_path.name, "running",
+                         f"Chunk {idx}/{n_chunks} attempt {attempt}/{_MAX_TRIES} errored, "
+                         f"retrying in {backoff:.0f}s: {last_err[:100]}")
+                    await asyncio.sleep(backoff)
+                continue
+            if _is_success(run_payload):
+                loaded = True
+                break
+            last_err = _summarize_error(run_payload)
+            # DNS/connection/gateway hiccups (e.g. 'getaddrinfo failed',
+            # 504) are transient — retry. Semantic GSQL errors are not.
+            if attempt < _MAX_TRIES and _is_transient(last_err):
+                emit("run_load", csv_path.name, "running",
+                     f"Chunk {idx}/{n_chunks} attempt {attempt}/{_MAX_TRIES} transient "
+                     f"fail, retrying in {backoff:.0f}s: {last_err[:100]}")
+                await asyncio.sleep(backoff)
+                continue
+            break  # non-transient (semantic) error — stop retrying
+        report["steps"].append({
+            "call": f"run_loading_job_with_data[chunk {idx}/{n_chunks}]",
+            "result": run_payload,
+        })
+        if not loaded:
+            emit("run_load", csv_path.name, "failed",
+                 f"Chunk {idx}/{n_chunks} failed after retries: {last_err}")
+            report["errors"].append({
+                "phase": "run_load", "chunk": f"{idx}/{n_chunks}",
+                "error": last_err, "result": run_payload,
+            })
+            return
+        # Gentle gap between chunks so we don't hammer the gateway.
+        await asyncio.sleep(0.5)
 
     emit("run_load", csv_path.name, "ok",
-         f"{csv_path.name} loaded into {graph_name}")
+         f"{csv_path.name} loaded into {graph_name} "
+         f"({total_rows:,} rows across {n_chunks} chunk(s))")
 
     # 5. Get per-vertex counts. TG occasionally returns 0 immediately after a
     # successful load (background index refresh hasn't settled) — poll up to
@@ -947,8 +1026,11 @@ async def _run_loading_job_phase(
 
     for v in schema.vertices:
         count: Any = None
+        # Query TG by the sanitized type name (Job -> JobNode); key the
+        # report by the original name so the user sees the readable label.
+        tg_type = _safe_vertex_name(v.name)
         for attempt in range(5):
-            count = await _count(v.name)
+            count = await _count(tg_type)
             if isinstance(count, int) and count > 0:
                 break
             await asyncio.sleep(2.0)
@@ -1056,6 +1138,33 @@ async def deploy(
             session, plan.graph_name, base_args, report, _emit
         )
 
+        # --- 2b. CONFIRM the drop committed before recreating ---
+        # DROP GRAPH on TG Cloud is eventually-consistent: it returns before
+        # the drop lands. If create_graph runs before the drop commits, the
+        # async drop can wipe the freshly-created schema OR the old schema
+        # lingers and new data loads on top of stale types — producing
+        # "deploy succeeded but the graph has garbage/old data" (exactly the
+        # symptom seen: FraudCase keyed by an old schema's column). Poll
+        # until the graph is actually gone before we recreate it.
+        import asyncio as _asyncio
+
+        _emit("drop", plan.graph_name, "running",
+              "Waiting for DROP GRAPH to commit before recreating")
+        for _drop_attempt in range(12):  # ~24s
+            lg_payload = _parse_mcp_payload(
+                await _call(session, "tigergraph__list_graphs", {**base_args})
+            )
+            graphs_now = ((lg_payload or {}).get("data") or {}).get("graphs") or []
+            if plan.graph_name not in graphs_now:
+                _emit("drop", plan.graph_name, "ok", "Old graph fully dropped")
+                break
+            await _asyncio.sleep(2.0)
+        else:
+            # Still present after polling — warn but proceed; create_graph
+            # will overwrite, and the post-create verify-poll is the backstop.
+            _emit("drop", plan.graph_name, "running",
+                  "Old graph still visible after drop poll; proceeding to recreate")
+
         # --- 3. The one atomic call: create the entire schema ---
         for vt in plan.vertex_types:
             _emit("vertex", vt["name"], "running", f"Queuing vertex {vt['name']}")
@@ -1093,29 +1202,54 @@ async def deploy(
             report["errors"].append({"phase": "create_graph", "result": create_payload})
             return report
 
-        # --- 4. Verify by reading the schema back ---
-        _emit("verify", plan.graph_name, "running", "Reading schema back from TigerGraph")
-        verify_payload = await _call(
-            session,
-            "tigergraph__get_graph_schema",
-            {**base_args, "graph_name": plan.graph_name},
-        )
+        # --- 4. Verify by reading the schema back — WITH POLLING ---
+        # create_graph on TG Cloud is EVENTUALLY CONSISTENT: it returns
+        # success immediately, but the schema-change commit lands a few
+        # seconds later. A single immediate read-back frequently reports 0
+        # types even though the schema is committing — which made deploy
+        # look like it "didn't persist" and sent callers into retry/wipe
+        # loops. Poll get_graph_schema until the types actually appear.
+        import asyncio as _asyncio
+
+        _emit("verify", plan.graph_name, "running",
+              "Reading schema back from TigerGraph (waiting for commit)")
+        vcount = 0
+        ecount = 0
+        verify_payload: Any = None
+        for _attempt in range(12):  # up to ~24s
+            verify_payload = await _call(
+                session,
+                "tigergraph__get_graph_schema",
+                {**base_args, "graph_name": plan.graph_name},
+            )
+            verified = _parse_mcp_payload(verify_payload)
+            sch = None
+            if isinstance(verified, dict):
+                data = verified.get("data") or {}
+                sch = data.get("schema") if isinstance(data, dict) else None
+            if isinstance(sch, dict):
+                vcount = len(sch.get("VertexTypes") or sch.get("vertex_types") or [])
+                ecount = len(sch.get("EdgeTypes") or sch.get("edge_types") or [])
+            if vcount > 0:
+                break
+            await _asyncio.sleep(2.0)
         report["steps"].append({"call": "get_graph_schema", "result": verify_payload})
-        verified = _parse_mcp_payload(verify_payload)
-        sch = None
-        if isinstance(verified, dict):
-            data = verified.get("data") or {}
-            # MCP get_graph_schema nests the schema dict: data.schema.{VertexTypes,EdgeTypes}
-            sch = data.get("schema") if isinstance(data, dict) else None
-        if isinstance(sch, dict):
-            vcount = len(sch.get("VertexTypes") or sch.get("vertex_types") or [])
-            ecount = len(sch.get("EdgeTypes") or sch.get("edge_types") or [])
+        report["verified_vertex_count"] = vcount
+        report["verified_edge_count"] = ecount
+        if vcount > 0:
             _emit("verify", plan.graph_name, "ok",
                   f"TigerGraph reports {vcount} vertex types + {ecount} edge types")
-            report["verified_vertex_count"] = vcount
-            report["verified_edge_count"] = ecount
         else:
-            _emit("verify", plan.graph_name, "ok", "Schema created (verify response unparseable)")
+            # create_graph claimed success but nothing materialized after
+            # polling. Record a REAL error so callers stop reporting a
+            # false "deployed successfully" on an empty graph.
+            _emit("verify", plan.graph_name, "failed",
+                  "create_graph reported success but 0 types registered after ~24s")
+            report["errors"].append({
+                "phase": "verify",
+                "error": "Schema did not register: create_graph returned success "
+                         "but get_graph_schema shows 0 vertex types after polling ~24s.",
+            })
 
         # --- 5. Loading job (optional) ---------------------------------
         if load_data:
