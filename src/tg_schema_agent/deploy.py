@@ -939,33 +939,28 @@ async def _run_loading_job_phase(
             "504", "ssl", "temporarily unavailable", "broken pipe", "eof",
         ))
 
-    for idx, chunk in enumerate(chunks, start=1):
+    _MAX_TRIES = 8  # per-chunk: ride through extended DNS/connection flakiness
+
+    async def _load_chunk(idx: int, chunk: list[str]) -> tuple[bool, str]:
+        """Load one chunk with per-chunk retry. Returns (ok, last_error).
+
+        Loads are UPSERT-by-primary-id, so re-running a chunk is idempotent.
+        """
         chunk_text = header_line + "\n" + "\n".join(chunk)
         emit("run_load", csv_path.name, "running",
              f"Loading chunk {idx}/{n_chunks} ({len(chunk):,} rows)")
-        # Per-chunk retry: rapid sequential large POSTs to TG Cloud
-        # occasionally drop the connection mid-stream. Loads are
-        # UPSERT-by-primary-id, so retrying a chunk is safe (idempotent).
-        run_payload: Any = None
         last_err = ""
-        loaded = False
-        _MAX_TRIES = 8  # ride through extended DNS/connection flakiness
         for attempt in range(1, _MAX_TRIES + 1):
-            # Exponential-ish backoff capped at 20s: 3,6,9,12,15,18,20s
-            backoff = min(3.0 * attempt, 20.0)
+            backoff = min(3.0 * attempt, 20.0)  # 3,6,9,12,15,18,20s
             try:
-                run_payload = await _call(
+                rp = await _call(
                     session,
                     "tigergraph__run_loading_job_with_data",
                     {
-                        **base_args,
-                        "graph_name": graph_name,
-                        "job_name": job_name,
-                        "file_tag": file_tag,
-                        "data": chunk_text,
-                        "separator": sep,
-                        "timeout": 600_000,
-                        "size_limit": 0,
+                        **base_args, "graph_name": graph_name,
+                        "job_name": job_name, "file_tag": file_tag,
+                        "data": chunk_text, "separator": sep,
+                        "timeout": 600_000, "size_limit": 0,
                     },
                 )
             except Exception as exc:  # noqa: BLE001 — treat as transient
@@ -976,12 +971,13 @@ async def _run_loading_job_phase(
                          f"retrying in {backoff:.0f}s: {last_err[:100]}")
                     await asyncio.sleep(backoff)
                 continue
-            if _is_success(run_payload):
-                loaded = True
-                break
-            last_err = _summarize_error(run_payload)
-            # DNS/connection/gateway hiccups (e.g. 'getaddrinfo failed',
-            # 504) are transient — retry. Semantic GSQL errors are not.
+            report["steps"].append({
+                "call": f"run_loading_job_with_data[chunk {idx}/{n_chunks}]",
+                "result": rp,
+            })
+            if _is_success(rp):
+                return True, ""
+            last_err = _summarize_error(rp)
             if attempt < _MAX_TRIES and _is_transient(last_err):
                 emit("run_load", csv_path.name, "running",
                      f"Chunk {idx}/{n_chunks} attempt {attempt}/{_MAX_TRIES} transient "
@@ -989,24 +985,52 @@ async def _run_loading_job_phase(
                 await asyncio.sleep(backoff)
                 continue
             break  # non-transient (semantic) error — stop retrying
-        report["steps"].append({
-            "call": f"run_loading_job_with_data[chunk {idx}/{n_chunks}]",
-            "result": run_payload,
-        })
-        if not loaded:
-            emit("run_load", csv_path.name, "failed",
-                 f"Chunk {idx}/{n_chunks} failed after retries: {last_err}")
-            report["errors"].append({
-                "phase": "run_load", "chunk": f"{idx}/{n_chunks}",
-                "error": last_err, "result": run_payload,
-            })
-            return
-        # Gentle gap between chunks so we don't hammer the gateway.
+        return False, last_err
+
+    # First pass over all chunks; collect failures instead of aborting so one
+    # transient blip doesn't kill the whole load.
+    failed: list[tuple[int, list[str], str]] = []
+    for idx, chunk in enumerate(chunks, start=1):
+        ok, err = await _load_chunk(idx, chunk)
+        if not ok:
+            failed.append((idx, chunk, err))
         await asyncio.sleep(0.5)
 
-    emit("run_load", csv_path.name, "ok",
-         f"{csv_path.name} loaded into {graph_name} "
-         f"({total_rows:,} rows across {n_chunks} chunk(s))")
+    # Retry ROUNDS over still-failed chunks — an intermittent network (e.g.
+    # flaky local DNS: 'getaddrinfo failed') recovers between rounds, and
+    # upsert loads make re-running safe. This is what lets a load complete
+    # across a choppy connection instead of dying on the first bad chunk.
+    _MAX_ROUNDS = 3
+    round_no = 0
+    while failed and round_no < _MAX_ROUNDS:
+        round_no += 1
+        emit("run_load", csv_path.name, "running",
+             f"Retry round {round_no}/{_MAX_ROUNDS}: {len(failed)} chunk(s) pending "
+             f"— waiting for the network to recover")
+        await asyncio.sleep(8.0)
+        still: list[tuple[int, list[str], str]] = []
+        for idx, chunk, _ in failed:
+            ok, err = await _load_chunk(idx, chunk)
+            if not ok:
+                still.append((idx, chunk, err))
+            await asyncio.sleep(0.5)
+        failed = still
+
+    if failed:
+        idxs = [i for i, _, _ in failed]
+        emit("run_load", csv_path.name, "failed",
+             f"{len(failed)}/{n_chunks} chunk(s) could not load after {_MAX_ROUNDS} "
+             f"rounds: {idxs}. Last error: {failed[0][2][:120]}")
+        report["errors"].append({
+            "phase": "run_load", "failed_chunks": idxs, "error": failed[0][2],
+            "note": "Other chunks loaded; these failures are network-transient "
+                    "(retried across rounds). Re-run the load to pick up stragglers.",
+        })
+        # Continue to counts so the partial load that DID land is reported.
+    else:
+        emit("run_load", csv_path.name, "ok",
+             f"{csv_path.name} loaded into {graph_name} "
+             f"({total_rows:,} rows across {n_chunks} chunk(s))")
 
     # 5. Get per-vertex counts. TG occasionally returns 0 immediately after a
     # successful load (background index refresh hasn't settled) — poll up to
