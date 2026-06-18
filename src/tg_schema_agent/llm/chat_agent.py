@@ -334,7 +334,9 @@ def reply(
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     client = genai.Client(api_key=api_key)
 
-    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    # Lower default thinking budget for faster responses (was 32768, which
+    # added noticeable latency). Override via GEMINI_THINKING_BUDGET.
+    _thinking_default = 6144 if "pro" in model_name.lower() else 0
     try:
         _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
     except ValueError:
@@ -411,7 +413,9 @@ def reply_stream(
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     client = genai.Client(api_key=api_key)
 
-    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    # Lower default thinking budget for faster responses (was 32768, which
+    # added noticeable latency). Override via GEMINI_THINKING_BUDGET.
+    _thinking_default = 6144 if "pro" in model_name.lower() else 0
     try:
         _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
     except ValueError:
@@ -1249,7 +1253,9 @@ async def run_agentic_turn(
     #     before emitting any tool call, returning 0 parts. Disable it.
     # Override via GEMINI_THINKING_BUDGET env (positive int, or -1 for
     # dynamic — let the model decide per turn).
-    _thinking_default = 32768 if "pro" in model_name.lower() else 0
+    # Lower default thinking budget for faster responses (was 32768, which
+    # added noticeable latency). Override via GEMINI_THINKING_BUDGET.
+    _thinking_default = 6144 if "pro" in model_name.lower() else 0
     try:
         _thinking_budget = int(os.environ.get("GEMINI_THINKING_BUDGET", _thinking_default))
     except ValueError:

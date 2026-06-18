@@ -296,19 +296,29 @@ async def run_agentic_turn(
         "analyze_column_distribution": 30,
     }
 
+    # Keep reasoning light so chat replies come back fast. OpenRouter maps
+    # `reasoning.effort` to the model's thinking budget; "low" trims latency
+    # noticeably. Override via OPENROUTER_REASONING_EFFORT (low|medium|high),
+    # or set it to "none"/"off" to omit the param entirely.
+    _effort = (os.environ.get("OPENROUTER_REASONING_EFFORT", "low") or "low").strip().lower()
+    _reasoning_body: dict[str, Any] | None = (
+        {"reasoning": {"effort": _effort}}
+        if _effort not in ("none", "off", "")
+        else None
+    )
+
     for iteration in range(max_iters):
         try:
-            resp = await client.chat.completions.create(
-                model=model_name,
-                messages=messages,
-                tools=tools,
-                tool_choice="auto",
-                temperature=0.3,
-                # Sonnet 4.6 + adaptive thinking is automatic on OpenRouter;
-                # we don't need to pass a budget. For models that don't
-                # support tools, this still returns plain text and we'll
-                # treat it as a conversational reply.
-            )
+            _create_kwargs: dict[str, Any] = {
+                "model": model_name,
+                "messages": messages,
+                "tools": tools,
+                "tool_choice": "auto",
+                "temperature": 0.3,
+            }
+            if _reasoning_body:
+                _create_kwargs["extra_body"] = _reasoning_body
+            resp = await client.chat.completions.create(**_create_kwargs)
         except Exception as exc:  # noqa: BLE001
             yield "error", {
                 "message": f"OpenRouter call failed: {exc}",

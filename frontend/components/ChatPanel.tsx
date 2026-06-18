@@ -6,6 +6,7 @@ import {
   Paperclip,
   Send,
   Sparkles,
+  Square,
   Wrench,
   X,
 } from 'lucide-react';
@@ -31,11 +32,15 @@ export type AgentStep =
 interface Props {
   uploadedName: string | null;
   onFilesPicked: (files: File[]) => Promise<void> | void;
+  /** Attach a file mid-chat WITHOUT auto-sending a turn (paperclip / drag). */
+  onAttachFile: (files: File[]) => Promise<void> | void;
   messages: ChatMessage[];
   steps: AgentStep[];
   onSend: (message: string) => Promise<void> | void;
+  /** Abort the in-flight turn (Stop button). */
+  onStop: () => void;
   busy: boolean;
-  useCase: UseCase;
+  useCase: UseCase | null;
   onUseCaseChange: (uc: UseCase) => void;
   hasWorkspace: boolean;
 }
@@ -43,9 +48,11 @@ interface Props {
 export default function ChatPanel({
   uploadedName,
   onFilesPicked,
+  onAttachFile,
   messages,
   steps,
   onSend,
+  onStop,
   busy,
   useCase,
   onUseCaseChange,
@@ -53,6 +60,19 @@ export default function ChatPanel({
 }: Props) {
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const taRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Auto-grow the textarea up to a max height, then scroll.
+  const autoGrow = useCallback(() => {
+    const el = taRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+  }, []);
+
+  useEffect(() => {
+    autoGrow();
+  }, [input, autoGrow]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -64,16 +84,36 @@ export default function ChatPanel({
     setInput('');
   };
 
+  // Insert a newline at the cursor (Shift+Enter handles itself; this powers
+  // Ctrl/Cmd+Enter which the browser otherwise ignores in a textarea).
+  const insertNewline = () => {
+    const el = taRef.current;
+    if (!el) {
+      setInput((v) => v + '\n');
+      return;
+    }
+    const s = el.selectionStart ?? input.length;
+    const e2 = el.selectionEnd ?? input.length;
+    setInput(input.slice(0, s) + '\n' + input.slice(e2));
+    requestAnimationFrame(() => {
+      el.selectionStart = el.selectionEnd = s + 1;
+      autoGrow();
+    });
+  };
+
   const onChipClick = (reply: string) => {
     if (busy) return;
     void onSend(reply);
   };
 
+  // Drag-drop and the paperclip ATTACH the file without auto-sending — the
+  // user types/sends when ready (onFilesPicked w/ kickoff is only the welcome
+  // "upload CSV" entry point).
   const onDrop = useCallback(
     (accepted: File[]) => {
-      if (accepted.length) void onFilesPicked(accepted);
+      if (accepted.length) void onAttachFile(accepted);
     },
-    [onFilesPicked],
+    [onAttachFile],
   );
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
@@ -85,6 +125,14 @@ export default function ChatPanel({
 
   const lastAgent = [...messages].reverse().find((m) => m.role === 'agent');
   const chips = lastAgent?.suggested_replies ?? [];
+
+  // The agent's latest in-flight thought (for the compact Claude-Code-style
+  // indicator) and whether any tools are running this turn.
+  const latestThought = [...steps]
+    .reverse()
+    .find((s): s is Extract<AgentStep, { kind: 'thinking' }> => s.kind === 'thinking')
+    ?.text;
+  const hasToolCalls = steps.some((s) => s.kind === 'tool_call');
 
   // Pill stays green ("Agent Active") and just animates the dot when busy —
   // an orange/peach swap looked alarming to users (read as "warning / error").
@@ -121,24 +169,41 @@ export default function ChatPanel({
       {/* Conversation area */}
       <div className="flex-1 overflow-y-auto px-5 py-5">
         {!uploadedName ? (
-          <WelcomeScreen
-            isDragActive={isDragActive}
-            disabled={!hasWorkspace}
-            onFilesPicked={onFilesPicked}
-            uploadedName={uploadedName}
-            useCase={useCase}
-            onUseCaseChange={onUseCaseChange}
-          />
+          // As soon as the user uploads (busy flips true) show an immediate
+          // "getting started" state instead of the welcome picker — no dead
+          // gap while the CSV uploads + the agent spins up.
+          busy ? (
+            <KickoffProcessing />
+          ) : (
+            <WelcomeScreen
+              isDragActive={isDragActive}
+              disabled={!hasWorkspace}
+              onFilesPicked={onFilesPicked}
+              uploadedName={uploadedName}
+              useCase={useCase}
+              onUseCaseChange={onUseCaseChange}
+            />
+          )
         ) : (
           <div className="space-y-4">
             {messages.map((m, i) => (
-              <MessageBubble key={i} message={m} />
+              <MessageBubble
+                key={i}
+                message={m}
+                // Stream only the newest agent message word-by-word.
+                animate={i === messages.length - 1}
+              />
             ))}
-            {/* Agent's live work log for the current turn */}
-            {steps.length > 0 && <AgentStepsBlock steps={steps} busy={busy} />}
-            {/* Persistent "Thinking..." bubble — shows whenever the agent
-                is mid-turn so the user knows it's working, like Claude Code */}
-            {busy && <ThinkingBubble hasSteps={steps.length > 0} />}
+            {/* Compact tool-call progress (only while working, only if tools
+                are actually running). Verbose thinking is NOT dumped here —
+                it rides the single Thinking indicator below. */}
+            {busy && hasToolCalls && <AgentStepsBlock steps={steps} busy={busy} />}
+            {/* Single compact Thinking indicator — shows the latest thought
+                (truncated) like Claude Code, and vanishes when the answer
+                lands (steps are cleared on final). */}
+            {busy && (
+              <ThinkingBubble hasSteps={hasToolCalls} latestThought={latestThought} />
+            )}
             <div ref={bottomRef} />
           </div>
         )}
@@ -178,37 +243,69 @@ export default function ChatPanel({
           );
         })()}
 
-        <div className="flex items-center gap-2 rounded-lg border border-tgl-border bg-tgl-card px-3 py-2 focus-within:border-tg-orange/60">
-          {/* Upload-in-chat — paperclip opens file picker mid-conversation */}
+        {/* Active / attached file chip — confirms the paperclip attached a
+            file without firing a turn; the user sends when ready. */}
+        {uploadedName && (
+          <div className="mb-1.5 inline-flex max-w-full items-center gap-1.5 rounded-md bg-tgl-chip px-2 py-1 text-[11px] text-tgl-chipInk">
+            <Paperclip size={11} className="shrink-0" />
+            <span className="truncate">{uploadedName}</span>
+          </div>
+        )}
+
+        <div className="flex items-end gap-2 rounded-lg border border-tgl-border bg-tgl-card px-3 py-2 focus-within:border-tg-orange/60">
+          {/* Attach-in-chat — paperclip attaches a CSV WITHOUT sending */}
           <button
             type="button"
             onClick={() => open()}
             disabled={busy || !hasWorkspace}
-            title="Upload a CSV"
-            className="text-tgl-mute transition-colors hover:text-tg-orange disabled:cursor-not-allowed disabled:opacity-50"
+            title="Attach a CSV (won't send)"
+            className="mb-0.5 text-tgl-mute transition-colors hover:text-tg-orange disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Paperclip size={14} />
           </button>
-          <input
-            type="text"
-            placeholder={busy ? 'Agent is working…' : 'Ask Savanna…'}
+          <textarea
+            ref={taRef}
+            rows={1}
+            placeholder={
+              busy ? 'Agent is working… (Stop to interrupt)' : 'Ask Savanna…  (Enter to send, Shift/Ctrl+Enter for newline)'
+            }
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            disabled={busy || !hasWorkspace}
-            className="flex-1 bg-transparent text-[13px] text-tgl-ink outline-none placeholder:text-tgl-subtle disabled:cursor-not-allowed"
+            disabled={!hasWorkspace}
+            className="flex-1 resize-none bg-transparent py-0.5 text-[13px] leading-relaxed text-tgl-ink outline-none placeholder:text-tgl-subtle disabled:cursor-not-allowed"
+            style={{ maxHeight: 140 }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') submit();
+              if (e.key !== 'Enter') return;
+              if (e.shiftKey) return; // browser inserts newline
+              if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                insertNewline();
+                return;
+              }
+              e.preventDefault();
+              submit();
             }}
           />
-          <button
-            type="button"
-            className="text-tg-orange transition-colors hover:opacity-80 disabled:text-tgl-subtle"
-            disabled={!input.trim() || busy || !hasWorkspace}
-            onClick={submit}
-            title="Send"
-          >
-            <Send size={14} />
-          </button>
+          {busy ? (
+            <button
+              type="button"
+              className="mb-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-red-50 text-red-600 transition-colors hover:bg-red-100"
+              onClick={onStop}
+              title="Stop generating"
+            >
+              <Square size={11} className="fill-current" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="mb-0.5 text-tg-orange transition-colors hover:opacity-80 disabled:text-tgl-subtle"
+              disabled={!input.trim() || !hasWorkspace}
+              onClick={submit}
+              title="Send"
+            >
+              <Send size={14} />
+            </button>
+          )}
         </div>
         <p className="mt-1.5 text-center text-[10.5px] text-tgl-subtle">
           Savanna can help generate schema, GSQL, and more.
@@ -240,7 +337,18 @@ function isAffirmativeChip(text: string): boolean {
 // When tools are running it sits under the AgentStepsBlock so the user always
 // knows there's progress happening.
 
-function ThinkingBubble({ hasSteps }: { hasSteps: boolean }) {
+function ThinkingBubble({
+  hasSteps,
+  latestThought,
+}: {
+  hasSteps: boolean;
+  latestThought?: string;
+}) {
+  // Keep the live thought to a single compact line — never let the raw
+  // reasoning grow and push the conversation up the screen.
+  const thought = (latestThought || '').replace(/\s+/g, ' ').trim();
+  const preview = thought.length > 90 ? thought.slice(0, 90) + '…' : thought;
+
   return (
     <div className="flex tg-fade-in">
       {!hasSteps && (
@@ -250,17 +358,45 @@ function ThinkingBubble({ hasSteps }: { hasSteps: boolean }) {
       )}
       <div
         className={clsx(
-          'flex items-center gap-2 rounded-2xl bg-tgl-bubble px-4 py-2.5 text-[12.5px] text-tgl-mute',
+          'flex min-w-0 items-center gap-2 rounded-2xl bg-tgl-bubble px-4 py-2.5 text-[12.5px] text-tgl-mute',
           hasSteps && 'ml-9',
         )}
       >
-        <span className="font-medium text-tgl-ink">Thinking</span>
+        <span className="shrink-0 font-medium text-tgl-ink">Thinking</span>
+        <span className="flex shrink-0 gap-0.5">
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.3s]" />
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.15s]" />
+          <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange" />
+        </span>
+        {preview && (
+          <span className="truncate italic text-tgl-subtle">{preview}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// -------------------- Kickoff processing (immediate upload feedback) --------------------
+// Shown the instant a CSV upload starts, so there's no blank gap before the
+// agent's first thinking event arrives.
+
+function KickoffProcessing() {
+  return (
+    <div className="flex h-full flex-col items-center justify-center text-center tg-fade-in">
+      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-tgl-bubble">
+        <Sparkles size={20} className="animate-pulse text-tg-orange" />
+      </div>
+      <div className="flex items-center gap-2 text-[13px] font-medium text-tgl-ink">
+        <span>Analyzing your data</span>
         <span className="flex gap-0.5">
           <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.3s]" />
           <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange [animation-delay:-0.15s]" />
           <span className="h-1 w-1 animate-bounce rounded-full bg-tg-orange" />
         </span>
       </div>
+      <p className="mt-1.5 text-[11.5px] text-tgl-mute">
+        Uploading your CSV and starting the agent…
+      </p>
     </div>
   );
 }
@@ -268,10 +404,16 @@ function ThinkingBubble({ hasSteps }: { hasSteps: boolean }) {
 // -------------------- Agent steps (tool calls + thinking) --------------------
 
 function AgentStepsBlock({ steps, busy }: { steps: AgentStep[]; busy: boolean }) {
-  const toolCallCount = steps.filter((s) => s.kind === 'tool_call').length;
-  const okCount = steps.filter(
-    (s) => s.kind === 'tool_call' && s.status === 'ok',
-  ).length;
+  // Only the tool calls render here — the model's raw reasoning ("thinking")
+  // is intentionally NOT dumped (it grew unboundedly and pushed the chat up).
+  // To keep the list compact we also cap it to the most recent calls.
+  const toolCalls = steps.filter(
+    (s): s is Extract<AgentStep, { kind: 'tool_call' }> => s.kind === 'tool_call',
+  );
+  const okCount = toolCalls.filter((s) => s.status === 'ok').length;
+  const MAX_VISIBLE = 6;
+  const hidden = Math.max(0, toolCalls.length - MAX_VISIBLE);
+  const visible = toolCalls.slice(-MAX_VISIBLE);
 
   return (
     <div className="flex tg-fade-in">
@@ -287,23 +429,17 @@ function AgentStepsBlock({ steps, busy }: { steps: AgentStep[]; busy: boolean })
           <span className="font-semibold">Agent at work</span>
           <span>·</span>
           <span>
-            {okCount}/{toolCallCount} steps
+            {okCount}/{toolCalls.length} steps
             {busy && <span className="animate-pulse"> …</span>}
           </span>
         </div>
         <div className="space-y-1">
-          {steps.map((s, i) =>
-            s.kind === 'thinking' ? (
-              <div
-                key={i}
-                className="border-l-2 border-tg-orange/40 pl-2 text-[11.5px] italic text-tgl-mute"
-              >
-                {s.text}
-              </div>
-            ) : (
-              <ToolCallLine key={i} step={s} />
-            ),
+          {hidden > 0 && (
+            <div className="pl-1 text-[11px] text-tgl-subtle">+{hidden} earlier steps…</div>
           )}
+          {visible.map((s) => (
+            <ToolCallLine key={s.id} step={s} />
+          ))}
         </div>
       </div>
     </div>
@@ -377,7 +513,7 @@ function WelcomeScreen({
   disabled: boolean;
   onFilesPicked: (files: File[]) => Promise<void> | void;
   uploadedName: string | null;
-  useCase: UseCase;
+  useCase: UseCase | null;
   onUseCaseChange: (uc: UseCase) => void;
 }) {
   const [pickedSource, setPickedSource] = useState<string>('upload');
@@ -415,7 +551,38 @@ function WelcomeScreen({
 
 // -------------------- Chat bubbles --------------------
 
-function MessageBubble({ message }: { message: ChatMessage }) {
+// Reveals text word-by-word on mount (typewriter). Used for the newest
+// agent message so the answer "streams" in like Claude Code, then settles.
+function Typewriter({ text, animate }: { text: string; animate: boolean }) {
+  const [shown, setShown] = useState(animate ? '' : text);
+
+  useEffect(() => {
+    if (!animate) {
+      setShown(text);
+      return;
+    }
+    // Split keeping whitespace tokens so re-joining reconstructs exactly.
+    const tokens = text.split(/(\s+)/);
+    let i = 0;
+    setShown('');
+    const id = setInterval(() => {
+      i += 1;
+      setShown(tokens.slice(0, i).join(''));
+      if (i >= tokens.length) clearInterval(id);
+    }, 22);
+    return () => clearInterval(id);
+  }, [text, animate]);
+
+  return <div className="whitespace-pre-wrap">{shown}</div>;
+}
+
+function MessageBubble({
+  message,
+  animate = false,
+}: {
+  message: ChatMessage;
+  animate?: boolean;
+}) {
   const isUser = message.role === 'user';
   const isSchema =
     message.type === 'propose_schema' || message.type === 'update_schema';
@@ -460,7 +627,12 @@ function MessageBubble({ message }: { message: ChatMessage }) {
             {isDestructive ? 'Confirm — destructive' : 'Savanna asks'}
           </div>
         )}
-        <div className="whitespace-pre-wrap">{message.content}</div>
+        {isUser ? (
+          <div className="whitespace-pre-wrap">{message.content}</div>
+        ) : (
+          // Stream the newest agent answer word-by-word; older ones render full.
+          <Typewriter text={message.content} animate={animate} />
+        )}
         {isSchema && message.schema_json && (
           <div className="mt-2 border-t border-tgl-line pt-2 text-[11px] text-tgl-mute">
             {message.schema_json.vertices?.length ?? 0} vertices ·{' '}

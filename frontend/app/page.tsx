@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { api } from '@/lib/api';
 import type {
   ChatMessage,
@@ -20,9 +20,10 @@ import TopBar from '@/components/TopBar';
 export default function Page() {
   const [workspaceId, setWorkspaceId] = useState<string | null>(null);
   // Use case is a soft hint that drives the backend pattern library; the
-  // agent still asks the user about their decision in Stage 1. Default
-  // FRAUD because that's the only fully-fleshed pattern today.
-  const [useCase, setUseCase] = useState<UseCase>('FRAUD');
+  // agent still asks the user about their decision in Stage 1. Starts
+  // UNSELECTED (null) so nothing is pre-highlighted — we fall back to FRAUD
+  // only when actually sending to the backend.
+  const [useCase, setUseCase] = useState<UseCase | null>(null);
   const [uploadedName, setUploadedName] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [steps, setSteps] = useState<AgentStep[]>([]);
@@ -35,6 +36,8 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [deployModal, setDeployModal] = useState<DeployModalMode | null>(null);
   const [starterQueriesOpen, setStarterQueriesOpen] = useState(false);
+  // Cancel handle for the in-flight chat stream (powers the Stop button).
+  const cancelRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -63,7 +66,7 @@ export default function Page() {
       }
 
       return new Promise<void>((resolve) => {
-        api.chatTurnStream(workspaceId, message, useCase, {
+        const cancel = api.chatTurnStream(workspaceId, message, useCase ?? 'FRAUD', {
           onThinking: (e) => {
             setSteps((prev) => [...prev, { kind: 'thinking', text: e.text }]);
           },
@@ -109,24 +112,42 @@ export default function Page() {
             if (payload.score) setScore(payload.score);
             if (payload.confidence) setConfidence(payload.confidence);
             setBusy(false);
-            // Keep the step log visible after the turn finishes so the user
-            // can see what the agent did. We'll reset on next turn.
+            // Clear the live thinking/step log the moment the answer lands —
+            // the thinking trace vanishes and the streamed answer is what
+            // remains (Claude-Code style). Any schema result is on the canvas.
+            setSteps([]);
+            cancelRef.current = null;
             resolve();
           },
           onError: (msg) => {
             setError(msg);
             if (message.trim()) setMessages((prev) => prev.slice(0, -1));
             setBusy(false);
+            cancelRef.current = null;
             resolve();
           },
         });
+        cancelRef.current = cancel;
       });
     },
     [workspaceId, useCase],
   );
 
+  // Stop the in-flight turn (Claude-Code-style). Aborts the SSE stream and
+  // clears the working state; any partial schema stays on the canvas.
+  const stopTurn = useCallback(() => {
+    cancelRef.current?.();
+    cancelRef.current = null;
+    setBusy(false);
+    setSteps([]);
+  }, []);
+
   const handleFilesPicked = useCallback(
-    async (files: File[]) => {
+    // kickoff=true  → upload + immediately start the agent (the welcome
+    //                 "upload CSV" entry point).
+    // kickoff=false → just attach the file (paperclip mid-chat); wait for
+    //                 the user to type/press send instead of auto-firing.
+    async (files: File[], kickoff = true) => {
       if (!workspaceId) return;
       setError(null);
       setBusy(true);
@@ -134,8 +155,11 @@ export default function Page() {
         const res = await api.uploadFiles(workspaceId, files);
         const lastName = res.files[res.files.length - 1]?.name ?? null;
         setUploadedName(lastName);
-        // Kickoff the agent right after upload
-        await sendChat('');
+        if (kickoff) {
+          await sendChat(''); // upload + analyze in one go
+        } else {
+          setBusy(false); // attached only — user decides when to send
+        }
       } catch (e: unknown) {
         setError(e instanceof Error ? e.message : String(e));
         setBusy(false);
@@ -153,9 +177,11 @@ export default function Page() {
           <ChatPanel
             uploadedName={uploadedName}
             onFilesPicked={handleFilesPicked}
+            onAttachFile={(files) => handleFilesPicked(files, false)}
             messages={messages}
             steps={steps}
             onSend={sendChat}
+            onStop={stopTurn}
             busy={busy}
             useCase={useCase}
             onUseCaseChange={setUseCase}
