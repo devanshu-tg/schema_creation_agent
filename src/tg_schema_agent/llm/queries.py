@@ -875,6 +875,128 @@ def _repair_one_with_openrouter(
     return fixed
 
 
+def _repair_one_with_gemini(
+    schema: Schema,
+    graph_name: str,
+    business_context: BusinessContext | None,
+    failed: StarterQuery,
+    error: str,
+    model: str | None = None,
+) -> StarterQuery | None:
+    """Gemini equivalent of the per-query repair — same prompt, Gemini client.
+
+    Hands the model ONE failing query + its exact TigerGraph error and asks
+    for a corrected single query (not a whole-batch regenerate).
+    """
+    from google import genai
+    from google.genai import types as genai_types
+
+    schema_summary = _schema_summary_for_prompt(schema, graph_name)
+    business = _business_context_for_prompt(business_context)
+
+    user_text = "\n".join([
+        _FEW_SHOT_EXAMPLES,
+        "",
+        "=" * 70,
+        "== THIS SCHEMA'S REFERENCE TABLES (use these exactly) ==",
+        "=" * 70,
+        "",
+        schema_summary["edge_direction_table"],
+        "",
+        schema_summary["vertex_attribute_table"],
+        "",
+        "=" * 70,
+        "== REPAIR TASK ==",
+        "=" * 70,
+        "",
+        f"Graph: {graph_name}",
+        f"Domain: {business.get('domain', '')}",
+        f"Query name: {failed.name}",
+        f"Business question: {failed.business_question}",
+        "",
+        "The following GSQL query FAILED dry-run validation on TigerGraph:",
+        "",
+        "```gsql",
+        failed.gsql.strip(),
+        "```",
+        "",
+        "TigerGraph error:",
+        "",
+        error,
+        "",
+        "Common error → fix mapping:",
+        "  - TYP-111 (no such edge / wrong direction): use the EXACT edge name "
+        "from the EDGE DIRECTIONS table; use the paired REVERSE edge to go the "
+        "other way.",
+        "  - 'attribute X not found': only use names from VERTEX ATTRIBUTES.",
+        "  - 'Saved as draft' / 'no viable alternative': syntactic error — "
+        "compare against the FEW-SHOT EXAMPLES.",
+        "  - lowercase type names (tuple/string/int) — must be UPPERCASE.",
+        "  - VERTEX<T> parameter — change to STRING and resolve by primary_id.",
+        "",
+        "Fix the query and return ONLY the corrected JSON for THIS ONE query:",
+        '{"name": "...", "description": "...", "business_question": "...", '
+        '"gsql": "CREATE QUERY ...", "expected_output_description": "..."}',
+        "Keep the same `name` if possible.",
+    ])
+
+    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    client = genai.Client(api_key=api_key)
+    model_name = model or DEFAULT_MODEL
+    _tb_default = 6144 if "pro" in model_name.lower() else 0
+    try:
+        _tb = int(os.environ.get("GEMINI_THINKING_BUDGET", _tb_default))
+    except ValueError:
+        _tb = _tb_default
+    try:
+        resp = client.models.generate_content(
+            model=model_name,
+            contents=[
+                genai_types.Content(
+                    role="user", parts=[genai_types.Part.from_text(text=user_text)]
+                )
+            ],
+            config=genai_types.GenerateContentConfig(
+                system_instruction=_SYSTEM_INSTRUCTION,
+                response_mime_type="application/json",
+                temperature=0.05,
+                thinking_config=genai_types.ThinkingConfig(thinking_budget=_tb),
+            ),
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Gemini repair call failed for %s: %s", failed.name, exc)
+        return None
+
+    candidate = (resp.candidates or [None])[0]
+    if candidate is None:
+        return None
+    content_obj = getattr(candidate, "content", None)
+    if content_obj is None:
+        return None
+    parts = getattr(content_obj, "parts", None) or []
+    text = "".join(getattr(p, "text", "") or "" for p in parts).strip()
+    if not text:
+        return None
+    if text.startswith("```"):
+        text = text.strip("`")
+        if text.lower().startswith("json"):
+            text = text[4:].lstrip()
+        if text.endswith("```"):
+            text = text[:-3]
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError as exc:
+        log.warning("Gemini repair JSON parse failed for %s: %s", failed.name, exc)
+        return None
+    try:
+        fixed = StarterQuery.model_validate(parsed)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Gemini repair output shape invalid for %s: %s", failed.name, exc)
+        return None
+    fixed.gsql = _gsql_postprocess(fixed.gsql)
+    return fixed
+
+
 def _repair_one(
     schema: Schema,
     graph_name: str,
@@ -882,16 +1004,14 @@ def _repair_one(
     failed: StarterQuery,
     error: str,
 ) -> StarterQuery | None:
-    """Provider-dispatch wrapper for single-query repair.
-
-    Only OpenRouter has the per-query repair path implemented — Gemini
-    continues to use batch retry inside `_generate_with_gemini`.
-    """
+    """Provider-dispatch wrapper for single-query repair (both providers)."""
     if _active_provider() == "openrouter":
         return _repair_one_with_openrouter(
             schema, graph_name, business_context, failed, error
         )
-    return None
+    return _repair_one_with_gemini(
+        schema, graph_name, business_context, failed, error
+    )
 
 
 async def generate_starter_queries(
