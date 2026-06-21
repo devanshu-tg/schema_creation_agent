@@ -42,6 +42,15 @@ COPY rules/ ./rules/
 ENV PORT=7860
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+# Bake the NON-SECRET LLM config so HF doesn't need these as Space vars.
+# (Secrets — GEMINI_API_KEY, TG_HOST, TG_SECRET — must still be set in the
+# Space's Settings → Variables and secrets; they're never committed.)
+# NOTE: a Space-level env var of the same name OVERRIDES these — so if you
+# previously set LLM_PROVIDER=openrouter on the Space, remove it.
+ENV LLM_PROVIDER=gemini
+ENV GEMINI_MODEL=gemini-3.1-pro-preview
+ENV TG_GRAPHNAME=mcp_demo
+ENV TG_TGCLOUD=true
 
 EXPOSE 7860
 
